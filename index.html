@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Simulador de Filtros Ópticos — Visiometric Labs</title>
+  <meta name="description" content="Simulador interactivo en primera persona de filtros oftálmicos y tratamientos ópticos para consultorio y mostrador.">
+  
+  <!-- Tipografía Amigable y Médica -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./src/styles/theme.css">
+  <link rel="stylesheet" href="./src/styles/layout.css">
+  <link rel="stylesheet" href="./src/styles/components.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header Clínico Amigable -->
+    <header class="clinic-header">
+      <div class="brand-section">
+        <div class="brand-icon-wrapper">
+          <span>👓</span>
+        </div>
+        <div class="brand-texts">
+          <h1>
+            <span>Visiometric Labs</span>
+            <span class="brand-badge">Simulador Óptico</span>
+          </h1>
+          <p>Experiencia en primera persona para consulta y mostrador</p>
+        </div>
+      </div>
+
+      <!-- Selector de Escenas (Header central) -->
+      <div id="scene-selector-container"></div>
+
+      <!-- Acciones del Header -->
+      <div class="header-actions">
+        <button type="button" class="btn-clinic-action" id="btn-toggle-info" title="Mostrar/ocultar información del lente">
+          <span>💡</span> <span class="action-text">Beneficios</span>
+        </button>
+        <button type="button" class="btn-clinic-action" id="btn-fullscreen" title="Pantalla completa para tablet">
+          <span>⛶</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Área de la Simulación POV (Primera Persona) -->
+    <main class="sim-viewport-container" id="sim-viewport">
+      <!-- Canvas interactivo continuo 360 -->
+      <canvas id="sim-canvas"></canvas>
+
+      <!-- Capa de la Montura Oftálmica (HUD POV) -->
+      <div id="glasses-container"></div>
+
+      <!-- Indicador amigable para girar la cabeza -->
+      <div class="look-hint-overlay" id="look-hint">
+        <span>🕹️</span>
+        <span>Usa el joystick o arrastra la pantalla para girar la cabeza</span>
+      </div>
+
+      <!-- Botón para alternar Con Lentes / Sin Lentes -->
+      <button type="button" class="btn-toggle-glasses" id="btn-toggle-glasses">
+        <span class="status-dot"></span>
+        <span id="glasses-toggle-label">Ver con Gafas</span>
+      </button>
+
+      <!-- Tarjeta Flotante de Experiencia del Paciente -->
+      <div class="patient-card-anchor" id="patient-card-container"></div>
+
+      <!-- Barra Inferior de Controles -->
+      <div class="bottom-controls-bar">
+        <!-- Zona del Joystick Virtual -->
+        <div class="joystick-zone">
+          <div id="joystick-container"></div>
+          <span class="joystick-caption">Girar Cabeza</span>
+        </div>
+
+        <!-- Zona del Selector de Lentes -->
+        <div class="lens-selector-zone">
+          <div id="lens-selector-container"></div>
+        </div>
+
+        <!-- Zona del Slider UV (Transitions) -->
+        <div class="slider-uv-zone" id="uv-slider-container"></div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
