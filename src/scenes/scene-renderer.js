@@ -41,15 +41,21 @@ export class SceneRenderer {
   }
 
   handleResize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
     const rect = this.canvas.getBoundingClientRect();
     this.width = rect.width;
     this.height = rect.height;
 
-    this.canvas.width = this.width * dpr;
-    this.canvas.height = this.height * dpr;
-    this.ctx.scale(dpr, dpr);
+    this.canvas.width = Math.round(this.width * this.dpr);
+    this.canvas.height = Math.round(this.height * this.dpr);
+
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    this.ctx.scale(this.dpr, this.dpr);
+
+    this.ctx.imageSmoothingEnabled = true;
+    this.ctx.imageSmoothingQuality = 'high';
   }
+
 
   start() {
     if (this.isRunning) return;
@@ -86,7 +92,11 @@ export class SceneRenderer {
     const width = this.width;
     const height = this.height;
 
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
     ctx.clearRect(0, 0, width, height);
+
 
     // -------------------------------------------------------------
     // PASE 1: Visión Periférica (Fuera de las gafas / Sin filtro)

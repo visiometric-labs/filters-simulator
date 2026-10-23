@@ -145,64 +145,68 @@ export class GlassesHUD {
 
   /**
    * Genera el Path de recorte en el Canvas para aplicar los filtros SOLO dentro de las dos lentes
+   * Coincide exactamente con preserveAspectRatio="xMidYMid slice" del SVG
    */
   clipLensesOnCanvas(ctx, width, height) {
     if (!this.glassesEnabled) {
-      // Si el paciente se quita las gafas, no recortamos (todo es visión directa sin lente)
       return false;
     }
 
-    const scaleX = width / 1600;
-    const scaleY = height / 900;
+    const scale = Math.max(width / 1600, height / 900);
+    const ox = (width - 1600 * scale) / 2;
+    const oy = (height - 900 * scale) / 2;
+
+    const tx = (x) => Math.round(ox + x * scale);
+    const ty = (y) => Math.round(oy + y * scale);
 
     ctx.save();
     ctx.beginPath();
 
     // Lente Izquierda
-    ctx.moveTo(280 * scaleX, 340 * scaleY);
+    ctx.moveTo(tx(280), ty(340));
     ctx.bezierCurveTo(
-      365 * scaleX, 322 * scaleY,
-      670 * scaleX, 322 * scaleY,
-      728 * scaleX, 358 * scaleY
+      tx(365), ty(322),
+      tx(670), ty(322),
+      tx(728), ty(358)
     );
     ctx.bezierCurveTo(
-      746 * scaleX, 442 * scaleY,
-      732 * scaleX, 600 * scaleY,
-      662 * scaleX, 652 * scaleY
+      tx(746), ty(442),
+      tx(732), ty(600),
+      tx(662), ty(652)
     );
     ctx.bezierCurveTo(
-      568 * scaleX, 704 * scaleY,
-      380 * scaleX, 695 * scaleY,
-      304 * scaleX, 635 * scaleY
+      tx(568), ty(704),
+      tx(380), ty(695),
+      tx(304), ty(635)
     );
     ctx.bezierCurveTo(
-      248 * scaleX, 574 * scaleY,
-      230 * scaleX, 405 * scaleY,
-      280 * scaleX, 340 * scaleY
+      tx(248), ty(574),
+      tx(230), ty(405),
+      tx(280), ty(340)
     );
     ctx.closePath();
 
     // Lente Derecha
-    ctx.moveTo(1320 * scaleX, 340 * scaleY);
+    ctx.moveTo(tx(1320), ty(340));
     ctx.bezierCurveTo(
-      1235 * scaleX, 322 * scaleY,
-      930 * scaleX, 322 * scaleY,
-      872 * scaleX, 358 * scaleY
+      tx(1235), ty(322),
+      tx(930), ty(322),
+      tx(872), ty(358)
     );
     ctx.bezierCurveTo(
-      854 * scaleX, 442 * scaleY,
-      868 * scaleX, 600 * scaleY,
-      938 * scaleX, 652 * scaleY
+      tx(854), ty(442),
+      tx(868), ty(600),
+      tx(938), ty(652)
     );
     ctx.bezierCurveTo(
-      1032 * scaleX, 704 * scaleY,
-      1220 * scaleX, 695 * scaleY,
-      1296 * scaleX, 635 * scaleY
+      tx(1032), ty(704),
+      tx(1220), ty(695),
+      tx(1296), ty(635)
     );
     ctx.bezierCurveTo(
-      1352 * scaleX, 574 * scaleY,
-      1370 * scaleX, 405 * scaleY,
-      1320 * scaleX, 340 * scaleY
+      tx(1352), ty(574),
+      tx(1370), ty(405),
+      tx(1320), ty(340)
     );
     ctx.closePath();
 
@@ -210,3 +214,4 @@ export class GlassesHUD {
     return true;
   }
 }
+

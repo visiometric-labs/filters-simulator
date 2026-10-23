@@ -1,5 +1,5 @@
 /**
- * Escenario 3: Día Soleado y Exteriores (Fotografía Realista en Primera Persona)
+ * Escenario 3: Día Soleado y Exteriores (Fotografía Realista 2K en Primera Persona)
  * Muestra una carretera panorámica costera real con sol brillante y reflejo solar sobre el agua,
  * ideal para comprobar el oscurecimiento de Transitions y la cancelación de reflejos del Polarizado.
  */
@@ -16,14 +16,12 @@ export class OutdoorSunScene {
       this.isLoaded = true;
     };
 
-    // Coordenadas del sol en la fotografía real
     this.sun = {
       u: 0.60,
       v: 0.08,
       size: 45,
     };
 
-    // Zona del reflejo horizontal sobre el agua
     this.waterGlare = {
       u: 0.52,
       v: 0.65,
@@ -37,45 +35,53 @@ export class OutdoorSunScene {
   }
 
   renderBase(ctx, width, height, camera) {
-    if (!this.isLoaded) {
+    if (!this.isLoaded || !this.img.naturalWidth) {
       ctx.fillStyle = '#0284C7';
       ctx.fillRect(0, 0, width, height);
       return;
     }
 
-    const zoom = 1.30;
-    const destW = width * zoom;
-    const destH = height * zoom;
+    const imgAspect = this.img.naturalWidth / this.img.naturalHeight;
+    const viewAspect = width / height;
+    const zoom = 1.25;
+
+    let destW, destH;
+    if (viewAspect > imgAspect) {
+      destW = width * zoom;
+      destH = destW / imgAspect;
+    } else {
+      destH = height * zoom;
+      destW = destH * imgAspect;
+    }
 
     const panRangeX = (destW - width) * 0.5;
     const panRangeY = (destH - height) * 0.5;
 
-    const normYaw = Math.max(-1, Math.min(1, camera.yaw / (camera.fov * 0.6)));
+    const normYaw = Math.max(-1, Math.min(1, camera.yaw / (camera.fov * 0.55)));
     const normPitch = Math.max(-1, Math.min(1, camera.pitch / camera.maxPitch));
 
-    const drawX = -(panRangeX) - (normYaw * panRangeX * 0.85);
-    const drawY = -(panRangeY) + (normPitch * panRangeY * 0.85);
+    const drawX = Math.round(-panRangeX - (normYaw * panRangeX));
+    const drawY = Math.round(-panRangeY + (normPitch * panRangeY));
 
     this.currentDrawRect = { x: drawX, y: drawY, w: destW, h: destH };
 
+    ctx.save();
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(this.img, drawX, drawY, destW, destH);
+    ctx.restore();
   }
 
-  /**
-   * Renderizado de la corona solar y la cancelación del resplandor por Polarizado
-   */
   renderLights(ctx, width, height, camera, optical, uvIntensity = 0.85) {
     if (!this.isLoaded || !this.currentDrawRect) return;
 
     const { x: imgX, y: imgY, w: imgW, h: imgH } = this.currentDrawRect;
 
-    // 1. Corona del Sol en el cielo
-    const sunX = imgX + this.sun.u * imgW;
-    const sunY = imgY + this.sun.v * imgH;
+    const sunX = Math.round(imgX + this.sun.u * imgW);
+    const sunY = Math.round(imgY + this.sun.v * imgH);
 
-    if (sunX > -100 && sunX < width + 100 && sunY > -100 && sunY < height + 100) {
+    if (sunX > -150 && sunX < width + 150 && sunY > -150 && sunY < height + 150) {
       ctx.save();
-      // Corona de resplandor solar
       const sunGlow = ctx.createRadialGradient(sunX, sunY, 35, sunX, sunY, 240);
       sunGlow.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
       sunGlow.addColorStop(0.3, 'rgba(254, 240, 138, 0.4)');
@@ -89,12 +95,9 @@ export class OutdoorSunScene {
       ctx.restore();
     }
 
-    // 2. Resplandor Horizontal Cegador sobre el Agua (Demostración de Polarizado)
-    const glareX = imgX + this.waterGlare.u * imgW;
-    const glareY = imgY + this.waterGlare.v * imgH;
+    const glareX = Math.round(imgX + this.waterGlare.u * imgW);
+    const glareY = Math.round(imgY + this.waterGlare.v * imgH);
 
-    // Sin polarizado (optical.polarizationCut === 0): El reflejo blanco enceguece y tapa el agua
-    // Con polarizado (optical.polarizationCut > 0.8): Se cancela el 95% del brillo blanco horizontal
     const glareIntensity = (1.0 - optical.polarizationCut) * 0.85;
 
     if (glareIntensity > 0.05) {

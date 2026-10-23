@@ -1,5 +1,5 @@
 /**
- * Escenario 1: Conducción Nocturna (Fotografía Realista en Primera Persona)
+ * Escenario 1: Conducción Nocturna (Fotografía Realista 2K en Primera Persona)
  * Muestra el punto de vista real desde el asiento del conductor con asfalto mojado,
  * autos que vienen de frente con faros deslumbrantes y tablero iluminado.
  */
@@ -9,7 +9,6 @@ export class NightDriveScene {
     this.name = 'Conducción Nocturna';
     this.time = 0;
 
-    // Cargar fotografía real
     this.img = new Image();
     this.img.src = '/scenes/night-real.jpg';
     this.isLoaded = false;
@@ -17,15 +16,13 @@ export class NightDriveScene {
       this.isLoaded = true;
     };
 
-    // Coordenadas normalizadas (0 a 1) de los faros principales en la foto real
-    // En la foto, los autos que vienen de frente están en el carril izquierdo
+    // Coordenadas normalizadas (0 a 1) de los faros principales en la foto real 2K
     this.lightSources = [
-      { u: 0.21, v: 0.45, size: 28, color: '#FFFFFF', intensity: 1.0, isHeadlight: true },
-      { u: 0.25, v: 0.45, size: 24, color: '#FFFFFF', intensity: 1.0, isHeadlight: true },
-      { u: 0.31, v: 0.42, size: 16, color: '#FEF08A', intensity: 0.8, isHeadlight: true },
-      { u: 0.36, v: 0.42, size: 14, color: '#FEF08A', intensity: 0.7, isHeadlight: true },
-      // Farola elevada en el poste izquierdo
-      { u: 0.18, v: 0.12, size: 32, color: '#FCD34D', intensity: 0.85, isStreetLamp: true },
+      { u: 0.21, v: 0.45, size: 30, color: '#FFFFFF', intensity: 1.0, isHeadlight: true },
+      { u: 0.25, v: 0.45, size: 26, color: '#FFFFFF', intensity: 1.0, isHeadlight: true },
+      { u: 0.31, v: 0.42, size: 18, color: '#FEF08A', intensity: 0.8, isHeadlight: true },
+      { u: 0.36, v: 0.42, size: 16, color: '#FEF08A', intensity: 0.7, isHeadlight: true },
+      { u: 0.18, v: 0.12, size: 34, color: '#FCD34D', intensity: 0.85, isStreetLamp: true },
     ];
   }
 
@@ -34,36 +31,47 @@ export class NightDriveScene {
   }
 
   /**
-   * Renderiza el fondo fotográfico real con desplazamiento cinemático según giro de cabeza
+   * Renderiza el fondo fotográfico real preservando rigurosamente su relación de aspecto
+   * y alineando los píxeles para evitar desenfoque o pixelación.
    */
   renderBase(ctx, width, height, camera) {
-    if (!this.isLoaded) {
-      // Fondo provisional mientras carga
+    if (!this.isLoaded || !this.img.naturalWidth) {
       ctx.fillStyle = '#020617';
       ctx.fillRect(0, 0, width, height);
       return;
     }
 
-    // Escala para permitir paneo suave (1.35x para que al mover joystick no haya bordes negros)
-    const zoom = 1.32;
-    const destW = width * zoom;
-    const destH = height * zoom;
+    // Preservar la relación de aspecto nativa del archivo 2K (16:9)
+    const imgAspect = this.img.naturalWidth / this.img.naturalHeight;
+    const viewAspect = width / height;
+    const zoom = 1.25; // Margen óptimo para permitir paneo sin deformar
 
-    // Desplazamiento por Yaw (horizontal) y Pitch (vertical)
+    let destW, destH;
+    if (viewAspect > imgAspect) {
+      destW = width * zoom;
+      destH = destW / imgAspect;
+    } else {
+      destH = height * zoom;
+      destW = destH * imgAspect;
+    }
+
     const panRangeX = (destW - width) * 0.5;
     const panRangeY = (destH - height) * 0.5;
 
-    // Factores normalizados de cámara
-    const normYaw = Math.max(-1, Math.min(1, camera.yaw / (camera.fov * 0.6)));
+    const normYaw = Math.max(-1, Math.min(1, camera.yaw / (camera.fov * 0.55)));
     const normPitch = Math.max(-1, Math.min(1, camera.pitch / camera.maxPitch));
 
-    const drawX = -(panRangeX) - (normYaw * panRangeX * 0.85);
-    const drawY = -(panRangeY) + (normPitch * panRangeY * 0.85);
+    // Redondeo entero para nitidez pixel-perfect
+    const drawX = Math.round(-panRangeX - (normYaw * panRangeX));
+    const drawY = Math.round(-panRangeY + (normPitch * panRangeY));
 
-    // Guardar para cálculo de coordenadas de luces
     this.currentDrawRect = { x: drawX, y: drawY, w: destW, h: destH };
 
+    ctx.save();
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(this.img, drawX, drawY, destW, destH);
+    ctx.restore();
   }
 
   /**
@@ -76,12 +84,10 @@ export class NightDriveScene {
     const flareFactor = optical.flareFactor; // 1.0 (Sin AR) a 0.05 (Crizal)
 
     this.lightSources.forEach((light) => {
-      // Coordenada exacta en pantalla de cada faro en la foto
-      const px = imgX + light.u * imgW;
-      const py = imgY + light.v * imgH;
+      const px = Math.round(imgX + light.u * imgW);
+      const py = Math.round(imgY + light.v * imgH);
 
-      // Descartar si está fuera de pantalla
-      if (px < -100 || px > width + 100 || py < -100 || py > height + 100) return;
+      if (px < -150 || px > width + 150 || py < -150 || py > height + 150) return;
 
       ctx.save();
 
@@ -122,8 +128,8 @@ export class NightDriveScene {
       if (optical.ghostReflection > 0.04 && light.isHeadlight) {
         const centerDistX = (px - width / 2);
         const centerDistY = (py - height / 2);
-        const gx = width / 2 - centerDistX * 0.45;
-        const gy = height / 2 - centerDistY * 0.45;
+        const gx = Math.round(width / 2 - centerDistX * 0.45);
+        const gy = Math.round(height / 2 - centerDistY * 0.45);
 
         ctx.fillStyle = `rgba(254, 240, 138, ${optical.ghostReflection * 2.5})`;
         ctx.beginPath();
