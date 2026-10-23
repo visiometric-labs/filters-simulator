@@ -1,0 +1,11 @@
+services:
+  optics-simulator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: visiometric_optics_simulator
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
