@@ -209,8 +209,8 @@
   opacity: 0;
 }
 
-/* Barra Flotante para Probar y Ver las Propuestas Fotográficas */
-.proposal-picker-bar {
+/* Barra Flotante de Tipo de Escena */
+.scene-picker-bar {
   position: absolute;
   top: 18px;
   left: 24px;
@@ -227,54 +227,45 @@
   z-index: 35;
 }
 
-.proposal-picker-bar .picker-label {
+.scene-picker-bar .picker-label {
   font-size: 11.5px;
   font-weight: 700;
   color: #38BDF8;
   text-transform: uppercase;
   margin-right: 4px;
+  letter-spacing: 0.04em;
 }
 
-.btn-prop {
+.btn-scene-pick {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.08);
   color: #F8FAFC;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
   font-family: inherit;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   transition: all 0.2s ease;
 }
 
-.btn-prop:hover {
+.btn-scene-pick:hover {
   background: rgba(255, 255, 255, 0.22);
+  color: #FFFFFF;
 }
 
-.btn-prop.active {
+.btn-scene-pick.active {
   background: #0284C7;
   border-color: #38BDF8;
   color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.45);
 }
 
-.btn-view-gallery {
-  color: #FDE047;
-  font-size: 11.5px;
-  font-weight: 700;
-  text-decoration: none;
-  margin-left: 6px;
-  padding: 5px 12px;
-  border-radius: var(--radius-full);
-  background: rgba(234, 179, 8, 0.15);
-  border: 1px solid rgba(234, 179, 8, 0.35);
-  transition: all 0.2s ease;
-}
-
-.btn-view-gallery:hover {
-  background: rgba(234, 179, 8, 0.28);
-  color: #FFFFFF;
+.scene-pick-icon {
+  font-size: 14px;
 }
 
 /* Botón flotante para alternar Con Lentes / Sin Lentes */

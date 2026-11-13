@@ -54,13 +54,18 @@
       <!-- Capa de la Montura Oftálmica (HUD POV) -->
       <div id="glasses-container"></div>
 
-      <!-- Selector Rápido de Propuestas de Fotografía Nocturna -->
-      <div class="proposal-picker-bar" id="proposal-picker">
-        <span class="picker-label">📸 Probar Foto:</span>
-        <button type="button" class="btn-prop active" data-prop="1">1. Audi</button>
-        <button type="button" class="btn-prop" data-prop="2">2. Mercedes</button>
-        <button type="button" class="btn-prop" data-prop="3">3. Lexus</button>
-        <a href="/preview.html" target="_blank" class="btn-view-gallery" title="Ver galería completa con detalles">🖼️ Ver las 3 en Galería</a>
+      <!-- Selector Flotante de Tipo de Escena -->
+      <div class="scene-picker-bar" id="scene-picker-bar">
+        <span class="picker-label">🎬 Tipo de Escena:</span>
+        <button type="button" class="btn-scene-pick active" data-scene="night-drive">
+          <span class="scene-pick-icon">🚗</span> Conducción Nocturna
+        </button>
+        <button type="button" class="btn-scene-pick" data-scene="digital-office">
+          <span class="scene-pick-icon">💻</span> Oficina y Pantallas
+        </button>
+        <button type="button" class="btn-scene-pick" data-scene="outdoor-sun">
+          <span class="scene-pick-icon">☀️</span> Día Soleado
+        </button>
       </div>
 
       <!-- Indicador amigable para girar la cabeza -->

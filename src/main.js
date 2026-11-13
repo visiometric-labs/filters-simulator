@@ -45,7 +45,7 @@ class App {
 
     // 4. Selectores de Lentes y Escenas
     const lensContainer = document.getElementById('lens-selector-container');
-    this.lensSelector = new LensSelector(lensContainer, 'blanco');
+    this.lensSelector = new LensSelector(lensContainer, 'crizal', 'night-drive');
 
     const sceneContainer = document.getElementById('scene-selector-container');
     this.sceneSelector = new SceneSelector(sceneContainer, 'night-drive');
@@ -151,15 +151,23 @@ class App {
       }
     });
 
-    // Selector de Propuestas Fotográficas
-    const propBtns = document.querySelectorAll('.btn-prop');
-    propBtns.forEach((btn) => {
+    // Selector de Tipo de Escena Flotante
+    const scenePickBtns = document.querySelectorAll('.btn-scene-pick');
+    scenePickBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        propBtns.forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        const propId = btn.dataset.prop;
-        if (this.renderer && this.renderer.scenes['night-drive']) {
-          this.renderer.scenes['night-drive'].setProposal(propId);
+        const sceneId = btn.dataset.scene;
+        if (this.sceneSelector) {
+          this.sceneSelector.selectScene(sceneId);
+        }
+      });
+    });
+
+    eventBus.on('scene-changed', (sceneInfo) => {
+      scenePickBtns.forEach((b) => {
+        if (b.dataset.scene === sceneInfo.id) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
         }
       });
     });

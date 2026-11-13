@@ -2,11 +2,31 @@ import { FILTERS_DATA } from '../core/filters-data.js';
 import { eventBus } from '../core/event-bus.js';
 
 /**
- * Selector de Lentes y Tratamientos (Diseño amigable en tarjetas táctiles)
+ * Matriz de Colocación de Filtros según la Escena Clínica
+ * Cada escenario muestra rigurosamente los tratamientos que resuelven los problemas visuales de ese entorno:
+ * - Conducción Nocturna: Lente Normal (deslumbramiento), AR Verde, Crizal Multicapa y Filtro Amarillo DriveSafe.
+ * - Oficina y Pantallas: Lente Normal (fatiga LED), AR Verde, Filtro Blue Cut y Crizal Multicapa.
+ * - Día Soleado: Lente Normal, Transitions Inteligente (con Slider Solar), Filtro Polarizado y Crizal Multicapa.
+ */
+export const SCENE_FILTERS = {
+  'night-drive': ['blanco', 'ar-verde', 'crizal', 'amarillo'],
+  'digital-office': ['blanco', 'ar-verde', 'blue-cut', 'crizal'],
+  'outdoor-sun': ['blanco', 'transitions', 'polarizado', 'crizal'],
+};
+
+export const SCENE_DEFAULT_FILTERS = {
+  'night-drive': 'crizal',
+  'digital-office': 'blue-cut',
+  'outdoor-sun': 'transitions',
+};
+
+/**
+ * Selector de Lentes y Tratamientos Contextual
  */
 export class LensSelector {
-  constructor(containerElement, initialFilterId = 'blanco') {
+  constructor(containerElement, initialFilterId = 'crizal', initialSceneId = 'night-drive') {
     this.container = containerElement;
+    this.currentSceneId = initialSceneId;
     this.currentFilterId = initialFilterId;
     this.buttons = [];
 
@@ -19,7 +39,20 @@ export class LensSelector {
     const carousel = document.createElement('div');
     carousel.className = 'lens-carousel-container';
 
-    Object.values(FILTERS_DATA).forEach((filter) => {
+    // Obtener los filtros específicos colocados para la escena activa
+    const filterIds = SCENE_FILTERS[this.currentSceneId] || Object.keys(FILTERS_DATA);
+
+    // Asegurar que el filtro actual pertenece a la escena
+    if (!filterIds.includes(this.currentFilterId)) {
+      this.currentFilterId = SCENE_DEFAULT_FILTERS[this.currentSceneId] || filterIds[0];
+    }
+
+    this.buttons = [];
+
+    filterIds.forEach((id) => {
+      const filter = FILTERS_DATA[id];
+      if (!filter) return;
+
       const btn = document.createElement('button');
       btn.className = `lens-card-btn ${filter.id === this.currentFilterId ? 'active' : ''}`;
       btn.dataset.filter = filter.id;
@@ -59,9 +92,28 @@ export class LensSelector {
     eventBus.emit('user-interacted');
   }
 
+  setScene(sceneId) {
+    if (this.currentSceneId === sceneId) return;
+    this.currentSceneId = sceneId;
+
+    const availableFilters = SCENE_FILTERS[sceneId] || Object.keys(FILTERS_DATA);
+    if (!availableFilters.includes(this.currentFilterId)) {
+      this.currentFilterId = SCENE_DEFAULT_FILTERS[sceneId] || availableFilters[0];
+    }
+
+    this.render();
+
+    // Notificar el filtro colocado para la nueva escena
+    eventBus.emit('filter-changed', FILTERS_DATA[this.currentFilterId]);
+  }
+
   bindEvents() {
     eventBus.on('set-filter', (filterId) => {
       this.selectFilter(filterId);
+    });
+
+    eventBus.on('scene-changed', (sceneInfo) => {
+      this.setScene(sceneInfo.id);
     });
   }
 }

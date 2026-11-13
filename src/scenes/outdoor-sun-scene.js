@@ -43,7 +43,7 @@ export class OutdoorSunScene {
 
     const imgAspect = this.img.naturalWidth / this.img.naturalHeight;
     const viewAspect = width / height;
-    const zoom = 1.25;
+    const zoom = 1.15;
 
     let destW, destH;
     if (viewAspect > imgAspect) {
@@ -60,14 +60,13 @@ export class OutdoorSunScene {
     const normYaw = Math.max(-1, Math.min(1, camera.yaw / (camera.fov * 0.55)));
     const normPitch = Math.max(-1, Math.min(1, camera.pitch / camera.maxPitch));
 
-    const drawX = Math.round(-panRangeX - (normYaw * panRangeX));
-    const drawY = Math.round(-panRangeY + (normPitch * panRangeY));
+    const drawX = -panRangeX - (normYaw * panRangeX);
+    const drawY = -panRangeY + (normPitch * panRangeY);
 
     this.currentDrawRect = { x: drawX, y: drawY, w: destW, h: destH };
 
     ctx.save();
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(this.img, drawX, drawY, destW, destH);
     ctx.restore();
   }

@@ -154,15 +154,15 @@ export const FILTERS_DATA = {
     },
     optical: {
       transmission: 0.96,
-      flareFactor: 0.25,
-      ghostReflection: 0.02,
-      blueLightAbsorption: 0.65, // Bloqueo potente de luz azul HEV
-      tintRgba: [254, 243, 199, 0.16], // Calidez relajante ámbar/crema
-      tintIntensity: 0.20,
+      flareFactor: 0.20,
+      ghostReflection: 0.015,
+      blueLightAbsorption: 0.80, // Bloqueo selectivo de luz azul HEV de pantallas
+      tintRgba: [251, 191, 36, 0.24], // Calidez relajante ámbar/crema de descanso
+      tintIntensity: 0.55,
       polarizationCut: 0.0,
       photochromic: false,
       antiFog: false,
-      contrastBoost: 1.30,       // Alto contraste en textos
+      contrastBoost: 1.35,       // Alto contraste y nitidez en textos
     },
     pitch: {
       dialogue: '“Si pasas más de 3 horas al día mirando pantallas o tu celular, este filtro evita que termines la jornada con ojos rojos, pesadez y dolor de cabeza.”',
