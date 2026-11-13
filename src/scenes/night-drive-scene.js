@@ -25,7 +25,7 @@ export class NightDriveScene {
     this.currentFilterId = 'blanco';
     this.targetFilterId = 'blanco';
     this.transitionProgress = 1.0;
-    this.transitionSpeed = 0.006; // ~180 ms para transición sedosa
+    this.transitionDuration = 260; // ms para transición óptica elegante y sedosa
 
     this.currentDrawRect = null;
   }
@@ -53,7 +53,7 @@ export class NightDriveScene {
     this.time += deltaTime * 0.001;
 
     if (this.transitionProgress < 1.0) {
-      this.transitionProgress = Math.min(1.0, this.transitionProgress + deltaTime * this.transitionSpeed);
+      this.transitionProgress = Math.min(1.0, this.transitionProgress + deltaTime / this.transitionDuration);
     }
   }
 
@@ -89,8 +89,8 @@ export class NightDriveScene {
     const imgAspect = naturalW / naturalH;
     const viewAspect = width / height;
 
-    // Zoom suave óptimo (1.08x) para dar margen sutil de inercia de cabeza sin recortar el tablero
-    const zoom = 1.08;
+    // Zoom calibrado (1.15x) para libertad de mirada natural en cabina sin recortar el tablero
+    const zoom = 1.15;
 
     let destW, destH;
     if (viewAspect > imgAspect) {
@@ -108,8 +108,9 @@ export class NightDriveScene {
     const normYaw = Math.max(-1, Math.min(1, camera.yaw / (camera.fov * 0.55)));
     const normPitch = Math.max(-1, Math.min(1, camera.pitch / camera.maxPitch));
 
-    const drawX = Math.round(-panRangeX - (normYaw * panRangeX));
-    const drawY = Math.round(-panRangeY + (normPitch * panRangeY));
+    // Coordenadas flotantes subpíxel para interpolación 100% fluida a 60-144 FPS
+    const drawX = -panRangeX - (normYaw * panRangeX);
+    const drawY = -panRangeY + (normPitch * panRangeY);
 
     return { x: drawX, y: drawY, w: destW, h: destH };
   }
@@ -131,7 +132,6 @@ export class NightDriveScene {
 
     ctx.save();
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(baseImg, rect.x, rect.y, rect.w, rect.h);
     ctx.restore();
   }
@@ -156,12 +156,13 @@ export class NightDriveScene {
 
     ctx.save();
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
 
     // Si estamos en transición entre dos fotos de lentes
     if (this.transitionProgress < 1.0 && currentImg !== targetImg && currentImg.isLoaded) {
+      const t = this.transitionProgress;
+      const smoothAlpha = t * t * (3 - 2 * t); // Smoothstep óptico sedoso
       ctx.drawImage(currentImg, rect.x, rect.y, rect.w, rect.h);
-      ctx.globalAlpha = this.transitionProgress;
+      ctx.globalAlpha = smoothAlpha;
       if (targetImg.isLoaded) {
         ctx.drawImage(targetImg, rect.x, rect.y, rect.w, rect.h);
       }

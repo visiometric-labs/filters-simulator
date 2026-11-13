@@ -151,6 +151,8 @@
   height: 100%;
   display: block;
   cursor: grab;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 #sim-canvas:active {
@@ -170,6 +172,9 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s ease;
+  transform: translateZ(0);
+  will-change: opacity;
+  contain: layout style paint;
 }
 
 .glasses-hud-layer.glasses-off {

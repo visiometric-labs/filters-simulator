@@ -100,22 +100,19 @@ class App {
     canvas.addEventListener('pointerup', handlePointerUp);
     canvas.addEventListener('pointercancel', handlePointerUp);
 
-    // Controles con teclado (Flechas o WASD para girar la cabeza en desktop)
+    // Controles con teclado (Flechas o WASD para girar la cabeza con inercia cinematográfica)
     window.addEventListener('keydown', (e) => {
-      const step = 0.05;
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-        this.camera.yaw += step;
+        this.camera.stepYaw(-1);
         eventBus.emit('user-interacted');
       } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-        this.camera.yaw -= step;
+        this.camera.stepYaw(1);
         eventBus.emit('user-interacted');
       } else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
-        this.camera.pitch += step;
-        this.camera.clampPitch();
+        this.camera.stepPitch(1);
         eventBus.emit('user-interacted');
       } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
-        this.camera.pitch -= step;
-        this.camera.clampPitch();
+        this.camera.stepPitch(-1);
         eventBus.emit('user-interacted');
       }
     });

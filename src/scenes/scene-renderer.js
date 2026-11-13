@@ -41,7 +41,7 @@ export class SceneRenderer {
   }
 
   handleResize() {
-    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     const rect = this.canvas.getBoundingClientRect();
     this.width = rect.width;
     this.height = rect.height;
@@ -52,8 +52,8 @@ export class SceneRenderer {
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     this.ctx.scale(this.dpr, this.dpr);
 
+    // Suavizado por GPU por hardware (60 FPS fluidos)
     this.ctx.imageSmoothingEnabled = true;
-    this.ctx.imageSmoothingQuality = 'high';
   }
 
 
@@ -91,9 +91,6 @@ export class SceneRenderer {
     const ctx = this.ctx;
     const width = this.width;
     const height = this.height;
-
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
 
     ctx.clearRect(0, 0, width, height);
 
