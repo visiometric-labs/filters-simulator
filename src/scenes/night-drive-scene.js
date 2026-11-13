@@ -12,13 +12,13 @@ export class NightDriveScene {
     this.name = 'Conducción Nocturna';
     this.time = 0;
 
-    // Placas fotográficas reales calibradas (Carga inicial: Propuesta 1 Audi)
-    this.currentProposal = '1';
+    // Placas fotográficas reales calibradas (Definitiva: Mercedes-Benz Clase S en Avenida)
+    this.currentProposal = '2';
     this.images = {
-      'blanco': this.createImage('/scenes/proposals/proposal-1.jpg'),
-      'ar-verde': this.createImage('/scenes/proposals/proposal-1.jpg'),
-      'crizal': this.createImage('/scenes/proposals/proposal-1.jpg'),
-      'amarillo': this.createImage('/scenes/proposals/proposal-1.jpg'),
+      'blanco': this.createImage('/scenes/night-blanco.jpg'),
+      'ar-verde': this.createImage('/scenes/night-ar-verde.jpg'),
+      'crizal': this.createImage('/scenes/night-crizal.jpg'),
+      'amarillo': this.createImage('/scenes/night-amarillo.jpg'),
     };
 
     // Control de transición suave (cross-fade) entre lentes
