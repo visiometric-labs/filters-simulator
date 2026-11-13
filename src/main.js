@@ -154,6 +154,19 @@ class App {
       }
     });
 
+    // Selector de Propuestas Fotográficas
+    const propBtns = document.querySelectorAll('.btn-prop');
+    propBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        propBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const propId = btn.dataset.prop;
+        if (this.renderer && this.renderer.scenes['night-drive']) {
+          this.renderer.scenes['night-drive'].setProposal(propId);
+        }
+      });
+    });
+
     // Ocultar hint de ayuda tras la primera interacción o 6 segundos
     const lookHint = document.getElementById('look-hint');
     eventBus.on('user-interacted', () => {
