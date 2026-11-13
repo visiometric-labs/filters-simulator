@@ -114,8 +114,12 @@ export class SceneRenderer {
       const isClipped = this.glassesHUD.clipLensesOnCanvas(ctx, width, height);
 
       if (isClipped) {
-        // Redibujar la escena base dentro de las lentes
-        this.currentScene.renderBase(ctx, width, height, this.camera);
+        // Renderizar dentro de las lentes (fotográfico o procedural)
+        if (this.currentScene.renderTreated) {
+          this.currentScene.renderTreated(ctx, width, height, this.camera, this.currentFilter);
+        } else {
+          this.currentScene.renderBase(ctx, width, height, this.camera);
+        }
 
         // Calcular propiedades ópticas activas del filtro
         const activeOptical = { ...this.currentFilter.optical };
@@ -129,8 +133,8 @@ export class SceneRenderer {
         // Renderizar las luces con la calibración del filtro activo
         this.currentScene.renderLights(ctx, width, height, this.camera, activeOptical, this.uvIntensity);
 
-        // Aplicar tinte del cristal (Blue Cut cálido, Transitions oscuro, etc.)
-        if (activeOptical.tintIntensity > 0.01) {
+        // Aplicar tinte del cristal sólo si no es una escena fotográfica que ya incluye su propio tinte
+        if (activeOptical.tintIntensity > 0.01 && !this.currentScene.renderTreated) {
           const [r, g, b, a] = activeOptical.tintRgba;
           const alpha = a * (activeOptical.tintIntensity / 0.85);
           ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;

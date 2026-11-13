@@ -274,7 +274,7 @@
   gap: 20px;
   z-index: 30;
   pointer-events: none; /* Dejar pasar toques al canvas salvo en controles */
-  background: linear-gradient(to top, rgba(248, 250, 252, 0.95) 0%, rgba(248, 250, 252, 0.6) 70%, transparent 100%);
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.5) 0%, rgba(15, 23, 42, 0.15) 50%, transparent 100%);
 }
 
 .joystick-zone {

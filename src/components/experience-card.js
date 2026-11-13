@@ -8,10 +8,11 @@ export class ExperienceCard {
   constructor(containerElement, initialFilter) {
     this.container = containerElement;
     this.currentFilter = initialFilter;
-    this.isCollapsed = false;
+    this.isCollapsed = true;
     this.element = null;
 
     this.render();
+    this.container.classList.add('collapsed');
     this.bindEvents();
   }
 

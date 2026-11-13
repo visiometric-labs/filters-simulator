@@ -183,6 +183,13 @@
 .lens-card-btn[data-filter="crizal"].active .lens-title { color: var(--color-indigo); }
 .lens-card-btn[data-filter="crizal"].active .lens-icon-circle { background-color: var(--color-indigo-light); }
 
+.lens-card-btn[data-filter="amarillo"].active {
+  border-color: var(--color-amber);
+  box-shadow: 0 4px 14px -2px rgba(217, 119, 6, 0.25), 0 0 0 2px var(--color-amber-light);
+}
+.lens-card-btn[data-filter="amarillo"].active .lens-title { color: var(--color-amber); }
+.lens-card-btn[data-filter="amarillo"].active .lens-icon-circle { background-color: var(--color-amber-light); }
+
 .lens-card-btn[data-filter="blue-cut"].active {
   border-color: var(--color-bluecut);
   box-shadow: 0 4px 14px -2px rgba(37, 99, 235, 0.25), 0 0 0 2px var(--color-bluecut-light);
