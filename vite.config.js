@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: '/filters-simulator/',
   server: {
     port: 3000,
     host: true,
