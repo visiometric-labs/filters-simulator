@@ -1,61 +1,92 @@
 # 👓 Filtros Ópticos — Simulador y Comparador Clínico Interactivo
+> **Suite Visiometric Labs — JayzirTech**  
+> *Plataforma en Primera Persona (POV) de Demostración Oftálmica y Argumentación en Mostrador*
 
+[![GitHub Pages](https://img.shields.io/badge/Demo-GitHub%20Pages-success?logo=github)](https://visiometric-labs.github.io/filters-simulator/)
+[![Vite](https://img.shields.io/badge/Bundler-Vite%206-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![JavaScript](https://img.shields.io/badge/Language-Vanilla%20JS%20(ES6+)-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)]()
-[![JavaScript](https://img.shields.io/badge/Language-Vanilla%20JS%20(ES6+)-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Vite](https://img.shields.io/badge/Bundler-Vite%206-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Organization](https://img.shields.io/badge/Org-visiometric--labs-00f2fe)](https://github.com/visiometric-labs)
-
-Plataforma educativa y comparador visual interactivo diseñado para la consulta optométrica y venta en mostrador. Permite demostrar al paciente de forma clara, estética e intuitiva el funcionamiento y beneficios tangibles de los diferentes **filtros y tratamientos oftálmicos** del mercado.
-
-> 📘 **Documentación Completa:** Para revisar la taxonomía clínica, argumentos de venta de mostrador y arquitectura técnica detallada, consulta el archivo [**`ESPECIFICACIONES_FILTROS.md`**](./ESPECIFICACIONES_FILTROS.md).
 
 ---
 
-## 🌟 Tratamientos Integrados en el Catálogo
-
-1. **Claridad y Uso Diario:**
-   - **Lente Blanca (Sin tratamiento):** Base de control con reflejos parásitos y pérdida de luz.
-   - **Antirreflejo Verde Normal:** Estándar de mercado, eliminación de halos nocturnos y reflejo esmeralda sutil.
-   - **Crizal (Multicapa Premium 5 en 1):** Máxima transparencia, hidrofóbico (agua resbala), oleofóbico (antihuellas), antirayas reforzado, antiestático y filtro UV posterior.
-
-2. **Protección Digital:**
-   - **Filtro Blue (Blue Cut / Bloqueo Luz Azul HEV 380-455 nm):** Confort visual en pantallas, reducción de fatiga ocular y mejora de contraste.
-
-3. **Inteligentes y Sensibles a la Luz:**
-   - **Fotocromático / Transitions:** Lente 2 en 1 (transparente en interiores, gafa de sol en exteriores ante radiación UV) con slider dinámico de radiación solar.
-
-4. **Sol, Exteriores y Alto Contraste:**
-   - **Filtro Polarizado:** Cancelación total del resplandor blanco horizontal en asfalto mojado, agua y nieve.
-   - **Tratamiento Espejado (Flash Mirror):** Alta reflexión de luz visible para deporte y estética.
-   - **Filtro Amarillo / Visión Nocturna:** Realce de contraste en niebla, lluvia y atardecer.
-   - **Filtro UV400:** Bloqueo total de radiación ultravioleta.
-
-5. **Especiales y Terapéuticos:**
-   - **FL-41:** Tinte rosado terapéutico para pacientes con migraña y fotofobia severa.
-   - **Antivaho (Anti-Fog):** Dispersión molecular de la condensación para evitar el empañamiento.
+## 🌐 Demo Pública en Vivo
+Accede al simulador interactivo desplegado en producción:  
+👉 **[https://visiometric-labs.github.io/filters-simulator/](https://visiometric-labs.github.io/filters-simulator/)**
 
 ---
 
-## 🚀 Escenas de Simulación Previstas
+## 📌 ¿Qué es este Simulador?
+Una herramienta digital de consultorio y mostrador óptico diseñada para resolver la mayor objeción comercial en la venta de lentes: **el paciente no compra lo que no puede experimentar**.
 
-* 🚗 **Conducción Nocturna:** Demostración de halos de faros (Sin AR vs AR Verde vs Crizal).
-* 💻 **Oficina Digital:** Resplandor de pantallas LED y fatiga visual (Sin Blue vs Con Blue Cut).
-* ☀️ **Parque Soleado (Slider UV):** Activación y oscurecimiento progresivo de Transitions.
-* 🌧️ **Carretera Mojada y Agua:** Demostración de eliminación de resplandor mediante polarizado.
-* 🧪 **Laboratorio de Resistencia Crizal:** Pruebas interactivas de gotas de agua resbalando, grasa de huellas dactilares y rayones.
-
----
-
-## 📂 Continuación del Proyecto en Otra Computadora
-
-Este repositorio contiene las especificaciones completas para retomar el desarrollo en cualquier momento y en cualquier equipo.
-
-1. Abre la carpeta `Proyecto Filtros Opticos` en **Antigravity**.
-2. Envía un mensaje como:
-   > *"Hola, lee el archivo `ESPECIFICACIONES_FILTROS.md` para retomar el contexto y empecemos a implementar el simulador."*
-3. Todo el contexto técnico, comercial y visual estará cargado inmediatamente.
+Permite que el paciente experimente **en primera persona (POV)**, dentro de una montura oftálmica panorámica de alta definición, el efecto óptico real de los diferentes tratamientos comerciales del mercado:
+- **Lente Normal (Sin tratamiento / Control):** Demuestra los reflejos parásitos de superficie, deslumbramiento descontrolado en noche y fatiga fotópica por luz LED fría en pantallas.
+- **Antirreflejo Verde (Estándar de mercado):** Supresión de halos nocturnos y neutralización de reflejos de lámparas y ventanas.
+- **Crizal Multicapa (Gama Premium 5 en 1):** Claridad quirúrgica con 99.5% de transmisión, negros profundos sin velo lumínico y corte nítido de faros.
+- **Filtro Amarillo (DriveSafe Nocturno & Lluvia):** Realce dramático del contraste del pavimento y absorción de luz azul molesta de faros xenón/LED.
+- **Filtro Blue Cut (Protección Pantallas LED):** Transformación del blanco LED frío y agresivo (~8500K) a un confort cálido descansado tipo papel (~4500K) sin perder nitidez tipográfica en hojas de cálculo y documentos.
+- **Fotocromático Transitions:** Oscurecimiento dinámico continuo controlado por slider de radiación solar/UV.
+- **Filtro Polarizado:** Cancelación total del resplandor enceguecedor horizontal en asfalto mojado y agua.
 
 ---
 
-© Visiometric Labs — JayzirTech. Todos los derechos reservados.
+## 🚗 Escenarios Clínicos Calibrados (Fotografía Multicapa 2K Master HD)
+
+### 1. 🚗 Conducción Nocturna (Avenida en Mercedes-Benz Clase S)
+- **Perspectiva:** Cabina de lujo en primera persona con cuadro de instrumentos digital activo, volante multifunción, iluminación ambiental LED y tráfico real.
+- **Placas Ópticas 2K:** Calibradas píxel a píxel (`night-blanco`, `night-ar-verde`, `night-crizal`, `night-amarillo`) con faros LED de tráfico que reaccionan inmediatamente al tratamiento seleccionado.
+
+### 2. 💻 Oficina y Pantallas (Entorno Corporativo Ultrawide Dell)
+- **Perspectiva:** Escritorio ergonómico de madera con teclado mecánico y monitor ultrawide curvo Dell con hojas de cálculo financieras ("Q3 Sales Performance") y documentos de texto.
+- **Física Anti-Astenopía:**
+  - **Lente Normal / Sin Gafas:** Emula la fatiga visual real por sobreexposición LED fría (~8500K) y halo de saturación fotópica, manteniendo el texto 100% nítido (cero aberraciones de aumento o dioptrías).
+  - **Filtro Blue Cut:** Alivio visual inmediato, aumentando el contraste de los caracteres oscuros sobre un fondo relajante.
+
+### 3. ☀️ Día Soleado y Exteriores (Carretera Panorámica Costera)
+- **Perspectiva:** Carretera abierta frente al mar bajo sol brillante.
+- **Controles:** Slider interactivo de radiación UV para simular la velocidad de oscurecimiento de Transitions y eliminación de reflejo especular sobre el agua con filtro polarizado.
+
+---
+
+## 🛠️ Arquitectura y Tecnologías
+- **Motor Gráfico:** Canvas 2D + SVG binocular HUD con doble pase de renderizado (visión periférica fuera de gafas vs. visión a través de las lentes).
+- **Cinemática:** Giro de cabeza continuo a 60-144 FPS con interpolación subpíxel suave, controlado por arrastre de pantalla y joystick virtual.
+- **HUD Panorámico:** Marco de titanio vectorial ultra-nítido con biseles reflectivos sin desenfoque artificial.
+- **Resolución Universal de Recursos:** Helper `asset-helper.js` compatible con Vite local, compilación de producción y despliegue estático en GitHub Pages (`/filters-simulator/`).
+- **Arquitectura de Eventos:** Bus de eventos desacoplado (`event-bus.js`) para sincronizar selector de lentes, tarjeta de beneficios, slider UV y cámara.
+
+---
+
+## 🚀 Despliegue y Ejecución Local
+
+### Requisitos
+- Node.js 18+ (o Docker)
+
+### En Desarrollo
+```bash
+npm install
+npm run dev
+# Accede a http://localhost:5173/ (o el puerto indicado)
+```
+
+### Compilación para Producción
+```bash
+npm run build
+# Genera los archivos optimizados en dist/
+```
+
+### Con Docker
+```bash
+docker compose up -d
+# Servido con Nginx en http://localhost:8080/
+```
+
+---
+
+## 📂 Especificación Completa
+Para una revisión exhaustiva de la taxonomía clínica de los filtros, argumentos de venta para el mostrador, física óptica y estructura detallada de código, consulta:
+👉 [**`ESPECIFICACIONES_FILTROS.md`**](./ESPECIFICACIONES_FILTROS.md)
+
+---
+
+© 2026 Visiometric Labs — JayzirTech. Todos los derechos reservados.

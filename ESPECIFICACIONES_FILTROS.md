@@ -142,64 +142,101 @@ A continuación se detalla la clasificación completa de los tratamientos comerc
 
 ---
 
-## 🎨 3. Arquitectura del Simulador de Filtros
+## 🎨 3. Arquitectura Real Implementada en el Simulador
 
-Siguiendo el éxito del **Proyecto Experiencia Óptica**, este segundo proyecto debe estructurarse con una arquitectura moderna, rápida y sin sobrecarga de dependencias pesadas:
+El software está implementado con una arquitectura orientada a componentes modulares en Vanilla ES6+ con empaquetador Vite 6, garantizando 60–144 FPS estables en navegadores móviles, tablets y PCs de escritorio:
 
 ```
 Proyecto Filtros Opticos/
-├── index.html                   # Interfaz HUD clínica con panel de control táctil
-├── package.json                 # Vite 6 + Scripts
-├── vite.config.js               # Bundler de alta velocidad
-├── docker-compose.yml           # Despliegue en 1 comando
-├── Dockerfile                   # Nginx Alpine ultraligero (~25 MB)
-├── ESPECIFICACIONES_FILTROS.md  # Este documento de especificación
-├── README.md                    # Resumen ejecutivo bilingüe
+├── index.html                   # Shell HUD clínico con contenedor de simulación POV
+├── package.json                 # Dependencias (Sharp para calibración, Vite 6)
+├── vite.config.js               # Bundler con base: '/filters-simulator/' para GitHub Pages
+├── docker-compose.yml           # Despliegue en 1 comando (Nginx Alpine)
+├── Dockerfile                   # Imagen Nginx de producción ultraligera (~25 MB)
+├── ESPECIFICACIONES_FILTROS.md  # Especificación clínica y técnica exhaustiva
+├── README.md                    # Documentación general y guía rápida
+├── .github/
+│   └── workflows/
+│       └── deploy.yml           # Despliegue continuo automático a GitHub Pages
+│
+├── public/
+│   ├── preview.html             # Galería interactiva de propuestas de cabina
+│   └── scenes/                  # Placas fotográficas maestras 2K (2752x1536)
+│       ├── night-blanco.jpg     # Conducción nocturna: descontrol y halos expandidos
+│       ├── night-ar-verde.jpg   # Conducción nocturna: faros contenidos y asfalto nítido
+│       ├── night-crizal.jpg     # Conducción nocturna: 99.5% transmisión, negros profundos
+│       ├── night-amarillo.jpg   # Conducción nocturna: DriveSafe ámbar alto contraste
+│       ├── office-blanco.jpg    # Oficina: sobreexposición LED fría (~8500K) anti-astenopía
+│       ├── office-ar-verde.jpg  # Oficina: supresión de reflejos de lámpara y ventana
+│       ├── office-blue-cut.jpg  # Oficina: relajación a tono cálido descansado (~4500K)
+│       ├── office-crizal.jpg    # Oficina: nitidez tipográfica quirúrgica en Excel/docs
+│       └── sun-real.jpg         # Exteriores: carretera panorámica costera
+│
+├── scripts/                     # Herramientas de procesamiento y calibración fotográfica
+│   ├── generate-mercedes-layers.js # Calibrador espectral 2K para noche
+│   └── generate-office-layers.js   # Calibrador fotópico y anti-fatiga para oficina
 │
 └── src/
-    ├── main.js                  # Orquestador de la aplicación y máquinas de estado
+    ├── main.js                  # Orquestador del ciclo de vida y montaje de componentes
     │
     ├── core/
-    │   ├── filter-manager.js    # Estado de filtros activos y combinaciones
-    │   ├── scene-manager.js     # Cambio fluido entre escenarios de simulación
-    │   └── events.js            # Bus de eventos desacoplado
+    │   ├── camera.js            # Cinemática de mirada 360 subpíxel con inercia y amortiguación
+    │   ├── event-bus.js         # Bus de eventos reactivo desacoplado
+    │   ├── filters-data.js      # Catálogo comercial, textos de mostrador y física óptica
+    │   └── asset-helper.js      # Resolvedor universal de rutas para local y GitHub Pages
     │
-    ├── scenes/                  # Escenarios de prueba interactiva
-    │   ├── night-drive.js       # Conducción nocturna: AR Verde vs Sin AR vs Crizal
-    │   ├── digital-office.js    # Oficina con pantallas: Filtro Blue Cut vs Normal
-    │   ├── outdoor-sun.js       # Exteriores soleados: Transitions / Fotocromático (Slider UV)
-    │   ├── wet-road-lake.js     # Carretera mojada / Lago: Polarizado vs Gafa de Sol básica
-    │   └── stress-lab.js        # Laboratorio Crizal: Gotas de agua, grasa, polvo y rayones
+    ├── scenes/                  # Motor de renderizado fotográfico en primera persona (POV)
+    │   ├── scene-renderer.js    # Bucle maestro 60 FPS con doble pase (periferia vs montura)
+    │   ├── night-drive-scene.js # Conducción nocturna en Mercedes-Benz Clase S
+    │   ├── digital-office-scene.js # Oficina corporativa con monitor Dell ultrawide
+    │   └── outdoor-sun-scene.js # Día soleado con Transitions y Polarizado
     │
-    ├── components/
-    │   ├── split-comparator.js  # Barra divisora deslizable Antes/Después
-    │   ├── uv-slider.js         # Control táctil de intensidad lumínica y UV
-    │   ├── lens-inspector.js    # Vista en 3ra persona: reflejo exterior de la lente
-    │   └── filter-selector.js   # Menú táctil para elegir y acumular tratamientos
+    ├── components/              # Interfaz táctil y controles clínicos
+    │   ├── glasses-hud.js       # Montura vectorial biselada de titanio en SVG ultra-nítido
+    │   ├── joystick.js          # Joystick virtual ergonómico para giro de cabeza
+    │   ├── lens-selector.js     # Carrusel centrado con aislamiento estricto de scroll
+    │   ├── scene-selector.js    # Selector de escenas en la barra superior (Header)
+    │   ├── experience-card.js   # Tarjeta de beneficios clínicos bajo demanda (💡 manual)
+    │   ├── uv-slider.js         # Control deslizante de radiación solar (Transitions)
+    │   └── pitch-modal.js       # Modal pedagógico con argumentos de venta
     │
-    └── styles/
-        ├── index.css            # Dark medical design system & variables
-        └── components.css       # Estilos del HUD, tarjetas y controles táctiles
+    └── styles/                  # Sistema de diseño clínico amigable
+        ├── theme.css            # Paleta de colores, tipografía médica y sombras suaves
+        ├── layout.css           # Grid clínico, contención estricta y layout responsive
+        └── components.css       # Estilos del HUD, carrusel, botones y joystick
 ```
 
 ---
 
-## 🚀 4. Guía para Continuar en Otro Computador
+## 🔬 4. Principios Clave de la Simulación Fotográfica 2K
 
-Para retomar este proyecto en otro equipo manteniendo exactamente el mismo contexto:
-
-1. **Subir los cambios actuales al repositorio Git:**
-   ```bash
-   git add .
-   git commit -m "docs: documentacion completa de filtros opticos y arquitectura"
-   # Si tienes configurado un repositorio remoto (GitHub/GitLab):
-   # git push origin main
-   ```
-2. **En el otro computador:**
-   * Clona o abre la carpeta `Proyecto Filtros Opticos` en **Antigravity**.
-   * Inicia el chat con la IA diciendo:
-     > *"Hola, he abierto el repositorio de Proyecto Filtros Ópticos. Lee el archivo `ESPECIFICACIONES_FILTROS.md` para retomar el contexto y empecemos a implementar el simulador."*
-   * La IA tendrá a su disposición toda la taxonomía de filtros, las escenas interactivas y la estructura técnica acordada.
+1. **Cero Desenfoques de Graduación / Aumento:**
+   Los filtros oftálmicos modifican transmisión espectral, absorción y reflexión parásita; **no corrigen dioptrías**. Todo texto y detalle en pantalla permanece 100% nítido, evitando que el paciente confunda la simulación de un filtro con un problema de aumento o refracción.
+2. **Fotografía Multicapa Real vs. Parches Procedurales:**
+   En lugar de pintar rectángulos o círculos artificiales sobre la imagen, se capturaron y calibraron placas maestras completas alineadas píxel a píxel (`2752x1536`) que reaccionan con un fundido cruzado óptico suave (*cross-fade* con interpolación hermite `smoothstep` de 260 ms).
+3. **Doble Pase Óptico (Visión Binocular POV):**
+   - **Pase 1 (Visión Periférica):** Fuera del marco de la gafa, el ojo percibe la luz cruda y sin tratar (deslumbramiento en noche, luz LED fría en oficina).
+   - **Pase 2 (Visión a través de la Lente):** Dentro del bisel de la montura, se aprecia el efecto protector del tratamiento activo, permitiendo una comparación instantánea e intuitiva sin necesidad de cerrar o tapar la pantalla.
+4. **Montura Vectorial Ultra-Definida:**
+   Diseñada en SVG paramétrico con bordes biselados y reflejos especulares de titanio, libre de filtros de desenfoque DoF que degraden la calidad percibida en pantallas Full HD o 4K.
 
 ---
-*Documento registrado y generado para JayzirTech / Visiometric Labs.*
+
+## 🚀 5. Despliegue y Sincronización Continua
+
+* **Repositorio Central:** `https://github.com/visiometric-labs/filters-simulator`
+* **Ramas Sincronizadas:**
+  * `dev`: Rama de desarrollo y fuente de despliegue continuo.
+  * `feature/mvp`: Rama de trabajo con paridad exacta respecto a `dev`.
+* **Despliegue Público:** 
+  * Hospedado en **GitHub Pages**: [https://visiometric-labs.github.io/filters-simulator/](https://visiometric-labs.github.io/filters-simulator/)
+  * Automatizado mediante GitHub Actions (`.github/workflows/deploy.yml`).
+* **Ejecución Local Rápida:**
+  ```bash
+  npm install
+  npm run dev      # Servidor de desarrollo con Hot Module Reload
+  npm run build    # Compilación optimizada en dist/
+  ```
+
+---
+*Documento registrado y actualizado para JayzirTech / Visiometric Labs.*
