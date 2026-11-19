@@ -31,8 +31,11 @@ export class NightDriveScene {
   }
 
   createImage(src) {
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+    const cleanSrc = src.startsWith('/') ? src : `/${src}`;
+    const fullPath = `${base}${cleanSrc}`;
     const img = new Image();
-    img.src = src;
+    img.src = fullPath;
     img.isLoaded = false;
     img.onload = () => {
       img.isLoaded = true;

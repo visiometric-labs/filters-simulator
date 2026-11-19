@@ -9,8 +9,9 @@ export class OutdoorSunScene {
     this.name = 'Día Soleado';
     this.time = 0;
 
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
     this.img = new Image();
-    this.img.src = '/scenes/sun-real.jpg';
+    this.img.src = `${base}/scenes/sun-real.jpg`;
     this.isLoaded = false;
     this.img.onload = () => {
       this.isLoaded = true;
