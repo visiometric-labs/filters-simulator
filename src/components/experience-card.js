@@ -113,10 +113,7 @@ export class ExperienceCard {
     eventBus.on('filter-changed', (filter) => {
       this.currentFilter = filter;
       this.updateContent();
-      // Si estaba colapsado y el usuario cambia de lente, reabrir suavemente
-      if (this.isCollapsed) {
-        this.expand();
-      }
+      // Solo actualiza los datos informativos. No fuerza la apertura de la tarjeta.
     });
 
     eventBus.on('toggle-info-card', () => {

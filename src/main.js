@@ -117,7 +117,7 @@ class App {
       }
     });
 
-    // Botón Con Gafas / Sin Gafas
+    // Botón Con Gafas / Sin Gafas (Acción clara para el usuario)
     const toggleGlassesBtn = document.getElementById('btn-toggle-glasses');
     const toggleGlassesLabel = document.getElementById('glasses-toggle-label');
 
@@ -128,17 +128,25 @@ class App {
     eventBus.on('glasses-state-changed', (enabled) => {
       if (enabled) {
         toggleGlassesBtn.classList.remove('off');
-        toggleGlassesLabel.textContent = 'Ver con Gafas';
+        toggleGlassesLabel.textContent = 'Ver sin Gafas';
       } else {
         toggleGlassesBtn.classList.add('off');
-        toggleGlassesLabel.textContent = 'Ver sin Gafas';
+        toggleGlassesLabel.textContent = 'Ver con Gafas';
       }
     });
 
-    // Botón Beneficios del Header
+    // Botón Beneficios del Header (Abre y cierra bajo demanda)
     const toggleInfoBtn = document.getElementById('btn-toggle-info');
     toggleInfoBtn.addEventListener('click', () => {
       this.experienceCard.toggle();
+    });
+
+    eventBus.on('experience-card-collapsed', (collapsed) => {
+      if (collapsed) {
+        toggleInfoBtn.classList.remove('active');
+      } else {
+        toggleInfoBtn.classList.add('active');
+      }
     });
 
     // Botón Pantalla Completa
@@ -149,27 +157,6 @@ class App {
       } else {
         document.exitFullscreen().catch(() => {});
       }
-    });
-
-    // Selector de Tipo de Escena Flotante
-    const scenePickBtns = document.querySelectorAll('.btn-scene-pick');
-    scenePickBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const sceneId = btn.dataset.scene;
-        if (this.sceneSelector) {
-          this.sceneSelector.selectScene(sceneId);
-        }
-      });
-    });
-
-    eventBus.on('scene-changed', (sceneInfo) => {
-      scenePickBtns.forEach((b) => {
-        if (b.dataset.scene === sceneInfo.id) {
-          b.classList.add('active');
-        } else {
-          b.classList.remove('active');
-        }
-      });
     });
 
     // Ocultar hint de ayuda tras la primera interacción o 6 segundos
