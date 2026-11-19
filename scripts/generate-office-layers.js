@@ -25,44 +25,46 @@ async function generateOfficeLayers() {
     .jpeg({ quality: 97, chromaSubsampling: '4:4:4' })
     .toFile(path.join(outDir, 'office-ar-verde.jpg'));
 
-  // 3. FILTRO BLUE CUT (El filtro estrella: transforma el blanco LED frío en confort cálido relajante sin pegatinas)
+  // 3. FILTRO BLUE CUT (El alivio visual: transforma el blanco LED frío en confort cálido descansado tipo papel)
   console.log('3/4 office-blue-cut.jpg...');
   await sharp(src)
     .recomb([
-      [1.08, 0.04, 0.0],
-      [0.02, 1.05, 0.0],
-      [0.0, 0.02, 0.70] // Absorción del espectro azul agresivo (HEV)
+      [1.06, 0.05, 0.0],
+      [0.02, 1.06, 0.0],
+      [0.0, 0.02, 0.68] // Absorbe la luz azul punzante de alta energía (HEV)
     ])
-    .linear(1.10, -8)
-    .sharpen({ sigma: 1.2, m1: 1.0, m2: 2.5 })
+    .linear(1.02, -4) // Suaviza el deslumbramiento fotópico a un blanco descansado
+    .sharpen({ sigma: 1.1, m1: 1.0, m2: 2.2 })
     .jpeg({ quality: 98, chromaSubsampling: '4:4:4' })
     .toFile(path.join(outDir, 'office-blue-cut.jpg'));
 
-  // 4. LENTE BLANCA (Sin tratamiento: luz LED fría agresiva, velo lumínico de fatiga visual y reflejo de lámpara)
+  // 4. LENTE BLANCA (Sin tratamiento: fatiga visual por luz LED fría agresiva y punzante, 100% nítido sin desenfoque ni aberración de aumento)
   console.log('4/4 office-blanco.jpg...');
-  const lampHighlights = await sharp(src)
-    .threshold(215)
-    .toBuffer();
-
-  const lampGlare = await sharp(lampHighlights)
-    .blur(32)
-    .modulate({ brightness: 1.25 })
-    .toBuffer();
-
-  const washedBase = await sharp(src)
+  
+  // Paso 4a: Base con tinte azul frío penetrante (8500K) y sobreexposición en blancos
+  const harshLedBase = await sharp(src)
     .recomb([
       [0.96, 0.0, 0.0],
-      [0.0, 0.98, 0.0],
-      [0.02, 0.05, 1.10] // Tinte azulado frío deslumbrante de LED sin filtro
+      [0.0, 1.0, 0.0],
+      [0.02, 0.06, 1.28] // Tinte azul frío HEV punzante
     ])
-    .linear(0.92, 18) // Velo que reduce el contraste
+    .linear(1.15, 6) // Blancos sobreexpuestos y punzantes que cansan la pupila
+    .sharpen({ sigma: 1.1, m1: 1.0, m2: 2.5 }) // Texto 100% nítido, sin problemas de aumento
     .toBuffer();
 
-  await sharp(washedBase)
+  // Paso 4b: Deslumbramiento fotópico (halo de alta luminancia que cansa la vista sin desenfocar el texto)
+  // Extraemos únicamente las zonas de brillo extremo (las hojas en blanco del monitor y la lámpara)
+  const extremeWhites = await sharp(src)
+    .threshold(215)
+    .blur(18) // Halo difuso suave que simula la dispersión de luz en el ojo cansado
+    .modulate({ brightness: 0.35 })
+    .toBuffer();
+
+  await sharp(harshLedBase)
     .composite([
-      { input: lampGlare, blend: 'screen' }
+      { input: extremeWhites, blend: 'screen' }
     ])
-    .jpeg({ quality: 96, chromaSubsampling: '4:4:4' })
+    .jpeg({ quality: 98, chromaSubsampling: '4:4:4' })
     .toFile(path.join(outDir, 'office-blanco.jpg'));
 
   console.log('All 4 digital office layers generated successfully!');
