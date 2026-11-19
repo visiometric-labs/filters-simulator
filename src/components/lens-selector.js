@@ -82,7 +82,12 @@ export class LensSelector {
     this.buttons.forEach((btn) => {
       if (btn.dataset.filter === filterId) {
         btn.classList.add('active');
-        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        // Desplazamiento exclusivo dentro del carrusel interno (evita mover el canvas o viewport)
+        const carousel = this.container.querySelector('.lens-carousel-container');
+        if (carousel && carousel.scrollWidth > carousel.clientWidth) {
+          const targetLeft = btn.offsetLeft - (carousel.clientWidth - btn.clientWidth) / 2;
+          carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        }
       } else {
         btn.classList.remove('active');
       }
