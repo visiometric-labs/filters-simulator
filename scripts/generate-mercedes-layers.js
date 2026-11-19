@@ -32,30 +32,47 @@ async function generateMercedesLayers() {
     .threshold(195)
     .toBuffer();
 
-  // 1. CRIZAL MULTICAPA (Visión Pura, Faros Nítidos, Alto Contraste, 99.5% Transmisión)
+  // 1. CRIZAL MULTICAPA (Visión Pura Quirúrgica, Faros Nítidos Sin Nube, 99.5% Transmisión, Negros Puros)
   console.log('1/4 Creating Crizal Multicapa 2K Master...');
   await sharp(master2k)
-    .linear(1.18, -14)
-    .modulate({ brightness: 0.98, saturation: 1.08 })
-    .sharpen({ sigma: 1.3, m1: 1.0, m2: 2.4 })
+    .linear(1.25, -20)
+    .modulate({ brightness: 0.97, saturation: 1.12 })
+    .sharpen({ sigma: 1.4, m1: 1.25, m2: 2.8 })
     .jpeg({ quality: 98, chromaSubsampling: '4:4:4' })
     .toFile(path.join(outDir, 'night-crizal.jpg'));
 
-  // 2. ANTIRREFLEJO VERDE NORMAL (Estándar de Óptica: 75% reducción de halos)
+  // 2. ANTIRREFLEJO VERDE NORMAL (Estándar de Óptica: Controla destellos extremos pero conserva halo lechoso y reflejo verde residual)
   console.log('2/4 Creating AR Verde Normal 2K Master...');
-  const mildHalo = await sharp(highlights)
-    .blur(26)
-    .modulate({ brightness: 0.38 })
+  const diffuseBloom = await sharp(highlights)
+    .blur(50)
+    .modulate({ brightness: 0.85 })
+    .toBuffer();
+
+  const coreBloom = await sharp(highlights)
+    .blur(18)
+    .modulate({ brightness: 1.05 })
+    .toBuffer();
+
+  const greenResidual = await sharp(highlights)
+    .blur(22)
+    .recomb([
+      [0.06, 0.0, 0.0],
+      [0.15, 0.90, 0.10],
+      [0.05, 0.12, 0.12]
+    ])
+    .modulate({ brightness: 0.80 })
     .toBuffer();
 
   const arBase = await sharp(master2k)
-    .linear(1.06, -5)
-    .sharpen({ sigma: 0.8, m1: 0.7, m2: 1.8 })
+    .linear(0.95, 14) // Velo lumínico que eleva ligeramente las sombras (asfalto menos profundo)
+    .sharpen({ sigma: 0.75, m1: 0.6, m2: 1.6 })
     .toBuffer();
 
   await sharp(arBase)
     .composite([
-      { input: mildHalo, blend: 'screen' }
+      { input: diffuseBloom, blend: 'screen' },
+      { input: coreBloom, blend: 'screen' },
+      { input: greenResidual, blend: 'screen' }
     ])
     .jpeg({ quality: 98, chromaSubsampling: '4:4:4' })
     .toFile(path.join(outDir, 'night-ar-verde.jpg'));

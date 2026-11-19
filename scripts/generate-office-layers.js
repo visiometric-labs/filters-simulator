@@ -9,20 +9,45 @@ async function generateOfficeLayers() {
   const meta = await sharp(src).metadata();
   const { width, height } = meta;
 
-  // 1. CRIZAL MULTICAPA (Máxima nitidez quirúrgica, negros profundos, 99.5% transmisión, cero velo)
+  // 1. CRIZAL MULTICAPA (Máxima nitidez quirúrgica, negros profundos, 99.5% transmisión, cero velo, cero reflejo verde)
   console.log('1/4 office-crizal.jpg...');
   await sharp(src)
-    .linear(1.12, -10)
-    .sharpen({ sigma: 1.15, m1: 0.9, m2: 2.2 })
+    .linear(1.22, -18)
+    .modulate({ brightness: 0.98, saturation: 1.10 })
+    .sharpen({ sigma: 1.4, m1: 1.3, m2: 2.8 })
     .jpeg({ quality: 98, chromaSubsampling: '4:4:4' })
     .toFile(path.join(outDir, 'office-crizal.jpg'));
 
-  // 2. ANTIRREFLEJO VERDE (Estándar de mercado, neutraliza reflejos de lámpara y ventana)
+  // 2. ANTIRREFLEJO VERDE (Estándar de mercado: conserva reflejo residual verde esmeralda y contraste estándar con suave dispersión)
   console.log('2/4 office-ar-verde.jpg...');
-  await sharp(src)
-    .linear(1.05, -4)
-    .sharpen({ sigma: 0.75, m1: 0.6, m2: 1.8 })
-    .jpeg({ quality: 97, chromaSubsampling: '4:4:4' })
+  const lampHighlights = await sharp(src).threshold(244).toBuffer();
+
+  const greenReflection = await sharp(lampHighlights)
+    .blur(25)
+    .recomb([
+      [0.05, 0.0, 0.0],
+      [0.15, 0.90, 0.10],
+      [0.05, 0.12, 0.12]
+    ])
+    .modulate({ brightness: 0.85 })
+    .toBuffer();
+
+  const softHalo = await sharp(lampHighlights)
+    .blur(50)
+    .modulate({ brightness: 0.60 })
+    .toBuffer();
+
+  const arBase = await sharp(src)
+    .linear(0.96, 10) // Textos y sombras con contraste estándar (leve dispersión lechosa)
+    .sharpen({ sigma: 0.75, m1: 0.6, m2: 1.6 })
+    .toBuffer();
+
+  await sharp(arBase)
+    .composite([
+      { input: softHalo, blend: 'screen' },
+      { input: greenReflection, blend: 'screen' }
+    ])
+    .jpeg({ quality: 98, chromaSubsampling: '4:4:4' })
     .toFile(path.join(outDir, 'office-ar-verde.jpg'));
 
   // 3. FILTRO BLUE CUT (El alivio visual: transforma el blanco LED frío en confort cálido descansado tipo papel)

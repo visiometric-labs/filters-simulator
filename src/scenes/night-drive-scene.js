@@ -17,10 +17,10 @@ export class NightDriveScene {
     // Placas fotográficas reales calibradas (Definitiva: Mercedes-Benz Clase S en Avenida)
     this.currentProposal = '2';
     this.images = {
-      'blanco': this.createImage('/scenes/night-blanco.jpg'),
-      'ar-verde': this.createImage('/scenes/night-ar-verde.jpg'),
-      'crizal': this.createImage('/scenes/night-crizal.jpg'),
-      'amarillo': this.createImage('/scenes/night-amarillo.jpg'),
+      'blanco': this.createImage('/scenes/night-blanco.jpg?v=2'),
+      'ar-verde': this.createImage('/scenes/night-ar-verde.jpg?v=2'),
+      'crizal': this.createImage('/scenes/night-crizal.jpg?v=2'),
+      'amarillo': this.createImage('/scenes/night-amarillo.jpg?v=2'),
     };
 
     // Control de transición suave (cross-fade) entre lentes

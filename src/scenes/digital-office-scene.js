@@ -17,10 +17,10 @@ export class DigitalOfficeScene {
 
     // Placas fotográficas reales calibradas 2K Master HD (2752x1536)
     this.images = {
-      'blanco': this.createImage('/scenes/office-blanco.jpg'),
-      'ar-verde': this.createImage('/scenes/office-ar-verde.jpg'),
-      'blue-cut': this.createImage('/scenes/office-blue-cut.jpg'),
-      'crizal': this.createImage('/scenes/office-crizal.jpg'),
+      'blanco': this.createImage('/scenes/office-blanco.jpg?v=2'),
+      'ar-verde': this.createImage('/scenes/office-ar-verde.jpg?v=2'),
+      'blue-cut': this.createImage('/scenes/office-blue-cut.jpg?v=2'),
+      'crizal': this.createImage('/scenes/office-crizal.jpg?v=2'),
     };
 
     // Control de transición suave (cross-fade) entre lentes
