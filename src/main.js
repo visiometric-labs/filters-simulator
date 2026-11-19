@@ -172,6 +172,47 @@ class App {
         lookHint.classList.add('hidden');
       }
     }, 6000);
+
+    // 7. Control de la Portada de Bienvenida (Landing Cover)
+    const landingCover = document.getElementById('landing-cover');
+    const enterExpBtn = document.getElementById('btn-enter-exp');
+    const backToLandingBtn = document.getElementById('btn-back-to-landing');
+    const brandHomeBtn = document.getElementById('btn-brand-home');
+
+    const openSimulator = (sceneId = null) => {
+      if (sceneId && this.sceneSelector) {
+        this.sceneSelector.selectScene(sceneId);
+      }
+      if (landingCover) {
+        landingCover.classList.add('hidden');
+      }
+    };
+
+    const openLanding = () => {
+      if (landingCover) {
+        landingCover.classList.remove('hidden');
+      }
+    };
+
+    if (enterExpBtn) {
+      enterExpBtn.addEventListener('click', () => openSimulator());
+    }
+
+    // Botones de escenarios directos en la portada
+    document.querySelectorAll('.scenario-card-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const scene = btn.dataset.scene;
+        openSimulator(scene);
+      });
+    });
+
+    if (backToLandingBtn) {
+      backToLandingBtn.addEventListener('click', () => openLanding());
+    }
+
+    if (brandHomeBtn) {
+      brandHomeBtn.addEventListener('click', () => openLanding());
+    }
   }
 }
 

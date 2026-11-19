@@ -44,6 +44,7 @@
   <link rel="stylesheet" href="./src/styles/theme.css">
   <link rel="stylesheet" href="./src/styles/layout.css">
   <link rel="stylesheet" href="./src/styles/components.css">
+  <link rel="stylesheet" href="./src/styles/landing.css">
 </head>
 <body>
   <!-- Preloader Clínico Suave -->
@@ -55,10 +56,132 @@
     <div class="preloader-subtext">Calibrando simulación en primera persona...</div>
   </div>
 
+  <!-- Página de Portada / Welcome Landing (Antes de entrar al simulador) -->
+  <section id="landing-cover" class="landing-cover">
+    <!-- Header de Portada -->
+    <header class="landing-header">
+      <div class="landing-brand">
+        <div class="landing-brand-icon">👓</div>
+        <div class="landing-brand-text">
+          <h2>Visiometric Labs</h2>
+          <span>Demostrador Oftálmico Clínico • JayzirTech</span>
+        </div>
+      </div>
+      <div class="landing-badge-pill">
+        <span class="landing-badge-dot"></span>
+        <span>Tecnología POV 2K</span>
+      </div>
+    </header>
+
+    <!-- Hero Central -->
+    <main class="landing-hero">
+      <div class="landing-tagline-chip">
+        <span>🔬 Demostración en Primera Persona</span>
+      </div>
+      <h1>
+        Experimenta la Diferencia <br>
+        <span class="gradient-text">Antes de Fabricar tus Lentes</span>
+      </h1>
+      <p>
+        Comprueba en tiempo real el corte de deslumbramiento nocturno, el descanso visual en pantallas y la protección solar. Siente el beneficio en tus propios ojos.
+      </p>
+
+      <!-- Botón de Inicio Principal -->
+      <button type="button" class="btn-enter-experience" id="btn-enter-exp">
+        <span class="btn-icon">👓</span>
+        <span>Comenzar Demostración</span>
+      </button>
+    </main>
+
+    <!-- Escenarios Clínicos Interactivos -->
+    <section class="landing-scenarios-section">
+      <div class="landing-scenarios-title">O ingresa directo a un escenario clínico:</div>
+      <div class="landing-scenarios-grid">
+        <!-- Escenario 1 -->
+        <button type="button" class="scenario-card-btn" data-scene="night-drive">
+          <div>
+            <div class="scenario-card-header">
+              <div class="scenario-card-icon">🚗</div>
+              <div>
+                <div class="scenario-card-title">Conducción Nocturna</div>
+                <div class="scenario-card-subtitle">Corte de Faros LED y Halos</div>
+              </div>
+            </div>
+            <p class="scenario-card-desc">
+              Compara la nube lechosa del Antirreflejo Verde frente al corte quirúrgico y negros profundos de Crizal Multicapa.
+            </p>
+          </div>
+          <div>
+            <div class="scenario-card-tags">
+              <span class="scenario-mini-tag">AR Verde</span>
+              <span class="scenario-mini-tag">Crizal 99.5%</span>
+              <span class="scenario-mini-tag">Filtro Amarillo</span>
+            </div>
+            <div class="scenario-card-action">Probar Noche →</div>
+          </div>
+        </button>
+
+        <!-- Escenario 2 -->
+        <button type="button" class="scenario-card-btn" data-scene="digital-office">
+          <div>
+            <div class="scenario-card-header">
+              <div class="scenario-card-icon">💻</div>
+              <div>
+                <div class="scenario-card-title">Oficina y Pantallas</div>
+                <div class="scenario-card-subtitle">Protección Luz Azul HEV</div>
+              </div>
+            </div>
+            <p class="scenario-card-desc">
+              Descubre el alivio visual inmediato de Blue Cut frente a la fatiga y destellos de monitores y hojas de cálculo.
+            </p>
+          </div>
+          <div>
+            <div class="scenario-card-tags">
+              <span class="scenario-mini-tag">Lente Normal</span>
+              <span class="scenario-mini-tag">Blue Cut Cálido</span>
+              <span class="scenario-mini-tag">Crizal</span>
+            </div>
+            <div class="scenario-card-action">Probar Oficina →</div>
+          </div>
+        </button>
+
+        <!-- Escenario 3 -->
+        <button type="button" class="scenario-card-btn" data-scene="outdoor-sun">
+          <div>
+            <div class="scenario-card-header">
+              <div class="scenario-card-icon">☀️</div>
+              <div>
+                <div class="scenario-card-title">Día Soleado y Ruta</div>
+                <div class="scenario-card-subtitle">Fotocromático &amp; Polarizado</div>
+              </div>
+            </div>
+            <p class="scenario-card-desc">
+              Controla el oscurecimiento dinámico de Transitions con el slider UV y elimina el resplandor de carretera con Polarizado.
+            </p>
+          </div>
+          <div>
+            <div class="scenario-card-tags">
+              <span class="scenario-mini-tag">Slider UV</span>
+              <span class="scenario-mini-tag">Transitions</span>
+              <span class="scenario-mini-tag">Polarizado</span>
+            </div>
+            <div class="scenario-card-action">Probar Sol →</div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer de Portada -->
+    <footer class="landing-footer">
+      <div>© 2026 Visiometric Labs — JayzirTech. Todos los derechos reservados.</div>
+      <div>Plataforma de argumentación clínica y demostración en mostrador.</div>
+    </footer>
+  </section>
+
   <div id="app">
     <!-- Header Clínico Amigable -->
     <header class="clinic-header">
-      <div class="brand-section">
+      <div class="brand-section" id="btn-brand-home" title="Volver a la portada de inicio" style="cursor: pointer;">
         <div class="brand-icon-wrapper">
           <span>👓</span>
         </div>
@@ -76,6 +199,9 @@
 
       <!-- Acciones del Header -->
       <div class="header-actions">
+        <button type="button" class="btn-clinic-action" id="btn-back-to-landing" title="Volver a la portada de inicio">
+          <span>🏠</span> <span class="action-text">Inicio</span>
+        </button>
         <button type="button" class="btn-clinic-action" id="btn-toggle-info" title="Mostrar/ocultar información del lente">
           <span>💡</span> <span class="action-text">Beneficios</span>
         </button>
