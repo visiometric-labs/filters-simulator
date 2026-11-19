@@ -1,7 +1,11 @@
 /**
- * Escenario 2: Oficina Digital & Pantallas (Fotografía Realista 2K en Primera Persona)
- * Muestra un escritorio ejecutivo nórdico real con gran monitor curvo LED, teclado,
- * ventana con luz natural y lámpara de escritorio.
+ * Escenario 2: Oficina Digital & Pantallas (Fotografía Multicapa Calibrada 2K en Primera Persona)
+ * Utiliza 4 placas fotográficas reales alineadas píxel a píxel para cada tratamiento óptico:
+ * - Lente Blanca: Fatiga visual con luz LED fría dispersa, velo deslumbrante y reflejo de lámpara.
+ * - AR Verde: Neutralización de reflejos parásitos de lámpara y ventana, claridad estándar.
+ * - Filtro Blue Cut: Transformación natural del blanco LED agresivo en confort cálido descansado,
+ *   con máximo contraste y nitidez en documentos, gráficos y números de hojas de cálculo.
+ * - Crizal Multicapa: Máxima transmisión (99.5%), nitidez quirúrgica en caracteres y cero reflejos.
  */
 export class DigitalOfficeScene {
   constructor() {
@@ -9,42 +13,62 @@ export class DigitalOfficeScene {
     this.name = 'Oficina y Pantallas';
     this.time = 0;
 
-    this.img = new Image();
-    this.img.src = '/scenes/office-real.jpg';
-    this.isLoaded = false;
-    this.img.onload = () => {
-      this.isLoaded = true;
+    // Placas fotográficas reales calibradas 2K Master HD (2752x1536)
+    this.images = {
+      'blanco': this.createImage('/scenes/office-blanco.jpg'),
+      'ar-verde': this.createImage('/scenes/office-ar-verde.jpg'),
+      'blue-cut': this.createImage('/scenes/office-blue-cut.jpg'),
+      'crizal': this.createImage('/scenes/office-crizal.jpg'),
     };
 
-    // Coordenadas del monitor ultrawide en la fotografía real 2K
-    this.monitorBounds = {
-      uMin: 0.31,
-      uMax: 0.82,
-      vMin: 0.22,
-      vMax: 0.62,
-    };
+    // Control de transición suave (cross-fade) entre lentes
+    this.currentFilterId = 'blue-cut';
+    this.targetFilterId = 'blue-cut';
+    this.transitionProgress = 1.0;
+    this.transitionDuration = 260; // ms
 
-    this.lamp = {
-      u: 0.88,
-      v: 0.38,
-      size: 35,
+    this.currentDrawRect = null;
+  }
+
+  createImage(src) {
+    const img = new Image();
+    img.src = src;
+    img.isLoaded = false;
+    img.onload = () => {
+      img.isLoaded = true;
     };
+    return img;
   }
 
   update(deltaTime) {
     this.time += deltaTime * 0.001;
+
+    if (this.transitionProgress < 1.0) {
+      this.transitionProgress = Math.min(1.0, this.transitionProgress + deltaTime / this.transitionDuration);
+    }
   }
 
-  renderBase(ctx, width, height, camera) {
-    if (!this.isLoaded || !this.img.naturalWidth) {
-      ctx.fillStyle = '#CBD5E1';
-      ctx.fillRect(0, 0, width, height);
-      return;
+  /**
+   * Resuelve la imagen correspondiente al filtro activo
+   */
+  getImageForFilter(filterId) {
+    if (this.images[filterId]) {
+      return this.images[filterId];
     }
+    return this.images['blanco'];
+  }
 
-    const imgAspect = this.img.naturalWidth / this.img.naturalHeight;
+  /**
+   * Encuadre fotográfico con relación de aspecto exacta y libertad de mirada
+   */
+  computeDrawRect(width, height, camera) {
+    const baseImg = this.images['blanco'];
+    const naturalW = baseImg.naturalWidth || 2752;
+    const naturalH = baseImg.naturalHeight || 1536;
+
+    const imgAspect = naturalW / naturalH;
     const viewAspect = width / height;
-    const zoom = 1.25;
+    const zoom = 1.15;
 
     let destW, destH;
     if (viewAspect > imgAspect) {
@@ -58,67 +82,83 @@ export class DigitalOfficeScene {
     const panRangeX = (destW - width) * 0.5;
     const panRangeY = (destH - height) * 0.5;
 
+    // Normalización de rotación de cabeza
     const normYaw = Math.max(-1, Math.min(1, camera.yaw / (camera.fov * 0.55)));
     const normPitch = Math.max(-1, Math.min(1, camera.pitch / camera.maxPitch));
 
-    const drawX = Math.round(-panRangeX - (normYaw * panRangeX));
-    const drawY = Math.round(-panRangeY + (normPitch * panRangeY));
+    // Coordenadas flotantes subpíxel para interpolación 100% fluida a 60-144 FPS
+    const drawX = -panRangeX - (normYaw * panRangeX);
+    const drawY = -panRangeY + (normPitch * panRangeY);
 
-    this.currentDrawRect = { x: drawX, y: drawY, w: destW, h: destH };
+    return { x: drawX, y: drawY, w: destW, h: destH };
+  }
+
+  /**
+   * PASE 1: Visión Periférica (Fuera de las gafas)
+   * Muestra la visión natural sin tratamiento con luz LED fría y reflejos.
+   */
+  renderBase(ctx, width, height, camera) {
+    const rect = this.computeDrawRect(width, height, camera);
+    this.currentDrawRect = rect;
+
+    const baseImg = this.images['blanco'];
+    if (!baseImg.isLoaded) {
+      ctx.fillStyle = '#CBD5E1';
+      ctx.fillRect(0, 0, width, height);
+      return;
+    }
 
     ctx.save();
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(this.img, drawX, drawY, destW, destH);
+    ctx.drawImage(baseImg, rect.x, rect.y, rect.w, rect.h);
     ctx.restore();
   }
 
-  renderLights(ctx, width, height, camera, optical) {
-    if (!this.isLoaded || !this.currentDrawRect) return;
+  /**
+   * PASE 2: Visión a través de los Cristales Oftálmicos (Dentro de la montura)
+   * Muestra la placa fotográfica real con el tratamiento óptico activo sin pegatinas artificiales.
+   */
+  renderTreated(ctx, width, height, camera, activeFilter) {
+    const rect = this.currentDrawRect || this.computeDrawRect(width, height, camera);
+    const targetFilterId = activeFilter.id;
 
-    const { x: imgX, y: imgY, w: imgW, h: imgH } = this.currentDrawRect;
-
-    const monX = Math.round(imgX + this.monitorBounds.uMin * imgW);
-    const monY = Math.round(imgY + this.monitorBounds.vMin * imgH);
-    const monW = Math.round((this.monitorBounds.uMax - this.monitorBounds.uMin) * imgW);
-    const monH = Math.round((this.monitorBounds.vMax - this.monitorBounds.vMin) * imgH);
-
-    const monCenterX = monX + monW * 0.5;
-    const monCenterY = monY + monH * 0.5;
-
-    const blueHazeIntensity = (1.0 - optical.blueLightAbsorption) * 0.55;
-
-    if (blueHazeIntensity > 0.08) {
-      ctx.save();
-      const hazeRadius = Math.max(monW, monH) * 0.85;
-      const hazeGrad = ctx.createRadialGradient(monCenterX, monCenterY, monW * 0.25, monCenterX, monCenterY, hazeRadius);
-      hazeGrad.addColorStop(0, `rgba(59, 130, 246, ${blueHazeIntensity * 0.7})`);
-      hazeGrad.addColorStop(0.5, `rgba(96, 165, 250, ${blueHazeIntensity * 0.35})`);
-      hazeGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-      ctx.fillStyle = hazeGrad;
-      ctx.beginPath();
-      ctx.arc(monCenterX, monCenterY, hazeRadius, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = `rgba(219, 234, 254, ${blueHazeIntensity * 0.35})`;
-      ctx.fillRect(monX, monY, monW, monH);
-      ctx.restore();
+    if (targetFilterId !== this.targetFilterId) {
+      this.currentFilterId = this.targetFilterId;
+      this.targetFilterId = targetFilterId;
+      this.transitionProgress = 0.0;
     }
 
-    if (optical.flareFactor > 0.2) {
-      const lampX = Math.round(imgX + this.lamp.u * imgW);
-      const lampY = Math.round(imgY + this.lamp.v * imgH);
+    const currentImg = this.getImageForFilter(this.currentFilterId);
+    const targetImg = this.getImageForFilter(this.targetFilterId);
 
-      ctx.save();
-      const lampGlow = ctx.createRadialGradient(lampX, lampY, 10, lampX, lampY, 120);
-      lampGlow.addColorStop(0, `rgba(254, 243, 199, ${optical.flareFactor * 0.7})`);
-      lampGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
-      ctx.fillStyle = lampGlow;
-      ctx.beginPath();
-      ctx.arc(lampX, lampY, 120, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
+    ctx.save();
+    ctx.imageSmoothingEnabled = true;
+
+    // Transición suave entre fotos de lentes
+    if (this.transitionProgress < 1.0 && currentImg !== targetImg && currentImg.isLoaded) {
+      const t = this.transitionProgress;
+      const smoothAlpha = t * t * (3 - 2 * t);
+      ctx.drawImage(currentImg, rect.x, rect.y, rect.w, rect.h);
+      ctx.globalAlpha = smoothAlpha;
+      if (targetImg.isLoaded) {
+        ctx.drawImage(targetImg, rect.x, rect.y, rect.w, rect.h);
+      }
+    } else {
+      // Estado estable
+      const imgToDraw = targetImg.isLoaded ? targetImg : this.images['blanco'];
+      if (imgToDraw.isLoaded) {
+        ctx.drawImage(imgToDraw, rect.x, rect.y, rect.w, rect.h);
+      }
     }
+
+    ctx.restore();
+  }
+
+  /**
+   * Las propiedades ópticas están 100% integradas a nivel fotográfico.
+   * Se eliminan por completo los rectángulos artificiales y gradientes de código.
+   */
+  renderLights() {
+    // No-op: Calibración óptica fotográfica pura
   }
 }

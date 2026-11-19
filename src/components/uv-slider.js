@@ -54,7 +54,7 @@ export class UVSlider {
 
   bindEvents() {
     eventBus.on('filter-changed', (filter) => {
-      // Mostrar si el filtro es fotocromático o si la escena es día soleado
+      // Mostrar si el filtro activo es fotocromático (Transitions)
       if (filter.id === 'transitions') {
         this.setVisible(true);
       } else {
@@ -63,8 +63,9 @@ export class UVSlider {
     });
 
     eventBus.on('scene-changed', (scene) => {
-      if (scene.id === 'outdoor-sun') {
-        this.setVisible(true);
+      // Si la escena no es de sol exterior, ocultar de inmediato
+      if (scene.id !== 'outdoor-sun') {
+        this.setVisible(false);
       }
     });
   }

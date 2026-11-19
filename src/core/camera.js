@@ -1,44 +1,79 @@
 /**
- * Controlador de Cámara en Primera Persona (Giro de Cabeza)
- * Proporciona rotación suave en Pitch (arriba/abajo) y Yaw (izquierda/derecha) con inercia física
+ * Controlador de Cámara en Primera Persona (Giro de Cabeza Ultrarfluido)
+ * Proporciona rotación cinemática mediante interpolación (lerp) independiente de FPS:
+ * - Respuesta inmediata sin lag de fricción esponjosa
+ * - Movimiento suave y continuo sin tirones de puntero
+ * - Límites de cuello humano fisiológicos y manejo consistente de entradas
  */
 export class CameraController {
   constructor() {
     // Ángulos actuales en radianes
-    this.yaw = 0;   // Rotación horizontal (360° continuo)
-    this.pitch = 0; // Rotación vertical (restringida a campo visual humano)
+    this.yaw = 0;
+    this.pitch = 0;
 
-    // Velocidades angulares
-    this.targetYawVel = 0;
-    this.targetPitchVel = 0;
-    this.yawVel = 0;
-    this.pitchVel = 0;
+    // Ángulos objetivo para interpolación suave
+    this.targetYaw = 0;
+    this.targetPitch = 0;
 
-    // Configuración de sensibilidad y límites
-    this.sensitivity = 1.8;
-    this.friction = 0.88; // Amortiguación suave para sensación natural de cabeza
-    this.maxPitch = Math.PI * 0.22; // ~40 grados arriba
-    this.minPitch = -Math.PI * 0.25; // ~45 grados abajo
+    // Velocidades del joystick virtual
+    this.joystickYawVel = 0;
+    this.joystickPitchVel = 0;
 
-    // Field of view
+    // Configuración ergonómica y de sensibilidad
+    this.sensitivity = 1.35;
+    this.maxYaw = Math.PI * 0.25;   // ~45° izquierda / derecha
+    this.minYaw = -Math.PI * 0.25;
+    this.maxPitch = Math.PI * 0.18; // ~32° arriba
+    this.minPitch = -Math.PI * 0.20; // ~36° abajo
+
     this.fov = 75 * (Math.PI / 180);
   }
 
   /**
-   * Recibe vector normalizado del joystick (-1 a 1)
+   * Recibe vector del joystick (-1 a 1)
+   * dx > 0 (derecha) -> gira a la derecha (+yaw)
+   * dy < 0 (arriba) -> mira hacia arriba (+pitch)
    */
   setJoystickInput(dx, dy) {
-    this.targetYawVel = -dx * this.sensitivity * 0.04;
-    this.targetPitchVel = dy * this.sensitivity * 0.035;
+    this.joystickYawVel = dx * this.sensitivity * 0.038;
+    this.joystickPitchVel = -dy * this.sensitivity * 0.032;
   }
 
   /**
-   * Recibe deltas directos de arrastre táctil o mouse
+   * Recibe deltas de arrastre directo táctil o mouse
    */
   applyDelta(deltaX, deltaY) {
-    this.yaw += deltaX * 0.0035;
-    this.pitch += deltaY * 0.0035;
-    this.clampPitch();
+    this.targetYaw += deltaX * 0.0028;
+    this.targetPitch += deltaY * 0.0028;
+    this.clampTargetYaw();
+    this.clampTargetPitch();
+  }
+
+  stepYaw(direction) {
+    const step = 0.08;
+    this.targetYaw += direction * step;
+    this.clampTargetYaw();
+  }
+
+  stepPitch(direction) {
+    const step = 0.06;
+    this.targetPitch += direction * step;
+    this.clampTargetPitch();
+  }
+
+  clampTargetYaw() {
+    if (this.targetYaw > this.maxYaw) this.targetYaw = this.maxYaw;
+    if (this.targetYaw < this.minYaw) this.targetYaw = this.minYaw;
+  }
+
+  clampTargetPitch() {
+    if (this.targetPitch > this.maxPitch) this.targetPitch = this.maxPitch;
+    if (this.targetPitch < this.minPitch) this.targetPitch = this.minPitch;
+  }
+
+  clampYaw() {
+    if (this.yaw > this.maxYaw) this.yaw = this.maxYaw;
+    if (this.yaw < this.minYaw) this.yaw = this.minYaw;
   }
 
   clampPitch() {
@@ -47,29 +82,35 @@ export class CameraController {
   }
 
   /**
-   * Actualización física por frame
+   * Actualización cinemática por frame (60-120 FPS independientes y fluidos)
    */
   update(deltaTime = 16) {
-    // Interpolar velocidad actual hacia la deseada
-    this.yawVel = this.yawVel * this.friction + this.targetYawVel * (1 - this.friction);
-    this.pitchVel = this.pitchVel * this.friction + this.targetPitchVel * (1 - this.friction);
+    const dtSeconds = Math.min(deltaTime, 64) / 1000;
 
-    this.yaw += this.yawVel;
-    this.pitch += this.pitchVel;
+    // Aplicar entrada del joystick al objetivo
+    if (Math.abs(this.joystickYawVel) > 0.0001 || Math.abs(this.joystickPitchVel) > 0.0001) {
+      this.targetYaw += this.joystickYawVel;
+      this.targetPitch += this.joystickPitchVel;
+      this.clampTargetYaw();
+      this.clampTargetPitch();
+    }
 
+    // Interpolación exponencial independiente del framerate
+    // Tau = ~38ms -> Respuesta inmediata y sedosa a 60Hz o 144Hz
+    const lerpFactor = 1.0 - Math.exp(-26 * dtSeconds);
+    this.yaw += (this.targetYaw - this.yaw) * lerpFactor;
+    this.pitch += (this.targetPitch - this.pitch) * lerpFactor;
+
+    this.clampYaw();
     this.clampPitch();
-
-    // Normalizar Yaw en el rango [-PI, PI] para evitar overflow numérico
-    if (this.yaw > Math.PI) this.yaw -= Math.PI * 2;
-    if (this.yaw < -Math.PI) this.yaw += Math.PI * 2;
   }
 
   reset() {
     this.yaw = 0;
     this.pitch = 0;
-    this.yawVel = 0;
-    this.pitchVel = 0;
-    this.targetYawVel = 0;
-    this.targetPitchVel = 0;
+    this.targetYaw = 0;
+    this.targetPitch = 0;
+    this.joystickYawVel = 0;
+    this.joystickPitchVel = 0;
   }
 }

@@ -104,6 +104,39 @@ export const FILTERS_DATA = {
     }
   },
 
+  'amarillo': {
+    id: 'amarillo',
+    name: 'Filtro Amarillo',
+    subtitle: 'DriveSafe Nocturno & Lluvia',
+    icon: '🟡',
+    color: '#D97706',
+    bgLight: '#FEF3C7',
+    tag: 'Alto Contraste',
+    headline: 'Elimina el encandilamiento azul y resalta los carriles',
+    patientDescription: 'Filtra las luces azules y blancas frías de los faros modernos LED y xenón. Aumenta drásticamente la definición del pavimento y líneas viales de noche o bajo lluvia.',
+    benefits: {
+      confort: 94,
+      claridad: 96,
+      proteccion: 88,
+    },
+    optical: {
+      transmission: 0.94,
+      flareFactor: 0.08,
+      ghostReflection: 0.01,
+      blueLightAbsorption: 0.85,
+      tintRgba: [245, 158, 11, 0.22],
+      tintIntensity: 0.25,
+      polarizationCut: 0.0,
+      photochromic: false,
+      antiFog: false,
+      contrastBoost: 1.40,
+    },
+    pitch: {
+      dialogue: '“Especial para personas que sufren al manejar de noche con lluvia o encandiladas por los faros LED de otros autos: este filtro relaja la vista y hace resaltar el asfalto.”',
+      physics: 'Tinte selectivo de corte ámbar que absorbe el extremo azul del espectro visible (responsable de la mayor aberración cromática y dispersión Rayleigh en el ojo), aumentando la agudeza visual y la sensibilidad al contraste.',
+    }
+  },
+
   'blue-cut': {
     id: 'blue-cut',
     name: 'Filtro Blue Cut',
@@ -121,15 +154,15 @@ export const FILTERS_DATA = {
     },
     optical: {
       transmission: 0.96,
-      flareFactor: 0.25,
-      ghostReflection: 0.02,
-      blueLightAbsorption: 0.65, // Bloqueo potente de luz azul HEV
-      tintRgba: [254, 243, 199, 0.16], // Calidez relajante ámbar/crema
-      tintIntensity: 0.20,
+      flareFactor: 0.20,
+      ghostReflection: 0.015,
+      blueLightAbsorption: 0.80, // Bloqueo selectivo de luz azul HEV de pantallas
+      tintRgba: [251, 191, 36, 0.24], // Calidez relajante ámbar/crema de descanso
+      tintIntensity: 0.55,
       polarizationCut: 0.0,
       photochromic: false,
       antiFog: false,
-      contrastBoost: 1.30,       // Alto contraste en textos
+      contrastBoost: 1.35,       // Alto contraste y nitidez en textos
     },
     pitch: {
       dialogue: '“Si pasas más de 3 horas al día mirando pantallas o tu celular, este filtro evita que termines la jornada con ojos rojos, pesadez y dolor de cabeza.”',

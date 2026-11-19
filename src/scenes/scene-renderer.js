@@ -41,7 +41,7 @@ export class SceneRenderer {
   }
 
   handleResize() {
-    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.dpr = Math.min(window.devicePixelRatio || 1, 2.0);
     const rect = this.canvas.getBoundingClientRect();
     this.width = rect.width;
     this.height = rect.height;
@@ -52,8 +52,9 @@ export class SceneRenderer {
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     this.ctx.scale(this.dpr, this.dpr);
 
+    // Suavizado por GPU por hardware (60 FPS fluidos)
     this.ctx.imageSmoothingEnabled = true;
-    this.ctx.imageSmoothingQuality = 'high';
+    this.ctx.imageSmoothingQuality = 'medium';
   }
 
 
@@ -92,9 +93,6 @@ export class SceneRenderer {
     const width = this.width;
     const height = this.height;
 
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-
     ctx.clearRect(0, 0, width, height);
 
 
@@ -114,8 +112,12 @@ export class SceneRenderer {
       const isClipped = this.glassesHUD.clipLensesOnCanvas(ctx, width, height);
 
       if (isClipped) {
-        // Redibujar la escena base dentro de las lentes
-        this.currentScene.renderBase(ctx, width, height, this.camera);
+        // Renderizar dentro de las lentes (fotográfico o procedural)
+        if (this.currentScene.renderTreated) {
+          this.currentScene.renderTreated(ctx, width, height, this.camera, this.currentFilter);
+        } else {
+          this.currentScene.renderBase(ctx, width, height, this.camera);
+        }
 
         // Calcular propiedades ópticas activas del filtro
         const activeOptical = { ...this.currentFilter.optical };
@@ -129,8 +131,8 @@ export class SceneRenderer {
         // Renderizar las luces con la calibración del filtro activo
         this.currentScene.renderLights(ctx, width, height, this.camera, activeOptical, this.uvIntensity);
 
-        // Aplicar tinte del cristal (Blue Cut cálido, Transitions oscuro, etc.)
-        if (activeOptical.tintIntensity > 0.01) {
+        // Aplicar tinte del cristal sólo si no es una escena fotográfica que ya incluye su propio tinte
+        if (activeOptical.tintIntensity > 0.01 && !this.currentScene.renderTreated) {
           const [r, g, b, a] = activeOptical.tintRgba;
           const alpha = a * (activeOptical.tintIntensity / 0.85);
           ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;

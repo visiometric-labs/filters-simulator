@@ -45,7 +45,7 @@ class App {
 
     // 4. Selectores de Lentes y Escenas
     const lensContainer = document.getElementById('lens-selector-container');
-    this.lensSelector = new LensSelector(lensContainer, 'blanco');
+    this.lensSelector = new LensSelector(lensContainer, 'crizal', 'night-drive');
 
     const sceneContainer = document.getElementById('scene-selector-container');
     this.sceneSelector = new SceneSelector(sceneContainer, 'night-drive');
@@ -100,27 +100,24 @@ class App {
     canvas.addEventListener('pointerup', handlePointerUp);
     canvas.addEventListener('pointercancel', handlePointerUp);
 
-    // Controles con teclado (Flechas o WASD para girar la cabeza en desktop)
+    // Controles con teclado (Flechas o WASD para girar la cabeza con inercia cinematográfica)
     window.addEventListener('keydown', (e) => {
-      const step = 0.05;
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-        this.camera.yaw += step;
+        this.camera.stepYaw(-1);
         eventBus.emit('user-interacted');
       } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-        this.camera.yaw -= step;
+        this.camera.stepYaw(1);
         eventBus.emit('user-interacted');
       } else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
-        this.camera.pitch += step;
-        this.camera.clampPitch();
+        this.camera.stepPitch(1);
         eventBus.emit('user-interacted');
       } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
-        this.camera.pitch -= step;
-        this.camera.clampPitch();
+        this.camera.stepPitch(-1);
         eventBus.emit('user-interacted');
       }
     });
 
-    // Botón Con Gafas / Sin Gafas
+    // Botón Con Gafas / Sin Gafas (Acción clara para el usuario)
     const toggleGlassesBtn = document.getElementById('btn-toggle-glasses');
     const toggleGlassesLabel = document.getElementById('glasses-toggle-label');
 
@@ -131,17 +128,25 @@ class App {
     eventBus.on('glasses-state-changed', (enabled) => {
       if (enabled) {
         toggleGlassesBtn.classList.remove('off');
-        toggleGlassesLabel.textContent = 'Ver con Gafas';
+        toggleGlassesLabel.textContent = 'Ver sin Gafas';
       } else {
         toggleGlassesBtn.classList.add('off');
-        toggleGlassesLabel.textContent = 'Ver sin Gafas';
+        toggleGlassesLabel.textContent = 'Ver con Gafas';
       }
     });
 
-    // Botón Beneficios del Header
+    // Botón Beneficios del Header (Abre y cierra bajo demanda)
     const toggleInfoBtn = document.getElementById('btn-toggle-info');
     toggleInfoBtn.addEventListener('click', () => {
       this.experienceCard.toggle();
+    });
+
+    eventBus.on('experience-card-collapsed', (collapsed) => {
+      if (collapsed) {
+        toggleInfoBtn.classList.remove('active');
+      } else {
+        toggleInfoBtn.classList.add('active');
+      }
     });
 
     // Botón Pantalla Completa

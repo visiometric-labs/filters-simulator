@@ -8,10 +8,11 @@ export class ExperienceCard {
   constructor(containerElement, initialFilter) {
     this.container = containerElement;
     this.currentFilter = initialFilter;
-    this.isCollapsed = false;
+    this.isCollapsed = true;
     this.element = null;
 
     this.render();
+    this.container.classList.add('collapsed');
     this.bindEvents();
   }
 
@@ -112,10 +113,7 @@ export class ExperienceCard {
     eventBus.on('filter-changed', (filter) => {
       this.currentFilter = filter;
       this.updateContent();
-      // Si estaba colapsado y el usuario cambia de lente, reabrir suavemente
-      if (this.isCollapsed) {
-        this.expand();
-      }
+      // Solo actualiza los datos informativos. No fuerza la apertura de la tarjeta.
     });
 
     eventBus.on('toggle-info-card', () => {

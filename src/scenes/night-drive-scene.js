@@ -1,7 +1,10 @@
 /**
- * Escenario 1: Conducción Nocturna (Fotografía Realista 2K en Primera Persona)
- * Muestra el punto de vista real desde el asiento del conductor con asfalto mojado,
- * autos que vienen de frente con faros deslumbrantes y tablero iluminado.
+ * Escenario 1: Conducción Nocturna (Fotografía Multicapa Calibrada en Primera Persona)
+ * Utiliza placas fotográficas reales alineadas píxel a píxel para cada tratamiento óptico:
+ * - Lente Blanca: Deslumbramiento intenso, halos expansivos y velo lumínico sobre el asfalto.
+ * - AR Verde: Reducción del 75-80% de destellos, faros contenidos, asfalto y carriles nítidos.
+ * - Crizal Multicapa: Máxima claridad (99.5%), negros profundos, corte perfecto sin velo.
+ * - Filtro Amarillo: Tinte ámbar de alto contraste que absorbe luz azul molesta de faros LED/xenón.
  */
 export class NightDriveScene {
   constructor() {
@@ -9,42 +12,85 @@ export class NightDriveScene {
     this.name = 'Conducción Nocturna';
     this.time = 0;
 
-    this.img = new Image();
-    this.img.src = '/scenes/night-real.jpg';
-    this.isLoaded = false;
-    this.img.onload = () => {
-      this.isLoaded = true;
+    // Placas fotográficas reales calibradas (Definitiva: Mercedes-Benz Clase S en Avenida)
+    this.currentProposal = '2';
+    this.images = {
+      'blanco': this.createImage('/scenes/night-blanco.jpg'),
+      'ar-verde': this.createImage('/scenes/night-ar-verde.jpg'),
+      'crizal': this.createImage('/scenes/night-crizal.jpg'),
+      'amarillo': this.createImage('/scenes/night-amarillo.jpg'),
     };
 
-    // Coordenadas normalizadas (0 a 1) de los faros principales en la foto real 2K
-    this.lightSources = [
-      { u: 0.21, v: 0.45, size: 30, color: '#FFFFFF', intensity: 1.0, isHeadlight: true },
-      { u: 0.25, v: 0.45, size: 26, color: '#FFFFFF', intensity: 1.0, isHeadlight: true },
-      { u: 0.31, v: 0.42, size: 18, color: '#FEF08A', intensity: 0.8, isHeadlight: true },
-      { u: 0.36, v: 0.42, size: 16, color: '#FEF08A', intensity: 0.7, isHeadlight: true },
-      { u: 0.18, v: 0.12, size: 34, color: '#FCD34D', intensity: 0.85, isStreetLamp: true },
-    ];
+    // Control de transición suave (cross-fade) entre lentes
+    this.currentFilterId = 'blanco';
+    this.targetFilterId = 'blanco';
+    this.transitionProgress = 1.0;
+    this.transitionDuration = 260; // ms para transición óptica elegante y sedosa
+
+    this.currentDrawRect = null;
+  }
+
+  createImage(src) {
+    const img = new Image();
+    img.src = src;
+    img.isLoaded = false;
+    img.onload = () => {
+      img.isLoaded = true;
+    };
+    return img;
+  }
+
+  setProposal(num) {
+    this.currentProposal = String(num);
+    const src = `/scenes/proposals/proposal-${num}.jpg`;
+    this.images.blanco = this.createImage(src);
+    this.images['ar-verde'] = this.createImage(src);
+    this.images.crizal = this.createImage(src);
+    this.images.amarillo = this.createImage(src);
   }
 
   update(deltaTime) {
     this.time += deltaTime * 0.001;
+
+    if (this.transitionProgress < 1.0) {
+      this.transitionProgress = Math.min(1.0, this.transitionProgress + deltaTime / this.transitionDuration);
+    }
   }
 
   /**
-   * Renderiza el fondo fotográfico real preservando rigurosamente su relación de aspecto
-   * y alineando los píxeles para evitar desenfoque o pixelación.
+   * Resuelve la imagen correspondiente a un ID de filtro
    */
-  renderBase(ctx, width, height, camera) {
-    if (!this.isLoaded || !this.img.naturalWidth) {
-      ctx.fillStyle = '#020617';
-      ctx.fillRect(0, 0, width, height);
-      return;
+  getImageForFilter(filterId) {
+    if (this.images[filterId]) {
+      return this.images[filterId];
     }
+    // Mapeos inteligentes para otros tratamientos del catálogo general
+    if (filterId === 'blue-cut') {
+      return this.images['ar-verde'];
+    }
+    if (filterId === 'transitions') {
+      return this.images['crizal']; // En la noche Transitions está 100% transparente
+    }
+    if (filterId === 'polarizado') {
+      return this.images['crizal'];
+    }
+    return this.images['blanco'];
+  }
 
-    // Preservar la relación de aspecto nativa del archivo 2K (16:9)
-    const imgAspect = this.img.naturalWidth / this.img.naturalHeight;
+  /**
+   * Calcula las dimensiones y posición del encuadre fotográfico manteniendo
+   * rigurosamente la relación de aspecto sin deformación ni estiramiento.
+   */
+  computeDrawRect(width, height, camera) {
+    const baseImg = this.images['blanco'];
+    const naturalW = baseImg.naturalWidth || 2752;
+    const naturalH = baseImg.naturalHeight || 1536;
+
+    const imgAspect = naturalW / naturalH;
     const viewAspect = width / height;
-    const zoom = 1.25; // Margen óptimo para permitir paneo sin deformar
+
+    // Zoom calibrado (1.15x) para libertad de mirada natural en cabina sin recortar el tablero
+    const zoom = 1.15;
 
     let destW, destH;
     if (viewAspect > imgAspect) {
@@ -58,86 +104,84 @@ export class NightDriveScene {
     const panRangeX = (destW - width) * 0.5;
     const panRangeY = (destH - height) * 0.5;
 
+    // Normalización de rotación de cabeza
     const normYaw = Math.max(-1, Math.min(1, camera.yaw / (camera.fov * 0.55)));
     const normPitch = Math.max(-1, Math.min(1, camera.pitch / camera.maxPitch));
 
-    // Redondeo entero para nitidez pixel-perfect
-    const drawX = Math.round(-panRangeX - (normYaw * panRangeX));
-    const drawY = Math.round(-panRangeY + (normPitch * panRangeY));
+    // Coordenadas flotantes subpíxel para interpolación 100% fluida a 60-144 FPS
+    const drawX = -panRangeX - (normYaw * panRangeX);
+    const drawY = -panRangeY + (normPitch * panRangeY);
 
-    this.currentDrawRect = { x: drawX, y: drawY, w: destW, h: destH };
+    return { x: drawX, y: drawY, w: destW, h: destH };
+  }
+
+  /**
+   * PASE 1: Visión Periférica (Fuera de las gafas)
+   * Muestra la visión natural sin tratamiento con deslumbramiento fotográfico real.
+   */
+  renderBase(ctx, width, height, camera) {
+    const rect = this.computeDrawRect(width, height, camera);
+    this.currentDrawRect = rect;
+
+    const baseImg = this.images['blanco'];
+    if (!baseImg.isLoaded) {
+      ctx.fillStyle = '#020617';
+      ctx.fillRect(0, 0, width, height);
+      return;
+    }
 
     ctx.save();
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(this.img, drawX, drawY, destW, destH);
+    ctx.drawImage(baseImg, rect.x, rect.y, rect.w, rect.h);
     ctx.restore();
   }
 
   /**
-   * Simulación física de difracción óptica, halos estrellados y reflejos sobre la fotografía real
+   * PASE 2: Visión a través de los Cristales Oftálmicos (Dentro del recorte de las lentes)
+   * Muestra la placa fotográfica real correspondiente al filtro seleccionado,
+   * con transición suave (cross-fade).
    */
-  renderLights(ctx, width, height, camera, optical) {
-    if (!this.isLoaded || !this.currentDrawRect) return;
+  renderTreated(ctx, width, height, camera, activeFilter) {
+    const rect = this.currentDrawRect || this.computeDrawRect(width, height, camera);
+    const targetFilterId = activeFilter.id;
 
-    const { x: imgX, y: imgY, w: imgW, h: imgH } = this.currentDrawRect;
-    const flareFactor = optical.flareFactor; // 1.0 (Sin AR) a 0.05 (Crizal)
+    if (targetFilterId !== this.targetFilterId) {
+      this.currentFilterId = this.targetFilterId;
+      this.targetFilterId = targetFilterId;
+      this.transitionProgress = 0.0;
+    }
 
-    this.lightSources.forEach((light) => {
-      const px = Math.round(imgX + light.u * imgW);
-      const py = Math.round(imgY + light.v * imgH);
+    const currentImg = this.getImageForFilter(this.currentFilterId);
+    const targetImg = this.getImageForFilter(this.targetFilterId);
 
-      if (px < -150 || px > width + 150 || py < -150 || py > height + 150) return;
+    ctx.save();
+    ctx.imageSmoothingEnabled = true;
 
-      ctx.save();
-
-      // 1. Destello cegador sobre los faros de los autos (Sin AR)
-      if (flareFactor > 0.08) {
-        // Halo difuso envolvente que encandila la vista
-        const haloRadius = light.size * (flareFactor * 7.5 + 1.2);
-        const haloGrad = ctx.createRadialGradient(px, py, light.size * 0.3, px, py, haloRadius);
-        haloGrad.addColorStop(0, `rgba(255, 255, 255, ${0.9 * flareFactor})`);
-        haloGrad.addColorStop(0.25, `rgba(254, 240, 138, ${0.65 * flareFactor})`);
-        haloGrad.addColorStop(0.65, `rgba(253, 186, 116, ${0.3 * flareFactor})`);
-        haloGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.fillStyle = haloGrad;
-        ctx.beginPath();
-        ctx.arc(px, py, haloRadius, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Destellos estrellados puntiagudos (Star-burst spikes característicos de la falta de AR)
-        const spikeCount = light.isHeadlight ? 8 : 6;
-        const spikeLength = light.size * (flareFactor * 16 + 2);
-        ctx.strokeStyle = `rgba(255, 255, 255, ${0.75 * flareFactor})`;
-        ctx.lineWidth = 2.2 * flareFactor;
-
-        for (let s = 0; s < spikeCount; s++) {
-          const angle = (s * (Math.PI / (spikeCount / 2))) + (this.time * 0.04);
-          const x2 = px + Math.cos(angle) * spikeLength;
-          const y2 = py + Math.sin(angle) * spikeLength;
-
-          ctx.beginPath();
-          ctx.moveTo(px, py);
-          ctx.lineTo(x2, y2);
-          ctx.stroke();
-        }
+    // Si estamos en transición entre dos fotos de lentes
+    if (this.transitionProgress < 1.0 && currentImg !== targetImg && currentImg.isLoaded) {
+      const t = this.transitionProgress;
+      const smoothAlpha = t * t * (3 - 2 * t); // Smoothstep óptico sedoso
+      ctx.drawImage(currentImg, rect.x, rect.y, rect.w, rect.h);
+      ctx.globalAlpha = smoothAlpha;
+      if (targetImg.isLoaded) {
+        ctx.drawImage(targetImg, rect.x, rect.y, rect.w, rect.h);
       }
-
-      // 2. Reflejos parásitos internos (Ghost reflections característicos del lente blanco sin tratamiento)
-      if (optical.ghostReflection > 0.04 && light.isHeadlight) {
-        const centerDistX = (px - width / 2);
-        const centerDistY = (py - height / 2);
-        const gx = Math.round(width / 2 - centerDistX * 0.45);
-        const gy = Math.round(height / 2 - centerDistY * 0.45);
-
-        ctx.fillStyle = `rgba(254, 240, 138, ${optical.ghostReflection * 2.5})`;
-        ctx.beginPath();
-        ctx.arc(gx, gy, light.size * 0.8, 0, Math.PI * 2);
-        ctx.fill();
+    } else {
+      // Estado estable
+      const imgToDraw = targetImg.isLoaded ? targetImg : this.images['blanco'];
+      if (imgToDraw.isLoaded) {
+        ctx.drawImage(imgToDraw, rect.x, rect.y, rect.w, rect.h);
       }
+    }
 
-      ctx.restore();
-    });
+    ctx.restore();
+  }
+
+  /**
+   * Las luces y destellos ahora están 100% integrados fotográficamente en las placas reales.
+   * Se eliminan por completo las líneas geométricas y círculos artificiales de código.
+   */
+  renderLights() {
+    // No-op: Calibración óptica fotográfica pura
   }
 }
