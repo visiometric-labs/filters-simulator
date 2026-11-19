@@ -1,3 +1,5 @@
+import { getAssetUrl } from '../core/asset-helper.js';
+
 /**
  * Escenario 2: Oficina Digital & Pantallas (Fotografía Multicapa Calibrada 2K en Primera Persona)
  * Utiliza 4 placas fotográficas reales alineadas píxel a píxel para cada tratamiento óptico:
@@ -31,9 +33,7 @@ export class DigitalOfficeScene {
   }
 
   createImage(src) {
-    const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
-    const cleanSrc = src.startsWith('/') ? src : `/${src}`;
-    const fullPath = `${base}${cleanSrc}`;
+    const fullPath = getAssetUrl(src);
     const img = new Image();
     img.src = fullPath;
     img.isLoaded = false;

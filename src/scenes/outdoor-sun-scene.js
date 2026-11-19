@@ -1,3 +1,5 @@
+import { getAssetUrl } from '../core/asset-helper.js';
+
 /**
  * Escenario 3: Día Soleado y Exteriores (Fotografía Realista 2K en Primera Persona)
  * Muestra una carretera panorámica costera real con sol brillante y reflejo solar sobre el agua,
@@ -9,9 +11,8 @@ export class OutdoorSunScene {
     this.name = 'Día Soleado';
     this.time = 0;
 
-    const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
     this.img = new Image();
-    this.img.src = `${base}/scenes/sun-real.jpg`;
+    this.img.src = getAssetUrl('scenes/sun-real.jpg');
     this.isLoaded = false;
     this.img.onload = () => {
       this.isLoaded = true;
