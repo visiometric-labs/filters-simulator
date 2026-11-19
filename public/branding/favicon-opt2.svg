@@ -1,0 +1,36 @@
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+    <defs>
+      <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#020617"/>
+        <stop offset="100%" stop-color="#0F172A"/>
+      </linearGradient>
+      <linearGradient id="ringEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#10B981"/>
+        <stop offset="100%" stop-color="#059669"/>
+      </linearGradient>
+      <linearGradient id="ringSapphire" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#38BDF8"/>
+        <stop offset="100%" stop-color="#6366F1"/>
+      </linearGradient>
+      <filter id="glow2" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="4" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
+    </defs>
+    <rect width="128" height="128" rx="28" fill="url(#bgGrad2)"/>
+    <circle cx="64" cy="64" r="54" fill="none" stroke="#1E293B" stroke-width="2"/>
+    
+    <!-- Anillos concéntricos antirreflejo multicapa -->
+    <circle cx="64" cy="64" r="44" fill="#0B1329" stroke="url(#ringSapphire)" stroke-width="4.5" filter="url(#glow2)"/>
+    <circle cx="64" cy="64" r="34" fill="none" stroke="url(#ringEmerald)" stroke-width="3" opacity="0.85"/>
+    <circle cx="64" cy="64" r="23" fill="none" stroke="#818CF8" stroke-width="2.5" opacity="0.7"/>
+    
+    <!-- Pupila óptica central de precisión -->
+    <circle cx="64" cy="64" r="10" fill="#38BDF8"/>
+    <circle cx="64" cy="64" r="4" fill="#FFFFFF"/>
+    
+    <!-- Destello de corte de luz -->
+    <path d="M 40 40 L 52 40 L 44 54 Z" fill="#FFFFFF" opacity="0.6"/>
+  </svg>
+  

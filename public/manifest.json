@@ -1,0 +1,22 @@
+{
+  "name": "Visiometric — Experiencia Óptica POV",
+  "short_name": "Visiometric",
+  "description": "Demostrador clínico de tratamientos oftálmicos en primera persona para consulta y mostrador",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#090D16",
+  "theme_color": "#0F172A",
+  "icons": [
+    {
+      "src": "./branding/favicon-opt1.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "./branding/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

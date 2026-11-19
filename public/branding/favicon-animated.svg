@@ -1,0 +1,37 @@
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+    <defs>
+      <linearGradient id="bgAnim" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#0F172A"/>
+        <stop offset="100%" stop-color="#020617"/>
+      </linearGradient>
+      <linearGradient id="frameRim" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#38BDF8"/>
+        <stop offset="100%" stop-color="#10B981"/>
+      </linearGradient>
+      <clipPath id="lensClip">
+        <rect x="20" y="44" width="38" height="38" rx="14"/>
+      </clipPath>
+    </defs>
+    <rect width="128" height="128" rx="28" fill="url(#bgAnim)"/>
+    
+    <!-- Montura -->
+    <rect x="20" y="44" width="38" height="38" rx="14" fill="#0B132B" stroke="url(#frameRim)" stroke-width="5"/>
+    <rect x="70" y="44" width="38" height="38" rx="14" fill="#0B132B" stroke="url(#frameRim)" stroke-width="5"/>
+    <path d="M 58 56 Q 64 51 70 56" fill="none" stroke="url(#frameRim)" stroke-width="4.5" stroke-linecap="round"/>
+    
+    <!-- Destello animado con SMIL que barre la lente cada 2.5 segundos -->
+    <g clip-path="url(#lensClip)">
+      <rect x="-40" y="30" width="20" height="70" fill="#FFFFFF" opacity="0.8" transform="rotate(25 35 60)">
+        <animate attributeName="x" values="-50; 90; 90; -50" dur="2.8s" repeatCount="indefinite" keyTimes="0; 0.4; 0.9; 1"/>
+        <animate attributeName="opacity" values="0; 0.85; 0; 0" dur="2.8s" repeatCount="indefinite" keyTimes="0; 0.2; 0.4; 1"/>
+      </rect>
+    </g>
+    
+    <!-- Punto de brillo que pulsa en la otra lente -->
+    <circle cx="89" cy="63" r="3.5" fill="#10B981">
+      <animate attributeName="r" values="3.5; 6; 3.5" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.7; 1; 0.7" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+  

@@ -178,4 +178,13 @@ class App {
 // Iniciar aplicación al cargar el DOM
 window.addEventListener('DOMContentLoaded', () => {
   new App();
+
+  // Ocultar preloader suavemente
+  const preloader = document.getElementById('clinic-preloader');
+  if (preloader) {
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+      setTimeout(() => preloader.remove(), 450);
+    }, 350);
+  }
 });

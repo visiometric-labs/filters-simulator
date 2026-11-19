@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuestas de Branding & Portadas — Visiometric Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #090D16;
+      color: #F8FAFC;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      padding: 40px 20px 100px 20px;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #38BDF8;
+      margin-bottom: 10px;
+    }
+    .header p {
+      font-size: 16px;
+      color: #94A3B8;
+    }
+    .section {
+      background: #0F172A;
+      border: 1px solid #1E293B;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #F8FAFC;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      font-size: 14px;
+      color: #94A3B8;
+      margin-bottom: 24px;
+    }
+
+    /* Simulador de Pestañas de Navegador */
+    .browser-mockup {
+      background: #1E293B;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #334155;
+      margin-bottom: 25px;
+    }
+    .browser-tabs-bar {
+      background: #0F172A;
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px 0 12px;
+      border-bottom: 1px solid #1E293B;
+      overflow-x: auto;
+    }
+    .browser-tab {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #1E293B;
+      padding: 9px 16px;
+      border-radius: 10px 10px 0 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: #F8FAFC;
+      white-space: nowrap;
+      border-top: 2px solid #38BDF8;
+    }
+    .browser-tab.inactive {
+      background: #131D31;
+      color: #94A3B8;
+      border-top: 2px solid transparent;
+    }
+    .browser-tab img {
+      width: 18px;
+      height: 18px;
+    }
+    .browser-url-bar {
+      padding: 10px 16px;
+      background: #1E293B;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .url-input {
+      background: #0F172A;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: #94A3B8;
+      flex: 1;
+      border: 1px solid #334155;
+    }
+
+    /* Grid de Favicons */
+    .favicons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .favicon-card {
+      background: #131D31;
+      border: 1px solid #1E293B;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .favicon-card:hover {
+      border-color: #38BDF8;
+      transform: translateY(-2px);
+    }
+    .fav-preview-large {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 16px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #090D16;
+      border-radius: 20px;
+      border: 1px solid #334155;
+      padding: 12px;
+    }
+    .fav-preview-large img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .fav-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #F8FAFC;
+      margin-bottom: 6px;
+    }
+    .fav-desc {
+      font-size: 12px;
+      color: #94A3B8;
+      margin-bottom: 12px;
+    }
+    .fav-real-scale {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0F172A;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #64748B;
+      border: 1px solid #1E293B;
+    }
+    .fav-real-scale img {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* WhatsApp Simulator */
+    .whatsapp-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #0B141B;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #1F2C34;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    }
+    .wa-header {
+      background: #1F2C34;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .wa-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #00A884;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .wa-contact-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #E9EDEF;
+    }
+    .wa-status {
+      font-size: 11px;
+      color: #8696A0;
+    }
+    .wa-chat-body {
+      padding: 20px 14px;
+      background: #0B141B url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png') repeat;
+      background-size: 380px;
+    }
+    .wa-bubble {
+      background: #005C4B;
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 420px;
+      margin-left: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .wa-card-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .wa-card-info {
+      padding: 12px 14px;
+      background: #025144;
+    }
+    .wa-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #E9EDEF;
+      margin-bottom: 4px;
+    }
+    .wa-card-desc {
+      font-size: 12px;
+      color: #8696A0;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .wa-card-url {
+      font-size: 11px;
+      color: #53BDEB;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .wa-message-text {
+      padding: 10px 14px 6px 14px;
+      font-size: 13px;
+      color: #E9EDEF;
+    }
+    .wa-time {
+      text-align: right;
+      padding: 0 10px 6px 0;
+      font-size: 10px;
+      color: #8696A0;
+    }
+
+    /* Selector de Portadas */
+    .cover-picker {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+    .cover-btn {
+      background: #1E293B;
+      color: #94A3B8;
+      border: 1px solid #334155;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cover-btn.active {
+      background: #0284C7;
+      color: #FFFFFF;
+      border-color: #38BDF8;
+    }
+
+    /* Grid de Portadas Grandes */
+    .covers-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .cover-full-card {
+      background: #131D31;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #1E293B;
+    }
+    .cover-full-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .cover-footer {
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0F172A;
+    }
+
+    /* Simulador de iPad / Tablet App Icon */
+    .tablet-screen {
+      max-width: 480px;
+      margin: 0 auto;
+      background: #020617;
+      border: 8px solid #1E293B;
+      border-radius: 36px;
+      padding: 30px 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    }
+    .tablet-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+    .app-icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .app-icon-box {
+      width: 64px;
+      height: 64px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    .app-icon-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .app-icon-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #E2E8F0;
+    }
+
+    .badge-highlight {
+      background: #0284C7;
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 12px;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>👓 Visiometric Labs — Propuestas Visuales de Marca</h1>
+      <p>Revisa y compara en vivo los títulos, favicons, portadas de WhatsApp y el ícono de app</p>
+    </div>
+
+    <!-- SECCIÓN 1: TÍTULO DE LA PESTAÑA -->
+    <div class="section">
+      <div class="section-title">
+        <span>1. 🏷️ Opciones de Título para la Pestaña</span>
+        <span class="badge-highlight">Sin la palabra "Simulador"</span>
+      </div>
+      <div class="section-desc">Así es como se ve la pestaña arriba en Google Chrome / Safari según la opción que elijas:</div>
+
+      <div class="browser-mockup">
+        <div class="browser-tabs-bar">
+          <div class="browser-tab">
+            <img src="./branding/favicon-animated.svg" alt="icon">
+            <span>👓 Visiometric™ | Experiencia Óptica POV</span>
+          </div>
+          <div class="browser-tab inactive">
+            <img src="./branding/favicon-opt1.png" alt="icon">
+            <span>👓 Visiometric™ | Comparador de Tratamientos Oftálmicos</span>
+          </div>
+          <div class="browser-tab inactive">
+            <img src="./branding/favicon-opt2.png" alt="icon">
+            <span>👓 Visiometric™ | Demostración de Lentes y Filtros</span>
+          </div>
+        </div>
+        <div class="browser-url-bar">
+          <div class="url-input">🔒 https://visiometric-labs.github.io/filters-simulator/</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: FAVICONS (CON ANIMADO) -->
+    <div class="section">
+      <div class="section-title">
+        <span>2. 💎 Opciones de Favicon (Incluye opción animada)</span>
+      </div>
+      <div class="section-desc">
+        Diseñados en SVG vectorial + PNG. Se ven nítidos a tamaño real (16x16 / 32x32) y en pantallas de alta resolución:
+      </div>
+
+      <div class="favicons-grid">
+        <!-- Opción 1 -->
+        <div class="favicon-card">
+          <div class="fav-preview-large">
+            <img src="./branding/favicon-opt1.svg" alt="Favicon 1">
+          </div>
+          <div class="fav-title">Opción 1: Montura Titanio + Destello</div>
+          <div class="fav-desc">Montura moderna con biseles reflectivos en cian y esmeralda.</div>
+          <div class="fav-real-scale">
+            <span>Tamaño real:</span>
+            <img src="./branding/favicon-opt1.png" alt="icon">
+          </div>
+        </div>
+
+        <!-- Opción 2 -->
+        <div class="favicon-card">
+          <div class="fav-preview-large">
+            <img src="./branding/favicon-opt2.svg" alt="Favicon 2">
+          </div>
+          <div class="fav-title">Opción 2: Lente Multicapa</div>
+          <div class="fav-desc">Lente circular con anillos de interferencia antirreflejante.</div>
+          <div class="fav-real-scale">
+            <span>Tamaño real:</span>
+            <img src="./branding/favicon-opt2.png" alt="icon">
+          </div>
+        </div>
+
+        <!-- Opción 3 -->
+        <div class="favicon-card">
+          <div class="fav-preview-large">
+            <img src="./branding/favicon-opt3.svg" alt="Favicon 3">
+          </div>
+          <div class="fav-title">Opción 3: Monograma "V"</div>
+          <div class="fav-desc">Letra V de Visiometric estilizada como prisma y montura.</div>
+          <div class="fav-real-scale">
+            <span>Tamaño real:</span>
+            <img src="./branding/favicon-opt3.png" alt="icon">
+          </div>
+        </div>
+
+        <!-- Opción 4 Animada -->
+        <div class="favicon-card" style="border-color: #0284C7;">
+          <div class="fav-preview-large">
+            <img src="./branding/favicon-animated.svg" alt="Favicon Animado">
+          </div>
+          <div class="fav-title">Opción 4: Favicon Animado ⭐</div>
+          <div class="fav-desc">Un destello de luz barre la lente y pulsa cada 2.8 segundos.</div>
+          <div class="fav-real-scale">
+            <span>En vivo:</span>
+            <img src="./branding/favicon-animated.svg" alt="icon">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3: PORTADA DE WHATSAPP -->
+    <div class="section">
+      <div class="section-title">
+        <span>3. 📱 Portada cuando envías el link por WhatsApp</span>
+      </div>
+      <div class="section-desc">
+        Toca los botones para ver exactamente cómo se verá el mensaje en WhatsApp según la portada que escojas:
+      </div>
+
+      <!-- Selector interactivo de portadas -->
+      <div class="cover-picker">
+        <button class="cover-btn active" onclick="setCover(1)">🚗 Portada 1: Noche Mercedes POV (Recomendada)</button>
+        <button class="cover-btn" onclick="setCover(2)">⚖️ Portada 2: Split-Screen Noche vs Oficina</button>
+        <button class="cover-btn" onclick="setCover(3)">💎 Portada 3: Minimalista de Lujo</button>
+      </div>
+
+      <!-- Mockup de WhatsApp -->
+      <div class="whatsapp-container">
+        <div class="wa-header">
+          <div class="wa-avatar">👓</div>
+          <div>
+            <div class="wa-contact-name">Dr. Optometría / Paciente</div>
+            <div class="wa-status">en línea</div>
+          </div>
+        </div>
+
+        <div class="wa-chat-body">
+          <div class="wa-bubble">
+            <img id="wa-card-img" class="wa-card-image" src="./branding/og-cover-opt1.jpg" alt="WhatsApp Cover">
+            <div class="wa-card-info">
+              <div class="wa-card-title" id="wa-card-title">Visiometric Labs — Experiencia Óptica en Primera Persona</div>
+              <div class="wa-card-desc" id="wa-card-desc">Demostración interactiva de tratamientos oftálmicos: Antirreflejo Verde, Crizal Multicapa, Blue Cut y Transitions en cabina 2K.</div>
+              <div class="wa-card-url">🔗 visiometric-labs.github.io/filters-simulator/</div>
+            </div>
+            <div class="wa-message-text">Hola! Te comparto la plataforma para que pruebes los tratamientos de lentes en vivo antes de mandarlos a hacer 👇</div>
+            <div class="wa-time">16:40 ✓✓</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Galería con las 3 imágenes a tamaño completo -->
+      <div class="covers-gallery">
+        <div class="cover-full-card">
+          <img src="./branding/og-cover-opt1.jpg" alt="Portada 1">
+          <div class="cover-footer">
+            <strong>Portada 1: Conducción Nocturna Mercedes POV (1200 x 630 px)</strong>
+            <span>Máximo impacto visual de seguridad</span>
+          </div>
+        </div>
+
+        <div class="cover-full-card">
+          <img src="./branding/og-cover-opt2.jpg" alt="Portada 2">
+          <div class="cover-footer">
+            <strong>Portada 2: Split-Screen Noche vs Oficina (1200 x 630 px)</strong>
+            <span>Muestra los dos escenarios clave al mismo tiempo</span>
+          </div>
+        </div>
+
+        <div class="cover-full-card">
+          <img src="./branding/og-cover-opt3.jpg" alt="Portada 3">
+          <div class="cover-footer">
+            <strong>Portada 3: Minimalista Corporativa de Lujo (1200 x 630 px)</strong>
+            <span>Elegancia médica sobria y limpia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 4: APP ICON IPAD / TABLET -->
+    <div class="section">
+      <div class="section-title">
+        <span>4.2 📲 Ícono en Pantalla de Inicio (iPad / Tablet de Consultorio)</span>
+      </div>
+      <div class="section-desc">
+        Si el asesor o médico guarda la página en la pantalla de su iPad o tablet, así es como se verá el ícono (igual a una app nativa):
+      </div>
+
+      <div class="tablet-screen">
+        <div class="tablet-grid">
+          <div class="app-icon-item">
+            <div class="app-icon-box" style="background: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 28px;">
+              📁
+            </div>
+            <span class="app-icon-name">Historias</span>
+          </div>
+
+          <div class="app-icon-item">
+            <div class="app-icon-box" style="background: #059669; display: flex; align-items: center; justify-content: center; font-size: 28px;">
+              👁️
+            </div>
+            <span class="app-icon-name">Refracción</span>
+          </div>
+
+          <!-- NUESTRO ICONO -->
+          <div class="app-icon-item">
+            <div class="app-icon-box" style="border: 2px solid #38BDF8;">
+              <img src="./branding/apple-touch-icon.png" alt="Visiometric App">
+            </div>
+            <span class="app-icon-name" style="color: #38BDF8; font-weight: 700;">Visiometric</span>
+          </div>
+
+          <div class="app-icon-item">
+            <div class="app-icon-box" style="background: #D97706; display: flex; align-items: center; justify-content: center; font-size: 28px;">
+              📊
+            </div>
+            <span class="app-icon-name">Ventas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const covers = {
+      1: {
+        img: './branding/og-cover-opt1.jpg',
+        title: 'Visiometric Labs — Experiencia Óptica en Primera Persona',
+        desc: 'Demostración interactiva de tratamientos oftálmicos: Antirreflejo Verde, Crizal Multicapa, Blue Cut y Transitions en cabina 2K.'
+      },
+      2: {
+        img: './branding/og-cover-opt2.jpg',
+        title: 'Visiometric Labs — Comparador Clínico de Filtros',
+        desc: 'Comprueba el beneficio real de cada tratamiento en conducción nocturna y oficina antes de mandar a hacer tus lentes.'
+      },
+      3: {
+        img: './branding/og-cover-opt3.jpg',
+        title: 'Visiometric Labs — Experimenta la Diferencia Antes de Comprar',
+        desc: 'Herramienta de consultorio para la venta y prescripción de tratamientos ópticos de alta gama.'
+      }
+    };
+
+    function setCover(num) {
+      document.querySelectorAll('.cover-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === num - 1);
+      });
+      document.getElementById('wa-card-img').src = covers[num].img;
+      document.getElementById('wa-card-title').textContent = covers[num].title;
+      document.getElementById('wa-card-desc').textContent = covers[num].desc;
+    }
+  </script>
+</body>
+</html>
