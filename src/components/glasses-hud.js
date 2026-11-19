@@ -72,8 +72,8 @@ export class GlassesHUD {
                 fill="none" stroke="#000000" stroke-width="28" />
         </g>
 
-        <!-- Marco Oftálmico Panorámico con DoF -->
-        <g id="glasses-frame-group" filter="url(#dof-blur)">
+        <!-- Marco Oftálmico Panorámico de Alta Definición (Full HD Vectorial Nítido) -->
+        <g id="glasses-frame-group">
           <!-- Silueta del Marco Panorámico (Borde externo) -->
           <path d="M 120 110 
                    C 600 75, 1320 75, 1800 110 
