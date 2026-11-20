@@ -63,10 +63,11 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--bg-app);
+  background-color: #070B14;
   color: var(--text-main);
   overflow: hidden;
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
   user-select: none;
   -webkit-font-smoothing: antialiased;

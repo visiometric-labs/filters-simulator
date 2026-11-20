@@ -10,7 +10,15 @@ html, body {
   -webkit-text-size-adjust: 100%;
 }
 
-:fullscreen, ::backdrop, :-webkit-full-screen {
+:fullscreen {
+  background-color: #070B14 !important;
+}
+
+:-webkit-full-screen {
+  background-color: #070B14 !important;
+}
+
+::backdrop {
   background-color: #070B14 !important;
 }
 
@@ -22,7 +30,7 @@ html, body {
   height: 100vh;
   height: 100dvh;
   position: relative;
-  background-color: var(--bg-app);
+  background-color: #070B14;
   overflow: hidden;
 }
 

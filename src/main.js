@@ -284,7 +284,9 @@ class App {
         const elem = document.documentElement;
         if (!document.fullscreenElement && !document.webkitFullscreenElement) {
           if (elem.requestFullscreen) {
-            elem.requestFullscreen().catch(() => {});
+            elem.requestFullscreen({ navigationUI: 'hide' }).catch(() => {
+              elem.requestFullscreen().catch(() => {});
+            });
           } else if (elem.webkitRequestFullscreen) {
             elem.webkitRequestFullscreen().catch(() => {});
           } else if (elem.msRequestFullscreen) {
