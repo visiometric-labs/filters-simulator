@@ -1,8 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy Multi-Branch to GitHub Pages
 
 on:
   push:
-    branches: [dev]
+    branches: [main, dev]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -20,20 +21,40 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      # 1. Compilar rama MAIN para la raíz (Producción: /filters-simulator/)
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main-repo
 
-      - name: Build
-        run: npm run build
+      - name: Build main (Producción)
+        run: |
+          cd main-repo
+          npm ci
+          npx vite build --base=/filters-simulator/
+          mkdir -p ../combined-dist
+          cp -r dist/* ../combined-dist/
+
+      # 2. Compilar rama DEV para la subcarpeta /dev/ (Tablet y Pruebas: /filters-simulator/dev/)
+      - name: Checkout dev
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: dev-repo
+
+      - name: Build dev (Pruebas Tablet)
+        run: |
+          cd dev-repo
+          npm ci
+          npx vite build --base=/filters-simulator/dev/
+          mkdir -p ../combined-dist/dev
+          cp -r dist/* ../combined-dist/dev/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -41,7 +62,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './combined-dist'
 
       - name: Deploy to GitHub Pages
         id: deployment

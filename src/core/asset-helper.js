@@ -16,9 +16,14 @@ export function getAssetUrl(path) {
     // Entorno sin import.meta
   }
 
-  // 2. Si corre directamente en GitHub Pages en subdirectorio /filters-simulator
-  if (typeof window !== 'undefined' && window.location && window.location.pathname.includes('/filters-simulator')) {
-    return `/filters-simulator/${cleanPath}`;
+  // 2. Si corre directamente en GitHub Pages en subdirectorios
+  if (typeof window !== 'undefined' && window.location) {
+    if (window.location.pathname.includes('/filters-simulator/dev')) {
+      return `/filters-simulator/dev/${cleanPath}`;
+    }
+    if (window.location.pathname.includes('/filters-simulator')) {
+      return `/filters-simulator/${cleanPath}`;
+    }
   }
 
   // 3. Fallback relativo local

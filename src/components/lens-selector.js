@@ -32,6 +32,11 @@ export class LensSelector {
 
     this.render();
     this.bindEvents();
+
+    // Emitir el filtro inicial para sincronizar el motor y la UI desde el primer fotograma
+    if (FILTERS_DATA[this.currentFilterId]) {
+      eventBus.emit('filter-changed', FILTERS_DATA[this.currentFilterId]);
+    }
   }
 
   render() {

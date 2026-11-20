@@ -36,6 +36,23 @@ html, body {
   gap: 12px;
 }
 
+.brand-section#btn-brand-home {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.brand-section#btn-brand-home:hover {
+  background-color: rgba(241, 245, 249, 0.85);
+  transform: translateY(-1px);
+}
+
+.brand-section#btn-brand-home:active {
+  transform: translateY(0);
+}
+
 .brand-icon-wrapper {
   width: 40px;
   height: 40px;

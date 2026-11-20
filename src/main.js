@@ -50,9 +50,9 @@ class App {
     const sceneContainer = document.getElementById('scene-selector-container');
     this.sceneSelector = new SceneSelector(sceneContainer, 'night-drive');
 
-    // 5. Tarjeta de Experiencia del Paciente
+    // 5. Tarjeta de Experiencia del Paciente (Inicializada con Crizal para sincronizar con el selector)
     const patientCardContainer = document.getElementById('patient-card-container');
-    this.experienceCard = new ExperienceCard(patientCardContainer, FILTERS_DATA['blanco']);
+    this.experienceCard = new ExperienceCard(patientCardContainer, FILTERS_DATA['crizal']);
 
     // 6. Slider UV para Transitions
     const uvContainer = document.getElementById('uv-slider-container');
@@ -173,13 +173,34 @@ class App {
       }
     }, 6000);
 
-    // 7. Control de la Portada de Bienvenida (Landing Cover)
+    // 7. Control de la Portada de Bienvenida (Landing Cover) y Pantalla Completa Automática
     const landingCover = document.getElementById('landing-cover');
     const enterExpBtn = document.getElementById('btn-enter-exp');
     const backToLandingBtn = document.getElementById('btn-back-to-landing');
     const brandHomeBtn = document.getElementById('btn-brand-home');
 
+    // Función segura para solicitar pantalla completa en navegadores móviles, tablets y desktop
+    const requestFullscreenSafe = () => {
+      try {
+        const elem = document.documentElement;
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(() => {});
+          } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen().catch(() => {});
+          } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen().catch(() => {});
+          }
+        }
+      } catch (err) {
+        // Ignorar si el navegador bloquea la llamada
+      }
+    };
+
     const openSimulator = (sceneId = null) => {
+      // Activar pantalla completa inmediatamente al iniciar la experiencia
+      requestFullscreenSafe();
+
       if (sceneId && this.sceneSelector) {
         this.sceneSelector.selectScene(sceneId);
       }

@@ -23,7 +23,7 @@ export class SceneRenderer {
     };
 
     this.currentScene = this.scenes['night-drive'];
-    this.currentFilter = FILTERS_DATA['blanco'];
+    this.currentFilter = FILTERS_DATA['crizal'];
     this.uvIntensity = 0.85;
 
     this.width = window.innerWidth;
