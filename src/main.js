@@ -69,36 +69,63 @@ class App {
   }
 
   bindDOMEvents(canvas) {
-    // Arrastre directo en la pantalla táctil o mouse sobre el canvas
-    let isPointerDown = false;
+    const viewport = document.getElementById('sim-viewport') || canvas;
+
+    let activePointerId = null;
     let lastX = 0;
     let lastY = 0;
 
-    canvas.addEventListener('pointerdown', (e) => {
-      isPointerDown = true;
+    // Ignorar toques sobre botones, joystick, carrusel o tarjeta de experiencia
+    const isInteractiveElement = (target) => {
+      if (!target || !target.closest) return false;
+      return !!target.closest(
+        'button, input, a, .virtual-joystick, .lens-card-btn, .scene-pill, .btn-clinic-action, .bottom-controls-bar, .patient-card-anchor, .patient-card-floating'
+      );
+    };
+
+    const handlePointerDown = (e) => {
+      if (isInteractiveElement(e.target)) return;
+      if (activePointerId !== null) return; // Bloquear segundo dedo para evitar saltos bruscos
+
+      activePointerId = e.pointerId;
       lastX = e.clientX;
       lastY = e.clientY;
-      canvas.setPointerCapture(e.pointerId);
-      eventBus.emit('user-interacted');
-    });
+      this.camera.stopDragMomentum();
 
-    canvas.addEventListener('pointermove', (e) => {
-      if (!isPointerDown) return;
+      try {
+        viewport.setPointerCapture(e.pointerId);
+      } catch (err) {}
+
+      eventBus.emit('user-interacted');
+    };
+
+    const handlePointerMove = (e) => {
+      if (e.pointerId !== activePointerId) return;
+
       const deltaX = e.clientX - lastX;
       const deltaY = e.clientY - lastY;
       lastX = e.clientX;
       lastY = e.clientY;
 
-      // Invertir deltaX para rotación natural de cabeza
-      this.camera.applyDelta(-deltaX, deltaY);
-    });
-
-    const handlePointerUp = () => {
-      isPointerDown = false;
+      const rect = viewport.getBoundingClientRect();
+      // -deltaX: arrastrar hacia la izquierda gira la cabeza hacia la derecha
+      // -deltaY: arrastrar hacia arriba mira hacia arriba (sincronizado con el joystick e intuición natural)
+      this.camera.applyDelta(-deltaX, -deltaY, rect.width, rect.height);
     };
 
-    canvas.addEventListener('pointerup', handlePointerUp);
-    canvas.addEventListener('pointercancel', handlePointerUp);
+    const handlePointerUp = (e) => {
+      if (e.pointerId === activePointerId) {
+        try {
+          viewport.releasePointerCapture(e.pointerId);
+        } catch (err) {}
+        activePointerId = null;
+      }
+    };
+
+    viewport.addEventListener('pointerdown', handlePointerDown);
+    viewport.addEventListener('pointermove', handlePointerMove);
+    viewport.addEventListener('pointerup', handlePointerUp);
+    viewport.addEventListener('pointercancel', handlePointerUp);
 
     // Controles con teclado (Flechas o WASD para girar la cabeza con inercia cinematográfica)
     window.addEventListener('keydown', (e) => {

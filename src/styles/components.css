@@ -96,6 +96,8 @@
   gap: 8px;
   overflow-x: auto;
   scrollbar-width: none;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
 }
 
 .lens-carousel-container::-webkit-scrollbar {

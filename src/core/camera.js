@@ -19,6 +19,10 @@ export class CameraController {
     this.joystickYawVel = 0;
     this.joystickPitchVel = 0;
 
+    // Inercia cinemática de arrastre táctil / mouse (Momentum Fling)
+    this.dragMomentumYaw = 0;
+    this.dragMomentumPitch = 0;
+
     // Configuración ergonómica y de sensibilidad
     this.sensitivity = 1.35;
     this.maxYaw = Math.PI * 0.25;   // ~45° izquierda / derecha
@@ -39,12 +43,33 @@ export class CameraController {
     this.joystickPitchVel = -dy * this.sensitivity * 0.032;
   }
 
+  stopDragMomentum() {
+    this.dragMomentumYaw = 0;
+    this.dragMomentumPitch = 0;
+  }
+
   /**
    * Recibe deltas de arrastre directo táctil o mouse
+   * Calibrado ergonómicamente al ancho y alto del viewport
    */
-  applyDelta(deltaX, deltaY) {
-    this.targetYaw += deltaX * 0.0028;
-    this.targetPitch += deltaY * 0.0028;
+  applyDelta(deltaX, deltaY, viewportWidth = 1000, viewportHeight = 600) {
+    const yawRange = this.maxYaw - this.minYaw; // ~1.57 rad
+    const pitchRange = this.maxPitch - this.minPitch; // ~1.19 rad
+
+    // Escala natural: recorrer ~70% de la pantalla cubre el campo de visión completo
+    const scaleX = (yawRange / Math.max(viewportWidth, 320)) * 1.15;
+    const scaleY = (pitchRange / Math.max(viewportHeight, 320)) * 1.15;
+
+    const dYaw = deltaX * scaleX;
+    const dPitch = deltaY * scaleY;
+
+    this.targetYaw += dYaw;
+    this.targetPitch += dPitch;
+
+    // Acumular inercia suave al soltar el dedo
+    this.dragMomentumYaw = dYaw * 0.45;
+    this.dragMomentumPitch = dPitch * 0.45;
+
     this.clampTargetYaw();
     this.clampTargetPitch();
   }
@@ -93,6 +118,16 @@ export class CameraController {
       this.targetPitch += this.joystickPitchVel;
       this.clampTargetYaw();
       this.clampTargetPitch();
+    } else if (Math.abs(this.dragMomentumYaw) > 0.00005 || Math.abs(this.dragMomentumPitch) > 0.00005) {
+      // Aplicar deslizamiento cinemático al soltar el dedo (inercia táctil)
+      this.targetYaw += this.dragMomentumYaw;
+      this.targetPitch += this.dragMomentumPitch;
+      this.clampTargetYaw();
+      this.clampTargetPitch();
+
+      // Fricción suave
+      this.dragMomentumYaw *= 0.88;
+      this.dragMomentumPitch *= 0.88;
     }
 
     // Interpolación exponencial independiente del framerate
@@ -112,5 +147,7 @@ export class CameraController {
     this.targetPitch = 0;
     this.joystickYawVel = 0;
     this.joystickPitchVel = 0;
+    this.dragMomentumYaw = 0;
+    this.dragMomentumPitch = 0;
   }
 }
