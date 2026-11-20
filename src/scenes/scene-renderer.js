@@ -114,7 +114,7 @@ export class SceneRenderer {
       if (isClipped) {
         // Renderizar dentro de las lentes (fotográfico o procedural)
         if (this.currentScene.renderTreated) {
-          this.currentScene.renderTreated(ctx, width, height, this.camera, this.currentFilter);
+          this.currentScene.renderTreated(ctx, width, height, this.camera, this.currentFilter, this.uvIntensity);
         } else {
           this.currentScene.renderBase(ctx, width, height, this.camera);
         }

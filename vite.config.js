@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
-  base: '/filters-simulator/',
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/filters-simulator/' : '/',
   server: {
-    port: 3000,
+    port: 5173,
     host: true,
   },
   preview: {
@@ -15,4 +15,4 @@ export default defineConfig({
     outDir: 'dist',
     assetsInlineLimit: 4096,
   },
-});
+}));

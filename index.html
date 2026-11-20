@@ -46,6 +46,7 @@
   <link rel="preload" as="image" href="./scenes/night-crizal.jpg?v=2" type="image/jpeg">
   <link rel="preload" as="image" href="./scenes/office-blue-cut.jpg?v=2" type="image/jpeg">
   <link rel="preload" as="image" href="./scenes/office-blanco.jpg?v=2" type="image/jpeg">
+  <link rel="preload" as="image" href="./scenes/sun-real.jpg?v=2" type="image/jpeg">
 
   <link rel="stylesheet" href="./src/styles/theme.css">
   <link rel="stylesheet" href="./src/styles/layout.css">
@@ -53,6 +54,12 @@
   <link rel="stylesheet" href="./src/styles/landing.css">
 </head>
 <body>
+  <!-- Transición Cinemática Diagonal (700ms - Sin líneas brillantes) -->
+  <div id="diagonal-transition" class="diagonal-transition" aria-hidden="true">
+    <div class="diagonal-panel diagonal-panel-tl"></div>
+    <div class="diagonal-panel diagonal-panel-br"></div>
+  </div>
+
   <!-- Preloader Clínico Suave -->
   <div id="clinic-preloader" class="clinic-preloader">
     <div class="preloader-icon-pulse">

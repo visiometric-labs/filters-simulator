@@ -45,8 +45,8 @@ export class SceneSelector {
     this.container.appendChild(nav);
   }
 
-  selectScene(sceneId) {
-    if (this.currentSceneId === sceneId) return;
+  selectScene(sceneId, force = false) {
+    if (!force && this.currentSceneId === sceneId) return;
     this.currentSceneId = sceneId;
 
     this.buttons.forEach((btn) => {

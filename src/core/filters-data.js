@@ -179,27 +179,27 @@ export const FILTERS_DATA = {
     bgLight: '#FEF3C7',
     tag: '2 en 1 (Interiores / Sol)',
     headline: 'Completamente claro bajo techo, oscuro bajo el sol',
-    patientDescription: 'Lentes inteligentes que detectan la radiación UV y la luz solar. Se oscurecen suavemente al salir a la calle para proteger tus ojos sin necesidad de cambiar de montura.',
+    patientDescription: 'Lentes inteligentes fotosensibles. En interiores son 100% transparentes como tu gafa regular, y al salir al sol se oscurecen suavemente adaptándose a la radiación UV.',
     benefits: {
       confort: 95,
-      claridad: 92,
+      claridad: 94,
       proteccion: 100,
     },
     optical: {
       transmission: 0.98,        // Dinámico según radiación UV
-      flareFactor: 0.2,
+      flareFactor: 0.15,
       ghostReflection: 0.02,
-      blueLightAbsorption: 0.35,
-      tintRgba: [51, 65, 85, 0.8], // Tinte gris neutro categoría solar
+      blueLightAbsorption: 0.40,
+      tintRgba: [38, 48, 62, 0.70], // Tinte gris grafito Transitions
       tintIntensity: 0.0,        // Se modula de 0 a 0.85 con el slider UV
       polarizationCut: 0.0,
       photochromic: true,
       antiFog: false,
-      contrastBoost: 1.1,
+      contrastBoost: 1.15,
     },
     pitch: {
-      dialogue: '“Tienes dos lentes en uno solo: tu gafa graduada transparente para la oficina y tu gafa de sol oscura al salir a la calle, con protección 100% contra los rayos UV.”',
-      physics: 'Moléculas orgánicas fotosensibles integradas (naftopiranos y oxazinas) que rotan tridimensionalmente ante la radiación ultravioleta, absorbiendo luz visible y modulando la transmitancia luminosa de Cat. 0 a Cat. 3.',
+      dialogue: '“Es la máxima comodidad para tu día a día: tienes tus gafas graduadas transparentes para la oficina y tus gafas de sol al salir a la calle, con protección 100% contra los rayos UV.”',
+      physics: 'Moléculas fotosensibles orgánicas integradas que rotan tridimensionalmente ante la radiación ultravioleta, regulando la transmitancia luminosa de Categoría 0 (92% de transmisión en interiores) a Categoría 3 (18% bajo sol intenso).',
     }
   },
 
@@ -211,28 +211,28 @@ export const FILTERS_DATA = {
     color: '#334155',
     bgLight: '#E2E8F0',
     tag: 'Conducción y Sol',
-    headline: 'Elimina por completo el brillo blanco enceguecedor',
-    patientDescription: 'A diferencia de una gafa oscura común que solo apaga la luz, el polarizado bloquea el rebote horizontal del sol en el asfalto mojado, autos y agua, revelando colores reales y seguros.',
+    headline: 'Elimina por completo el resplandor blanco enceguecedor',
+    patientDescription: 'Una gafa de sol común solo atenúa la luz. El polarizado bloquea el rebote horizontal del sol en el asfalto, autos y agua, revelando colores reales, gran contraste y descansando tus ojos al instante.',
     benefits: {
       confort: 100,
-      claridad: 95,
+      claridad: 98,
       proteccion: 100,
     },
     optical: {
-      transmission: 0.40,        // Categoría solar estándar
-      flareFactor: 0.05,
-      ghostReflection: 0.01,
-      blueLightAbsorption: 0.45,
-      tintRgba: [30, 41, 59, 0.70],
+      transmission: 0.45,        // Categoría solar estándar
+      flareFactor: 0.04,
+      ghostReflection: 0.008,
+      blueLightAbsorption: 0.50,
+      tintRgba: [22, 34, 48, 0.52], // Tinte polarizado neutro de alta fidelidad
       tintIntensity: 0.65,
-      polarizationCut: 0.95,     // Cancela el 95% del resplandor horizontal
+      polarizationCut: 0.95,     // Cancela el 95%+ del resplandor horizontal
       photochromic: false,
       antiFog: false,
       contrastBoost: 1.45,
     },
     pitch: {
-      dialogue: '“Una gafa de sol común solo oscurece la molestia; el lente polarizado borra mágicamente el reflejo blanco del asfalto o del agua para que veas con total seguridad y sin forzar los ojos.”',
-      physics: 'Filtro con eje de transmisión estrictamente vertical que bloquea por completo la luz polarizada horizontal producida por reflexión en superficies dieléctricas (ángulo de Brewster en pavimento y agua).',
+      dialogue: '“Una gafa de sol común solo oscurece la molestia; el lente polarizado borra mágicamente el reflejo blanco del asfalto o del agua para que veas con total seguridad, colores vivos y sin forzar los ojos.”',
+      physics: 'Filtro con eje de transmisión estrictamente vertical que bloquea por absorción la luz polarizada horizontal producida por reflexión en superficies brillantes (ángulo de Brewster en pavimento y agua), elevando drásticamente el contraste fotópico.',
     }
   }
 };

@@ -42,9 +42,20 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
   - **Lente Normal / Sin Gafas:** Emula la fatiga visual real por sobreexposición LED fría (~8500K) y halo de saturación fotópica, manteniendo el texto 100% nítido (cero aberraciones de aumento o dioptrías).
   - **Filtro Blue Cut:** Alivio visual inmediato, aumentando el contraste de los caracteres oscuros sobre un fondo relajante.
 
-### 3. ☀️ Día Soleado y Exteriores (Carretera Panorámica Costera)
-- **Perspectiva:** Carretera abierta frente al mar bajo sol brillante.
-- **Controles:** Slider interactivo de radiación UV para simular la velocidad de oscurecimiento de Transitions y eliminación de reflejo especular sobre el agua con filtro polarizado.
+### 3. ☀️ Día Soleado y Exteriores (Carretera Panorámica Costera 2K)
+- **Perspectiva:** Carretera abierta frente al mar bajo radiación solar intensa con destellos orgánicos multicapa sobre asfalto y oleaje.
+- **Filtro Polarizado:** Cancelación de más del 95% del resplandor especular horizontal, realce del contraste de las marcas viales y saturación profunda de aguas turquesas.
+- **Fotocromático Transitions:** Oscurecimiento sigmoidal continuo (de transparente Cat. 0 a gris grafito Cat. 3) regulado mediante el slider interactivo de radiación solar / UV, reteniendo los reflejos especulares del agua para evidenciar la diferencia clínica frente al Polarizado.
+
+---
+
+## 🎨 Experiencia de Usuario y Diseño Cyber-Clínico
+
+- **Portada de Bienvenida (Welcome Landing):** Acceso introductorio al simulador con selector directo de escenarios y botón de inicio.
+- **Transición Cinemática Diagonal (700ms):** Cierre orgánico de persianas oscuras desde las esquinas exteriores hacia el centro y apertura desde el centro hacia afuera, revelando los filtros sin líneas brillantes ni destellos artificiales.
+- **Tema Unificado Dark Glass (Glassmorphism):** Barra superior (*headbar*) y selector de filtros armonizados con el tema de la portada (`#070B14`, cristales translúcidos `rgba(11, 17, 32, 0.88)` con `backdrop-filter: blur(16px)` y acentos luminiscentes por tratamiento oftálmico).
+- **Controles Táctiles y Joystick Virtual:** Pomo ergonómico para girar la cabeza 360°, botón de conmutación rápida *"Ver con Gafas / Ver sin Gafas"* y tarjeta flotante explicativa de beneficios del paciente.
+- **Optimización de Pantalla Completa para Tablets:** Configuración `viewport-fit=cover`, meta `theme-color: #070B14` y llamada nativa con `{ navigationUI: 'hide' }` para eliminar franjas blancas en iPad y tablets Android.
 
 ---
 
@@ -54,6 +65,7 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
 - **HUD Panorámico:** Marco de titanio vectorial ultra-nítido con biseles reflectivos sin desenfoque artificial.
 - **Resolución Universal de Recursos:** Helper `asset-helper.js` compatible con Vite local, compilación de producción y despliegue estático en GitHub Pages (`/filters-simulator/`).
 - **Arquitectura de Eventos:** Bus de eventos desacoplado (`event-bus.js`) para sincronizar selector de lentes, tarjeta de beneficios, slider UV y cámara.
+- **Pre-calentamiento de Caché Óptica:** Precarga paralela de placas maestras 2K (`night-blanco`, `night-crizal`, `night-ar-verde`, `sun-real`, `office-blue-cut`) para conmutaciones instantáneas sin pantalla blanca ni parpadeos.
 
 ---
 

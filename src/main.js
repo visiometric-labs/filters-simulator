@@ -79,6 +79,7 @@ class App {
       'scenes/night-ar-verde.jpg?v=2',
       'scenes/office-blue-cut.jpg?v=2',
       'scenes/office-blanco.jpg?v=2',
+      'scenes/sun-real.jpg?v=2',
     ];
     assets.forEach((path) => {
       const img = new Image();
@@ -298,16 +299,50 @@ class App {
       }
     };
 
-    const openSimulator = (sceneId = null) => {
+    let isTransitioning = false;
+
+    const openSimulator = (sceneId = 'night-drive') => {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
       // Activar pantalla completa inmediatamente al iniciar la experiencia
       requestFullscreenSafe();
 
-      if (sceneId && this.sceneSelector) {
-        this.sceneSelector.selectScene(sceneId);
+      const transition = document.getElementById('diagonal-transition') || document.getElementById('eye-blink-transition');
+      if (!transition) {
+        if (this.sceneSelector) {
+          this.sceneSelector.selectScene(sceneId || 'night-drive');
+        }
+        if (landingCover) {
+          landingCover.classList.add('hidden');
+        }
+        isTransitioning = false;
+        return;
       }
-      if (landingCover) {
-        landingCover.classList.add('hidden');
-      }
+
+      // 1. Fase 1: Cierre Diagonal de afuera hacia dentro (320ms)
+      transition.className = 'diagonal-transition active phase-closing';
+
+      setTimeout(() => {
+        // 2. Punto Medio (~340ms): Pantalla 100% cubierta en oscuridad.
+        // Conmutar el escenario y retirar la portada al instante
+        const targetScene = sceneId || 'night-drive';
+        if (this.sceneSelector) {
+          this.sceneSelector.selectScene(targetScene, true);
+        }
+        if (landingCover) {
+          landingCover.classList.add('hidden');
+        }
+
+        // 3. Fase 2: Apertura Diagonal de adentro hacia fuera revelando los filtros (320ms)
+        transition.className = 'diagonal-transition active phase-opening';
+
+        setTimeout(() => {
+          // 4. Conclusión a los ~680-700ms exactos: Desactivar transición
+          transition.className = 'diagonal-transition';
+          isTransitioning = false;
+        }, 320);
+      }, 340);
     };
 
     const openLanding = () => {

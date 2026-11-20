@@ -24,10 +24,10 @@
 }
 
 .landing-cover.hidden {
-  opacity: 0;
-  transform: scale(1.02);
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: none !important;
 }
 
 /* 1. Header de la Portada */
@@ -401,5 +401,105 @@
   }
   .landing-scenarios-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   TRANSICIÓN CINEMÁTICA DIAGONAL (700MS - SIN LÍNEAS BRILLANTES)
+   Cierre de afuera hacia dentro en diagonal y apertura de adentro hacia fuera
+   ========================================================================== */
+
+.diagonal-transition {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 10000;
+  pointer-events: none;
+  overflow: hidden;
+  display: none;
+}
+
+.diagonal-transition.active {
+  display: block;
+  pointer-events: all;
+}
+
+/* Paneles diagonales oscuros (sin brillos ni reflejos artificiales) */
+.diagonal-panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #070B14;
+  will-change: transform;
+}
+
+/* Panel Diagonal Superior-Izquierdo (Triángulo con solape para evitar fugas) */
+.diagonal-panel-tl {
+  clip-path: polygon(-5% -5%, 115% -5%, -5% 115%);
+  transform: translate3d(-105%, -105%, 0);
+  filter: drop-shadow(4px 4px 24px rgba(0, 0, 0, 0.85));
+}
+
+/* Panel Diagonal Inferior-Derecho (Triángulo con solape continuo) */
+.diagonal-panel-br {
+  clip-path: polygon(115% -10%, 115% 115%, -10% 115%);
+  transform: translate3d(105%, 105%, 0);
+  filter: drop-shadow(-4px -4px 24px rgba(0, 0, 0, 0.85));
+}
+
+/* Fase 1: Cierre Diagonal (De afuera hacia adentro - 320ms) */
+.diagonal-transition.phase-closing .diagonal-panel-tl {
+  animation: diagonalCloseTL 320ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.diagonal-transition.phase-closing .diagonal-panel-br {
+  animation: diagonalCloseBR 320ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Fase 2: Apertura Diagonal (De adentro hacia afuera revelando el simulador - 320ms) */
+.diagonal-transition.phase-opening .diagonal-panel-tl {
+  animation: diagonalOpenTL 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.diagonal-transition.phase-opening .diagonal-panel-br {
+  animation: diagonalOpenBR 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes diagonalCloseTL {
+  0% {
+    transform: translate3d(-105%, -105%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes diagonalCloseBR {
+  0% {
+    transform: translate3d(105%, 105%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes diagonalOpenTL {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-105%, -105%, 0);
+  }
+}
+
+@keyframes diagonalOpenBR {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(105%, 105%, 0);
   }
 }

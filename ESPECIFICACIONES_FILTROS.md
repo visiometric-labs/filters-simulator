@@ -200,10 +200,11 @@ Proyecto Filtros Opticos/
     │   ├── uv-slider.js         # Control deslizante de radiación solar (Transitions)
     │   └── pitch-modal.js       # Modal pedagógico con argumentos de venta
     │
-    └── styles/                  # Sistema de diseño clínico amigable
-        ├── theme.css            # Paleta de colores, tipografía médica y sombras suaves
-        ├── layout.css           # Grid clínico, contención estricta y layout responsive
-        └── components.css       # Estilos del HUD, carrusel, botones y joystick
+    └── styles/                  # Sistema de diseño cyber-clínico (Dark Glass)
+        ├── theme.css            # Paleta de colores, tipografía médica y tokens
+        ├── layout.css           # Shell responsive, viewport seguro y barra superior
+        ├── components.css       # Estilos del HUD, carrusel de lentes, joystick y tarjetas
+        └── landing.css          # Portada de bienvenida y transición cinemática diagonal
 ```
 
 ---
@@ -219,6 +220,11 @@ Proyecto Filtros Opticos/
    - **Pase 2 (Visión a través de la Lente):** Dentro del bisel de la montura, se aprecia el efecto protector del tratamiento activo, permitiendo una comparación instantánea e intuitiva sin necesidad de cerrar o tapar la pantalla.
 4. **Montura Vectorial Ultra-Definida:**
    Diseñada en SVG paramétrico con bordes biselados y reflejos especulares de titanio, libre de filtros de desenfoque DoF que degraden la calidad percibida en pantallas Full HD o 4K.
+
+5. **Arquitectura Visual Dark Glass y Transición Diagonal:**
+   - **Transición Diagonal Cinemática (700ms):** Cierre diagonal fuera-adentro (320ms) y apertura dentro-fuera (320ms) libre de artefactos o líneas fluorescentes artificiales, garantizando un corte suave y profesional entre la portada y la cabina.
+   - **Armonización Cyber-Clínica:** Unificación cromática total entre la portada de bienvenida y la experiencia de simulación. La barra superior (*headbar*) y las tarjetas del selector de tratamientos adoptan vidrio oscuro translúcido (`rgba(11, 17, 32, 0.88)` / `rgba(15, 23, 42, 0.70)`) con microbordes de alta definición y brillos activos según el tratamiento, conservando el joystick virtual en su diseño clínico original.
+   - **Soporte de Pantalla Completa sin Franja Blanca:** Integración de `viewport-fit=cover`, meta `theme-color: #070B14`, pseudo-clases vendor desacopladas (`:fullscreen`, `:-webkit-full-screen`, `::backdrop`) y `requestFullscreen({ navigationUI: 'hide' })`.
 
 ---
 
