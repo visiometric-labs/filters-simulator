@@ -15,16 +15,16 @@ export const SCENE_FILTERS = {
 };
 
 export const SCENE_DEFAULT_FILTERS = {
-  'night-drive': 'crizal',
-  'digital-office': 'blue-cut',
-  'outdoor-sun': 'transitions',
+  'night-drive': 'blanco',
+  'digital-office': 'blanco',
+  'outdoor-sun': 'blanco',
 };
 
 /**
  * Selector de Lentes y Tratamientos Contextual
  */
 export class LensSelector {
-  constructor(containerElement, initialFilterId = 'crizal', initialSceneId = 'night-drive') {
+  constructor(containerElement, initialFilterId = 'blanco', initialSceneId = 'night-drive') {
     this.container = containerElement;
     this.currentSceneId = initialSceneId;
     this.currentFilterId = initialFilterId;

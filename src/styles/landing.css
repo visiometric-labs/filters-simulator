@@ -77,6 +77,40 @@
   font-weight: 500;
 }
 
+.landing-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-exit-fullscreen-landing {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #94A3B8;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.btn-exit-fullscreen-landing:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #F8FAFC;
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-exit-fullscreen-landing.visible {
+  display: flex;
+}
+
 .landing-badge-pill {
   display: inline-flex;
   align-items: center;

@@ -44,16 +44,16 @@ class App {
       this.camera.setJoystickInput(dx, dy);
     });
 
-    // 4. Selectores de Lentes y Escenas
+    // 4. Selectores de Lentes y Escenas (Inicializado en Lente Normal)
     const lensContainer = document.getElementById('lens-selector-container');
-    this.lensSelector = new LensSelector(lensContainer, 'crizal', 'night-drive');
+    this.lensSelector = new LensSelector(lensContainer, 'blanco', 'night-drive');
 
     const sceneContainer = document.getElementById('scene-selector-container');
     this.sceneSelector = new SceneSelector(sceneContainer, 'night-drive');
 
-    // 5. Tarjeta de Experiencia del Paciente (Inicializada con Crizal para sincronizar con el selector)
+    // 5. Tarjeta de Experiencia del Paciente (Inicializada con Lente Normal)
     const patientCardContainer = document.getElementById('patient-card-container');
-    this.experienceCard = new ExperienceCard(patientCardContainer, FILTERS_DATA['crizal']);
+    this.experienceCard = new ExperienceCard(patientCardContainer, FILTERS_DATA['blanco']);
 
     // 6. Slider UV para Transitions
     const uvContainer = document.getElementById('uv-slider-container');
@@ -127,8 +127,8 @@ class App {
 
       const rect = viewport.getBoundingClientRect();
       // -deltaX: arrastrar hacia la izquierda gira la cabeza hacia la derecha
-      // -deltaY: arrastrar hacia arriba mira hacia arriba (sincronizado con el joystick e intuición natural)
-      this.camera.applyDelta(-deltaX, -deltaY, rect.width, rect.height);
+      // deltaY: eje Y invertido según preferencia táctil
+      this.camera.applyDelta(-deltaX, deltaY, rect.width, rect.height);
     };
 
     const handlePointerUp = (e) => {
@@ -194,15 +194,69 @@ class App {
       }
     });
 
-    // Botón Pantalla Completa
+    // Botón Pantalla Completa (Distinto para entrar vs salir)
     const fullscreenBtn = document.getElementById('btn-fullscreen');
-    fullscreenBtn.addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {});
-      } else {
-        document.exitFullscreen().catch(() => {});
+    const landingExitFsBtn = document.getElementById('btn-landing-exit-fullscreen');
+
+    const isFullscreenActive = () => {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+    };
+
+    const updateFullscreenUI = () => {
+      const isFs = isFullscreenActive();
+
+      if (fullscreenBtn) {
+        const enterIcon = fullscreenBtn.querySelector('.icon-enter-fs');
+        const exitIcon = fullscreenBtn.querySelector('.icon-exit-fs');
+        if (isFs) {
+          if (enterIcon) enterIcon.style.display = 'none';
+          if (exitIcon) exitIcon.style.display = 'inline-block';
+          fullscreenBtn.title = 'Salir de pantalla completa';
+          fullscreenBtn.classList.add('active');
+        } else {
+          if (enterIcon) enterIcon.style.display = 'inline-block';
+          if (exitIcon) exitIcon.style.display = 'none';
+          fullscreenBtn.title = 'Pantalla completa para tablet';
+          fullscreenBtn.classList.remove('active');
+        }
       }
-    });
+
+      if (landingExitFsBtn) {
+        if (isFs) {
+          landingExitFsBtn.classList.add('visible');
+        } else {
+          landingExitFsBtn.classList.remove('visible');
+        }
+      }
+    };
+
+    const exitFullscreenSafe = () => {
+      try {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen().catch(() => {});
+        else if (document.msExitFullscreen) document.msExitFullscreen().catch(() => {});
+      } catch (err) {}
+    };
+
+    const toggleFullscreen = () => {
+      if (!isFullscreenActive()) {
+        requestFullscreenSafe();
+      } else {
+        exitFullscreenSafe();
+      }
+    };
+
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+    }
+
+    if (landingExitFsBtn) {
+      landingExitFsBtn.addEventListener('click', exitFullscreenSafe);
+    }
+
+    document.addEventListener('fullscreenchange', updateFullscreenUI);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
+    updateFullscreenUI();
 
     // Ocultar hint de ayuda tras la primera interacción o 6 segundos
     const lookHint = document.getElementById('look-hint');
@@ -257,6 +311,7 @@ class App {
     const openLanding = () => {
       if (landingCover) {
         landingCover.classList.remove('hidden');
+        updateFullscreenUI();
       }
     };
 

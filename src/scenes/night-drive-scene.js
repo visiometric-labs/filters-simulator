@@ -23,9 +23,9 @@ export class NightDriveScene {
       'amarillo': this.createImage('/scenes/night-amarillo.jpg?v=2'),
     };
 
-    // Control de transición suave (cross-fade) entre lentes (Crizal inicial sincronizado con el selector)
-    this.currentFilterId = 'crizal';
-    this.targetFilterId = 'crizal';
+    // Control de transición suave (cross-fade) entre lentes (Lente Normal inicial por defecto)
+    this.currentFilterId = 'blanco';
+    this.targetFilterId = 'blanco';
     this.transitionProgress = 1.0;
     this.transitionDuration = 260; // ms para transición óptica elegante y sedosa
 
