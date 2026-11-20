@@ -223,7 +223,7 @@ Proyecto Filtros Opticos/
 
 5. **Arquitectura Visual Dark Glass y Transición Diagonal:**
    - **Transición Diagonal Cinemática (700ms):** Cierre diagonal fuera-adentro (320ms) y apertura dentro-fuera (320ms) libre de artefactos o líneas fluorescentes artificiales, garantizando un corte suave y profesional entre la portada y la cabina.
-   - **Armonización Cyber-Clínica:** Unificación cromática total entre la portada de bienvenida y la experiencia de simulación. La barra superior (*headbar*) y las tarjetas del selector de tratamientos adoptan vidrio oscuro translúcido (`rgba(11, 17, 32, 0.88)` / `rgba(15, 23, 42, 0.70)`) con microbordes de alta definición y brillos activos según el tratamiento, conservando el joystick virtual en su diseño clínico original.
+   - **Armonización Cyber-Clínica:** Unificación cromática total entre la portada de bienvenida y la experiencia de simulación. La barra superior (*headbar*) y las tarjetas del selector de tratamientos adoptan vidrio oscuro translúcido (`rgba(11, 17, 32, 0.88)` / `rgba(15, 23, 42, 0.70)`) con microbordes de alta definición y brillos activos según el tratamiento: verde esmeralda para AR Verde, **azul rey (#2563EB)** para Crizal Multicapa, **morado vibrante (#8B5CF6)** para Polarizado (optimizando el contraste de las barras métricas de beneficios sobre el fondo oscuro) y ámbar para Conducción y Transitions, conservando el joystick virtual en su diseño clínico original.
    - **Soporte de Pantalla Completa sin Franja Blanca:** Integración de `viewport-fit=cover`, meta `theme-color: #070B14`, pseudo-clases vendor desacopladas (`:fullscreen`, `:-webkit-full-screen`, `::backdrop`) y `requestFullscreen({ navigationUI: 'hide' })`.
 
 ---

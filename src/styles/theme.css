@@ -22,8 +22,11 @@
   --color-emerald: #059669;        /* AR Verde */
   --color-emerald-light: #D1FAE5;
 
-  --color-indigo: #4F46E5;         /* Crizal */
-  --color-indigo-light: #E0E7FF;
+  --color-crizal: #2563EB;         /* Crizal Azul Rey */
+  --color-crizal-light: rgba(37, 99, 235, 0.18);
+
+  --color-polarizado: #8B5CF6;     /* Polarizado Morado */
+  --color-polarizado-light: rgba(139, 92, 246, 0.18);
 
   --color-bluecut: #2563EB;        /* Blue Cut */
   --color-bluecut-light: #DBEAFE;

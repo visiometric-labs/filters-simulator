@@ -53,8 +53,8 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
 
 - **Portada de Bienvenida (Welcome Landing):** Acceso introductorio al simulador con selector directo de escenarios y botón de inicio.
 - **Transición Cinemática Diagonal (700ms):** Cierre orgánico de persianas oscuras desde las esquinas exteriores hacia el centro y apertura desde el centro hacia afuera, revelando los filtros sin líneas brillantes ni destellos artificiales.
-- **Tema Unificado Dark Glass (Glassmorphism):** Barra superior (*headbar*) y selector de filtros armonizados con el tema de la portada (`#070B14`, cristales translúcidos `rgba(11, 17, 32, 0.88)` con `backdrop-filter: blur(16px)` y acentos luminiscentes por tratamiento oftálmico).
-- **Controles Táctiles y Joystick Virtual:** Pomo ergonómico para girar la cabeza 360°, botón de conmutación rápida *"Ver con Gafas / Ver sin Gafas"* y tarjeta flotante explicativa de beneficios del paciente.
+- **Tema Unificado Dark Glass (Glassmorphism):** Barra superior (*headbar*) y selector de filtros armonizados con el tema de la portada (`#070B14`, cristales translúcidos `rgba(11, 17, 32, 0.88)` con `backdrop-filter: blur(16px)` y acentos luminiscentes de alto contraste: verde esmeralda para AR Verde, azul rey `#2563EB` para Crizal, morado vibrante `#8B5CF6` para Polarizado y ámbar para Conducción/Transitions).
+- **Controles Táctiles y Joystick Virtual:** Pomo ergonómico para girar la cabeza 360°, botón de conmutación rápida *"Ver con Gafas / Ver sin Gafas"* y tarjeta flotante explicativa de beneficios del paciente con barras métricas visualmente diferenciadas por tratamiento.
 - **Optimización de Pantalla Completa para Tablets:** Configuración `viewport-fit=cover`, meta `theme-color: #070B14` y llamada nativa con `{ navigationUI: 'hide' }` para eliminar franjas blancas en iPad y tablets Android.
 
 ---
