@@ -2,7 +2,7 @@ name: Deploy Multi-Branch to GitHub Pages
 
 on:
   push:
-    branches: [main, dev]
+    branches: [dev]
   workflow_dispatch:
 
 permissions:
