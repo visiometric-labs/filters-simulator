@@ -9,6 +9,7 @@ import { ExperienceCard } from './components/experience-card.js';
 import { UVSlider } from './components/uv-slider.js';
 import { PitchModal } from './components/pitch-modal.js';
 import { SceneRenderer } from './scenes/scene-renderer.js';
+import { getAssetUrl } from './core/asset-helper.js';
 
 /**
  * Orquestador Principal de la Aplicación
@@ -66,6 +67,23 @@ class App {
 
     // Iniciar bucle de renderizado
     this.renderer.start();
+
+    // Pre-carga inmediata de placas ópticas 2K en memoria caché mientras se ve la portada
+    this.prewarmAssets();
+  }
+
+  prewarmAssets() {
+    const assets = [
+      'scenes/night-crizal.jpg?v=2',
+      'scenes/night-blanco.jpg?v=2',
+      'scenes/night-ar-verde.jpg?v=2',
+      'scenes/office-blue-cut.jpg?v=2',
+      'scenes/office-blanco.jpg?v=2',
+    ];
+    assets.forEach((path) => {
+      const img = new Image();
+      img.src = getAssetUrl(path);
+    });
   }
 
   bindDOMEvents(canvas) {
