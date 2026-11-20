@@ -1,8 +1,9 @@
 import { eventBus } from '../core/event-bus.js';
+import { getOpticalIcon } from '../core/optical-icons.js';
 
 /**
- * Tarjeta de Experiencia del Paciente
- * Muestra beneficios tangibles en lenguaje humano y cercano
+ * Ficha Técnica y de Respuesta Fisiológica (Laboratorio Oftálmico)
+ * Muestra especificaciones espectrales y confort visual con rigor clínico
  */
 export class ExperienceCard {
   constructor(containerElement, initialFilter) {
@@ -12,7 +13,7 @@ export class ExperienceCard {
     this.element = null;
 
     this.render();
-    this.container.classList.add('collapsed');
+    this.container.classList.add('is-collapsed');
     this.bindEvents();
   }
 
@@ -32,15 +33,20 @@ export class ExperienceCard {
     this.element.innerHTML = `
       <div class="experience-card-header">
         <div class="card-title-group">
-          <span class="card-tag" style="background-color: ${f.bgLight}; color: ${f.color};">${f.tag}</span>
+          <span class="card-tag" style="background-color: ${f.bgLight}; color: ${f.color}; border: 1px solid ${f.color}40;">
+            ${f.tag} · ${f.specCode || 'REF-STD'}
+          </span>
           <span class="card-lens-name">${f.name}</span>
         </div>
-        <button type="button" class="btn-card-close" title="Ocultar panel" id="btn-collapse-card">✕</button>
+        <button type="button" class="btn-card-close" title="Ocultar ficha técnica" id="btn-collapse-card" aria-label="Cerrar ficha">
+          ${getOpticalIcon('close', 14)}
+        </button>
       </div>
 
       <div class="experience-card-body">
         <div class="patient-highlight-box" style="border-left-color: ${f.color};">
-          💡 ${f.headline}
+          <span class="highlight-icon">${getOpticalIcon('clinical-info', 16)}</span>
+          <span class="highlight-text">${f.headline}</span>
         </div>
 
         <p class="patient-description">
@@ -49,37 +55,37 @@ export class ExperienceCard {
 
         <div class="benefits-metrics-list">
           <div class="metric-row">
-            <span>Confort Visual</span>
+            <span class="metric-label">Confort visual</span>
             <div class="metric-bar-bg">
-              <div class="metric-bar-fill" style="width: ${f.benefits.confort}%; background-color: ${f.color};"></div>
+              <div class="metric-bar-fill" style="transform: scaleX(${f.benefits.confort / 100}); background-color: ${f.color};"></div>
             </div>
-            <span>${f.benefits.confort}%</span>
+            <span class="metric-val">${f.benefits.confort}%</span>
           </div>
 
           <div class="metric-row">
-            <span>Claridad Óptica</span>
+            <span class="metric-label">Claridad óptica</span>
             <div class="metric-bar-bg">
-              <div class="metric-bar-fill" style="width: ${f.benefits.claridad}%; background-color: ${f.color};"></div>
+              <div class="metric-bar-fill" style="transform: scaleX(${f.benefits.claridad / 100}); background-color: ${f.color};"></div>
             </div>
-            <span>${f.benefits.claridad}%</span>
+            <span class="metric-val">${f.benefits.claridad}%</span>
           </div>
 
           <div class="metric-row">
-            <span>Protección</span>
+            <span class="metric-label">Atenuación parásita</span>
             <div class="metric-bar-bg">
-              <div class="metric-bar-fill" style="width: ${f.benefits.proteccion}%; background-color: ${f.color};"></div>
+              <div class="metric-bar-fill" style="transform: scaleX(${f.benefits.proteccion / 100}); background-color: ${f.color};"></div>
             </div>
-            <span>${f.benefits.proteccion}%</span>
+            <span class="metric-val">${f.benefits.proteccion}%</span>
           </div>
         </div>
 
         <button type="button" class="btn-show-pitch" id="btn-open-pitch">
-          <span>📋</span> Ver argumento de venta para mostrador
+          ${getOpticalIcon('protocol-doc', 15)}
+          <span>Protocolo de prescripción y física óptica</span>
         </button>
       </div>
     `;
 
-    // Eventos locales
     this.element.querySelector('#btn-collapse-card').addEventListener('click', () => {
       this.collapse();
     });
@@ -91,13 +97,13 @@ export class ExperienceCard {
 
   collapse() {
     this.isCollapsed = true;
-    this.container.classList.add('collapsed');
+    this.container.classList.add('is-collapsed');
     eventBus.emit('experience-card-collapsed', true);
   }
 
   expand() {
     this.isCollapsed = false;
-    this.container.classList.remove('collapsed');
+    this.container.classList.remove('is-collapsed');
     eventBus.emit('experience-card-collapsed', false);
   }
 
@@ -113,11 +119,6 @@ export class ExperienceCard {
     eventBus.on('filter-changed', (filter) => {
       this.currentFilter = filter;
       this.updateContent();
-      // Solo actualiza los datos informativos. No fuerza la apertura de la tarjeta.
-    });
-
-    eventBus.on('toggle-info-card', () => {
-      this.toggle();
     });
   }
 }

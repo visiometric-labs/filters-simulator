@@ -1,13 +1,35 @@
 import { eventBus } from '../core/event-bus.js';
+import { getOpticalIcon } from '../core/optical-icons.js';
 
 export const SCENES_DATA = [
-  { id: 'night-drive', name: 'Conducción Nocturna', icon: '🚗', hint: 'Mueve la cabeza hacia los faros de los autos' },
-  { id: 'digital-office', name: 'Oficina y Pantallas', icon: '💻', hint: 'Gira hacia el monitor LED para notar el filtro Blue' },
-  { id: 'outdoor-sun', name: 'Día Soleado', icon: '☀️', hint: 'Usa el slider solar para ver oscurecer el Transitions' },
+  {
+    id: 'night-drive',
+    name: 'Conducción Nocturna',
+    iconKey: 'scene-night',
+    get icon() { return getOpticalIcon('scene-night', 16); },
+    code: 'CAM-01 / NOCTURNO',
+    hint: 'Gira el colimador hacia los faros LED para observar el corte de interferencia'
+  },
+  {
+    id: 'digital-office',
+    name: 'Oficina y Pantallas',
+    iconKey: 'scene-office',
+    get icon() { return getOpticalIcon('scene-office', 16); },
+    code: 'CAM-02 / SPECTRA LED',
+    hint: 'Apunta al monitor para evaluar la atenuación de radiación azul HEV'
+  },
+  {
+    id: 'outdoor-sun',
+    name: 'Día Soleado y Ruta',
+    iconKey: 'scene-sun',
+    get icon() { return getOpticalIcon('scene-sun', 16); },
+    code: 'CAM-03 / SOLAR UV',
+    hint: 'Modula el potenciómetro UV para verificar la transición y polarización'
+  },
 ];
 
 /**
- * Selector de Escenarios en el Header
+ * Selector de Escenarios Clínicos en el Header
  */
 export class SceneSelector {
   constructor(containerElement, initialSceneId = 'night-drive') {

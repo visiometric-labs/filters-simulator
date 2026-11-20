@@ -162,7 +162,7 @@ class App {
       }
     });
 
-    // Botón Con Gafas / Sin Gafas (Acción clara para el usuario)
+    // Botón Con Filtro / Sin Filtro (Comparativa clínica inmediata)
     const toggleGlassesBtn = document.getElementById('btn-toggle-glasses');
     const toggleGlassesLabel = document.getElementById('glasses-toggle-label');
 
@@ -173,10 +173,10 @@ class App {
     eventBus.on('glasses-state-changed', (enabled) => {
       if (enabled) {
         toggleGlassesBtn.classList.remove('off');
-        toggleGlassesLabel.textContent = 'Ver sin Gafas';
+        toggleGlassesLabel.textContent = 'Ver sin Filtro';
       } else {
         toggleGlassesBtn.classList.add('off');
-        toggleGlassesLabel.textContent = 'Ver con Gafas';
+        toggleGlassesLabel.textContent = 'Ver con Filtro';
       }
     });
 
@@ -304,13 +304,13 @@ class App {
         this.sceneSelector.selectScene(sceneId);
       }
       if (landingCover) {
-        landingCover.classList.add('hidden');
+        landingCover.classList.add('is-dismissed');
       }
     };
 
     const openLanding = () => {
       if (landingCover) {
-        landingCover.classList.remove('hidden');
+        landingCover.classList.remove('is-dismissed');
         updateFullscreenUI();
       }
     };

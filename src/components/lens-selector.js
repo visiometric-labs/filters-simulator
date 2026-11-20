@@ -3,10 +3,6 @@ import { eventBus } from '../core/event-bus.js';
 
 /**
  * Matriz de Colocación de Filtros según la Escena Clínica
- * Cada escenario muestra rigurosamente los tratamientos que resuelven los problemas visuales de ese entorno:
- * - Conducción Nocturna: Lente Normal (deslumbramiento), AR Verde, Crizal Multicapa y Filtro Amarillo DriveSafe.
- * - Oficina y Pantallas: Lente Normal (fatiga LED), AR Verde, Filtro Blue Cut y Crizal Multicapa.
- * - Día Soleado: Lente Normal, Transitions Inteligente (con Slider Solar), Filtro Polarizado y Crizal Multicapa.
  */
 export const SCENE_FILTERS = {
   'night-drive': ['blanco', 'ar-verde', 'crizal', 'amarillo'],
@@ -21,7 +17,7 @@ export const SCENE_DEFAULT_FILTERS = {
 };
 
 /**
- * Selector de Lentes y Tratamientos Contextual
+ * Selector de Lentes y Tratamientos Contextual (Laboratorio Oftálmico)
  */
 export class LensSelector {
   constructor(containerElement, initialFilterId = 'blanco', initialSceneId = 'night-drive') {
@@ -33,7 +29,6 @@ export class LensSelector {
     this.render();
     this.bindEvents();
 
-    // Emitir el filtro inicial para sincronizar el motor y la UI desde el primer fotograma
     if (FILTERS_DATA[this.currentFilterId]) {
       eventBus.emit('filter-changed', FILTERS_DATA[this.currentFilterId]);
     }
@@ -44,10 +39,8 @@ export class LensSelector {
     const carousel = document.createElement('div');
     carousel.className = 'lens-carousel-container';
 
-    // Obtener los filtros específicos colocados para la escena activa
     const filterIds = SCENE_FILTERS[this.currentSceneId] || Object.keys(FILTERS_DATA);
 
-    // Asegurar que el filtro actual pertenece a la escena
     if (!filterIds.includes(this.currentFilterId)) {
       this.currentFilterId = SCENE_DEFAULT_FILTERS[this.currentSceneId] || filterIds[0];
     }
@@ -65,8 +58,13 @@ export class LensSelector {
 
       btn.innerHTML = `
         <div class="lens-icon-circle">${filter.icon}</div>
-        <span class="lens-title">${filter.name}</span>
-        <span class="lens-subtitle">${filter.subtitle}</span>
+        <div class="lens-card-info">
+          <div class="lens-card-top-row">
+            <span class="lens-title">${filter.name}</span>
+            <span class="lens-spec-code">${filter.specCode || ''}</span>
+          </div>
+          <span class="lens-subtitle">${filter.subtitle}</span>
+        </div>
       `;
 
       btn.addEventListener('click', () => {
@@ -87,7 +85,6 @@ export class LensSelector {
     this.buttons.forEach((btn) => {
       if (btn.dataset.filter === filterId) {
         btn.classList.add('active');
-        // Desplazamiento exclusivo dentro del carrusel interno (evita mover el canvas o viewport)
         const carousel = this.container.querySelector('.lens-carousel-container');
         if (carousel && carousel.scrollWidth > carousel.clientWidth) {
           const targetLeft = btn.offsetLeft - (carousel.clientWidth - btn.clientWidth) / 2;
@@ -112,8 +109,6 @@ export class LensSelector {
     }
 
     this.render();
-
-    // Notificar el filtro colocado para la nueva escena
     eventBus.emit('filter-changed', FILTERS_DATA[this.currentFilterId]);
   }
 

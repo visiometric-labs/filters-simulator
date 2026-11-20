@@ -1,13 +1,13 @@
 import { eventBus } from '../core/event-bus.js';
+import { getOpticalIcon } from '../core/optical-icons.js';
 
 /**
- * Control Deslizante de Intensidad Solar y UV
- * Permite modular el oscurecimiento de lentes fotosensibles (Transitions)
+ * Control Espectrofotométrico de Radiación UV y Activación Fotocromática
  */
 export class UVSlider {
   constructor(containerElement) {
     this.container = containerElement;
-    this.value = 0.85; // 85% por defecto al probar Transitions
+    this.value = 0.85;
     this.element = null;
 
     this.render();
@@ -19,17 +19,27 @@ export class UVSlider {
     this.element.className = 'uv-slider-card';
     this.element.innerHTML = `
       <div class="uv-slider-header">
-        <span>☀️ Radiación UV / Luz Solar</span>
+        <div class="uv-slider-title">
+          ${getOpticalIcon('slider-sun', 15)}
+          <span>Irradiancia UV Solar (380–400 nm)</span>
+        </div>
         <span class="uv-val" id="uv-val-display">${Math.round(this.value * 100)}%</span>
       </div>
-      <input 
-        type="range" 
-        id="uv-range-input" 
-        class="uv-slider-input" 
-        min="0" 
-        max="100" 
-        value="${Math.round(this.value * 100)}" 
-      />
+      <div class="uv-slider-track-wrapper">
+        <input 
+          type="range" 
+          id="uv-range-input" 
+          class="uv-slider-input" 
+          min="0" 
+          max="100" 
+          value="${Math.round(this.value * 100)}" 
+        />
+        <div class="uv-scale-markers">
+          <span>0% (Interiores)</span>
+          <span>50% (Sombra)</span>
+          <span>100% (Sol Directo)</span>
+        </div>
+      </div>
     `;
 
     this.container.appendChild(this.element);
@@ -54,7 +64,6 @@ export class UVSlider {
 
   bindEvents() {
     eventBus.on('filter-changed', (filter) => {
-      // Mostrar si el filtro activo es fotocromático (Transitions)
       if (filter.id === 'transitions') {
         this.setVisible(true);
       } else {
@@ -63,7 +72,6 @@ export class UVSlider {
     });
 
     eventBus.on('scene-changed', (scene) => {
-      // Si la escena no es de sol exterior, ocultar de inmediato
       if (scene.id !== 'outdoor-sun') {
         this.setVisible(false);
       }

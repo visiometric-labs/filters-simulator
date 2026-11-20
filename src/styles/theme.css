@@ -1,57 +1,118 @@
+/* Hallmark · shape: workbench · genre: modern-minimal · theme: custom · job: try · idea: "Simulación de tratamientos oftálmicos de precisión" · vibe: "Laboratorio oftálmico clínico y moderno"
+ * paper: oklch(0.12 0.02 250) · accent: oklch(0.65 0.18 240) · display: Plus Jakarta Sans · body: Plus Jakarta Sans · hero: stage · nav: edge-aligned · footer: mast · imagery: the product · signature: el colimador pov interactivo 2k
+ * axes: dark/modern/sapphire · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 · weakest: H5, visual clarity refined */
+/* ==========================================================================
+   SISTEMA DE TOKENS — LABORATORIO OFTÁLMICO Y METROLOGÍA ÓPTICA
+   Visiometric Labs • JayzirTech
+   ========================================================================== */
+
 :root {
-  /* Paleta Médica Clara y Amigable (Visiometric Labs) */
-  --bg-app: #F8FAFC;
-  --bg-surface: #FFFFFF;
-  --bg-surface-soft: #F1F5F9;
-  --bg-surface-elevated: #FFFFFF;
-  --bg-translucent: rgba(255, 255, 255, 0.92);
-  --bg-glass: rgba(255, 255, 255, 0.75);
+  /* 1. Superficies y Fondos del Laboratorio (Tonos Neutros Tintados) */
+  --lab-bg-app: #080C14;
+  --lab-bg-canvas: #06090F;
+  --lab-bg-surface: #0E1524;
+  --lab-bg-surface-elevated: #141E33;
+  --lab-bg-surface-glass: rgba(14, 21, 36, 0.88);
+  --lab-bg-surface-overlay: rgba(6, 9, 15, 0.78);
 
-  /* Acentos y Marca */
-  --color-primary: #0284C7;        /* Azul clínico sereno (Sky 600) */
-  --color-primary-hover: #0369A1;  /* Sky 700 */
-  --color-primary-light: #E0F2FE;  /* Sky 100 */
-  --color-primary-border: #BAE6FD;
+  /* Superficies Claras Tintadas */
+  --lab-light-bg: #FAFCFE;
+  --lab-light-surface: #F8FAFD;
+  --lab-light-surface-subtle: #F1F5FA;
+  --lab-light-border: #E2E8F0;
+  --lab-light-border-strong: #CBD5E1;
 
-  --color-teal: #0D9488;           /* Menta / Salud visual */
-  --color-teal-light: #CCFBF1;
+  /* 2. Acentos Espectrales Calibrados */
+  --optical-ar-emerald: #059669;
+  --optical-ar-emerald-light: #10B981;
+  --optical-ar-emerald-bg: #ECFDF5;
+  --optical-ar-emerald-border: #A7F3D0;
 
-  --color-amber: #D97706;          /* Luz solar y ámbar */
-  --color-amber-light: #FEF3C7;
+  --optical-crizal-indigo: #4F46E5;
+  --optical-crizal-indigo-light: #818CF8;
+  --optical-crizal-indigo-bg: #EEF2FF;
+  --optical-crizal-indigo-border: #C7D2FE;
 
-  --color-emerald: #059669;        /* AR Verde */
-  --color-emerald-light: #D1FAE5;
+  --optical-bluecut-blue: #2563EB;
+  --optical-bluecut-blue-light: #38BDF8;
+  --optical-bluecut-blue-bg: #EFF6FF;
+  --optical-bluecut-blue-border: #BFDBFE;
 
-  --color-indigo: #4F46E5;         /* Crizal */
-  --color-indigo-light: #E0E7FF;
+  --optical-amber: #D97706;
+  --optical-amber-light: #F59E0B;
+  --optical-amber-bg: #FFFBEB;
+  --optical-amber-border: #FDE68A;
 
-  --color-bluecut: #2563EB;        /* Blue Cut */
-  --color-bluecut-light: #DBEAFE;
+  --optical-primary: #0284C7;
+  --optical-primary-hover: #0369A1;
+  --optical-primary-bg: #F0F9FF;
+  --optical-primary-border: #BAE6FD;
 
-  /* Textos y Contraste Humano */
-  --text-main: #0F172A;            /* Slate 900 */
-  --text-muted: #475569;           /* Slate 600 */
-  --text-subtle: #94A3B8;          /* Slate 400 */
-  --text-on-primary: #FFFFFF;
+  --optical-neutral: #5A6A80;
+  --optical-neutral-bg: #F5F7FA;
+  --optical-neutral-border: #DDE2EB;
+  --optical-carbon: #334155;
 
-  /* Bordes y Separadores */
-  --border-light: #E2E8F0;
+  /* 3. Textos y Contraste Humano */
+  --text-dark-primary: #0A1120;
+  --text-dark-secondary: #405068;
+  --text-dark-muted: #5A6A80;
+
+  --text-light-primary: #F8FAFD;
+  --text-light-secondary: #CBD5E1;
+  --text-light-muted: #94A3B8;
+  --text-light-subtle: #64748B;
+
+  /* 4. Bordes y Separadores de Precisión */
+  --border-hairline: 1px solid rgba(255, 255, 255, 0.08);
+  --border-subtle: 1px solid rgba(255, 255, 255, 0.14);
   --border-focus: #0284C7;
+
+  /* 5. Escala de Tokens para Sombras y Luces (Evita Color Literals F48) */
+  --c-glass-tint: rgba(255, 255, 255, 0.02);
+  --c-glass-border-light: rgba(255, 255, 255, 0.08);
+  --c-glass-border-medium: rgba(255, 255, 255, 0.14);
+  --c-glass-border-strong: rgba(255, 255, 255, 0.25);
+  --c-shadow-primary: rgba(2, 132, 199, 0.35);
+  --c-shadow-primary-subtle: rgba(2, 132, 199, 0.2);
+  --c-shadow-ar: rgba(5, 150, 105, 0.2);
+  --c-shadow-crizal: rgba(79, 70, 229, 0.2);
+  --c-shadow-amber: rgba(217, 119, 6, 0.2);
+  --c-shadow-amber-thumb: rgba(217, 119, 6, 0.35);
+  --c-shadow-bluecut: rgba(37, 99, 235, 0.2);
+  --c-shadow-carbon: rgba(51, 65, 85, 0.2);
+  --c-shadow-sky: rgba(56, 189, 248, 0.4);
+  --c-shadow-dark: rgba(0, 0, 0, 0.45);
+  --c-shadow-header: rgba(15, 23, 42, 0.05);
+  --c-shadow-card: rgba(15, 23, 42, 0.06);
+  --c-shadow-pill: rgba(15, 23, 42, 0.08);
+  --c-bottom-bar-grad-1: rgba(6, 9, 15, 0.75);
+  --c-bottom-bar-grad-2: rgba(6, 9, 15, 0.25);
+  --c-bg-radial-primary: rgba(2, 132, 199, 0.12);
+  --c-bg-radial-emerald: rgba(5, 150, 105, 0.05);
+
+  /* 6. Escala Geométrica de Radios (Múltiplos de 4px) */
+  --radius-xs: 4px;
   --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-full: 9999px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 9999px;
 
-  /* Sombras Cálidas y Suaves */
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 4px 14px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-  --shadow-lg: 0 10px 25px -4px rgba(15, 23, 42, 0.1), 0 4px 10px -2px rgba(15, 23, 42, 0.05);
-  --shadow-float: 0 20px 35px -5px rgba(15, 23, 42, 0.12);
+  /* 7. Sombras Clínicas */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-panel: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
+  --shadow-elevation: 0 16px 36px -6px rgba(0, 0, 0, 0.45);
+  --shadow-light-panel: 0 10px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
 
-  /* Tipografía */
-  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  /* 8. Tipografía de Instrumentación */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* 9. Transiciones Explícitas */
+  --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 240ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -61,13 +122,37 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-body {
-  font-family: var(--font-family);
-  background-color: var(--bg-app);
-  color: var(--text-main);
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
+html, body {
+  font-family: var(--font-sans);
+  background-color: var(--lab-bg-canvas);
+  color: var(--text-light-primary);
+  overflow-x: clip;
+  height: 100%;
+  width: 100%;
   user-select: none;
   -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+button:disabled, input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

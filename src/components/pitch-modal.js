@@ -1,8 +1,9 @@
 import { eventBus } from '../core/event-bus.js';
+import { getOpticalIcon } from '../core/optical-icons.js';
 
 /**
- * Modal Clínico y Argumentario de Mostrador
- * Brinda al profesional de la salud visual las frases de valor para convencer al paciente
+ * Modal Clínico y Protocolo de Prescripción
+ * Proporciona al profesional de la salud visual las pautas de comunicación y la física óptica del tratamiento.
  */
 export class PitchModal {
   constructor() {
@@ -19,23 +20,31 @@ export class PitchModal {
     this.overlay.innerHTML = `
       <div class="pitch-modal-content">
         <div class="pitch-modal-header">
-          <h3>
-            <span>📋</span>
-            <span id="pitch-modal-title">Guía de Mostrador</span>
-          </h3>
-          <button type="button" class="btn-card-close" id="btn-close-pitch-modal">✕</button>
+          <div class="pitch-modal-title-group">
+            <span class="pitch-icon-badge">${getOpticalIcon('protocol-doc', 18)}</span>
+            <h3 id="pitch-modal-title">Ficha Técnica &amp; Prescripción</h3>
+          </div>
+          <button type="button" class="btn-card-close" id="btn-close-pitch-modal" title="Cerrar modal">
+            ${getOpticalIcon('close', 16)}
+          </button>
         </div>
 
         <div class="pitch-modal-body">
-          <div>
-            <div class="pitch-section-title">🗣️ ¿Qué decirle al paciente para cerrar la venta?</div>
+          <div class="pitch-section">
+            <div class="pitch-section-title">
+              <span class="section-title-icon">${getOpticalIcon('clinical-info', 15)}</span>
+              <span>Pauta de Comunicación y Valor para el Paciente</span>
+            </div>
             <div class="pitch-dialogue-quote" id="pitch-dialogue-text">
-              <!-- Frase clave -->
+              <!-- Frase clínica -->
             </div>
           </div>
 
-          <div>
-            <div class="pitch-section-title">🔬 Fundamento Óptico y Físico</div>
+          <div class="pitch-section">
+            <div class="pitch-section-title">
+              <span class="section-title-icon">${getOpticalIcon('physics-wave', 15)}</span>
+              <span>Fundamento Físico &amp; Espectrometría de Laboratorio</span>
+            </div>
             <p class="pitch-physics-text" id="pitch-physics-text">
               <!-- Física explicada -->
             </p>
@@ -59,7 +68,7 @@ export class PitchModal {
 
   open(filter) {
     this.currentFilter = filter;
-    this.overlay.querySelector('#pitch-modal-title').textContent = `Ficha de Venta: ${filter.name}`;
+    this.overlay.querySelector('#pitch-modal-title').textContent = `Prescripción de Laboratorio: ${filter.name}`;
     this.overlay.querySelector('#pitch-dialogue-text').textContent = filter.pitch.dialogue;
     this.overlay.querySelector('#pitch-physics-text').textContent = filter.pitch.physics;
 

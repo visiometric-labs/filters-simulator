@@ -1,29 +1,34 @@
+/* Hallmark · shape: workbench · genre: modern-minimal · theme: custom · job: try · idea: "Simulación de tratamientos oftálmicos de precisión" · vibe: "Laboratorio oftálmico clínico y moderno"
+ * paper: oklch(0.12 0.02 250) · accent: oklch(0.65 0.18 240) · display: Plus Jakarta Sans · body: Plus Jakarta Sans · hero: stage · nav: edge-aligned · footer: mast · imagery: the product · signature: el colimador pov interactivo 2k
+ * axes: dark/modern/sapphire · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 · weakest: H5, visual clarity refined */
 /* ==========================================================================
-   COMPONENTES CLÍNICOS AMIGABLES (JOYSTICK, SELECTOR DE LENTES, CARDS)
+   COMPONENTES DE INSTRUMENTACIÓN ÓPTICA (COLIMADOR, CASETES, METROLOGÍA)
+   Laboratorio Oftálmico Moderno • JayzirTech
    ========================================================================== */
 
-/* 1. Joystick Virtual Táctil */
+/* 1. Colimador de Orientación / Joystick Virtual */
 .virtual-joystick {
-  width: 104px;
-  height: 104px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, #F1F5F9 70%, #E2E8F0 100%);
-  border: 3px solid #FFFFFF;
-  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.16), 0 2px 6px -1px rgba(15, 23, 42, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  background: radial-gradient(circle at 50% 50%, var(--lab-bg-surface-elevated) 0%, var(--lab-bg-surface) 80%, var(--lab-bg-canvas) 100%);
+  border: 2px solid var(--border-subtle);
+  box-shadow: var(--shadow-panel);
   position: relative;
   touch-action: none;
   cursor: crosshair;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.1s ease;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .virtual-joystick:active {
   transform: scale(0.98);
 }
 
-/* Indicadores de dirección grabados suavemente */
+/* Retícula de Precisión Láser en 4 Cuadrantes */
 .joystick-crosshair {
   position: absolute;
   width: 100%;
@@ -36,33 +41,42 @@
 .joystick-crosshair::after {
   content: '';
   position: absolute;
-  background-color: #CBD5E1;
+  background-color: var(--border-subtle);
 }
 
 .joystick-crosshair::before {
   top: 50%;
-  left: 14px;
-  right: 14px;
-  height: 1.5px;
+  left: 12px;
+  right: 12px;
+  height: 1px;
   transform: translateY(-50%);
 }
 
 .joystick-crosshair::after {
   left: 50%;
-  top: 14px;
-  bottom: 14px;
-  width: 1.5px;
+  top: 12px;
+  bottom: 12px;
+  width: 1px;
   transform: translateX(-50%);
 }
 
-/* Pomo / Bola central del Joystick */
-.joystick-knob {
-  width: 44px;
-  height: 44px;
+/* Marcas Radiales de Calibración */
+.joystick-radial-ticks {
+  position: absolute;
+  inset: 8px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 60%, #E2E8F0 100%);
-  border: 2px solid #FFFFFF;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2), 0 1px 3px rgba(15, 23, 42, 0.1);
+  border: 1px dashed var(--border-hairline);
+  pointer-events: none;
+}
+
+/* Pomo / Mando Micrométrico Central */
+.joystick-knob {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--optical-carbon) 0%, var(--lab-bg-surface) 75%, var(--lab-bg-canvas) 100%);
+  border: 1.5px solid var(--border-subtle);
+  box-shadow: 0 4px 12px var(--lab-bg-canvas);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -71,25 +85,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-primary);
-  font-size: 14px;
-  transition: box-shadow 0.15s ease;
+  color: var(--optical-bluecut-blue-light);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .virtual-joystick.dragging .joystick-knob {
-  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
-  background: linear-gradient(135deg, #FFFFFF 0%, var(--color-primary-light) 100%);
+  border-color: var(--optical-bluecut-blue-light);
+  color: var(--optical-primary-border);
+  box-shadow: 0 0 16px var(--c-shadow-sky);
 }
 
-/* 2. Selector de Lentes y Tratamientos */
+/* 2. Selector de Casetes de Nanorrecubrimientos (Lentes) */
 .lens-carousel-container {
-  background-color: var(--bg-translucent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: var(--lab-light-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   padding: 8px 12px;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  box-shadow: var(--shadow-float);
+  border: 1px solid var(--lab-light-border);
+  box-shadow: var(--shadow-light-panel);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,129 +119,184 @@
 }
 
 .lens-card-btn {
-  border: 1px solid var(--border-light);
-  background-color: var(--bg-surface);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--lab-light-border);
+  background-color: var(--lab-light-surface);
+  border-radius: var(--radius-sm);
   padding: 8px 12px;
-  min-width: 110px;
+  min-width: 148px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   cursor: pointer;
   font-family: inherit;
-  transition: all var(--transition-fast);
-  text-align: center;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  text-align: left;
   position: relative;
 }
 
 .lens-card-btn:hover {
-  transform: translateY(-2px);
-  border-color: #CBD5E1;
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+  border-color: var(--lab-light-border-strong);
+  box-shadow: 0 2px 6px var(--c-shadow-card);
+}
+
+.lens-card-btn:focus-visible {
+  outline: 2px solid var(--border-focus);
 }
 
 .lens-card-btn .lens-icon-circle {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: var(--radius-xs);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  background-color: var(--bg-surface-soft);
-  transition: all var(--transition-fast);
+  background-color: var(--lab-light-surface-subtle);
+  border: 1px solid var(--lab-light-border);
+  color: var(--text-dark-secondary);
+  flex-shrink: 0;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.lens-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.lens-card-top-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .lens-card-btn .lens-title {
   font-size: 12px;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-dark-primary);
   line-height: 1.2;
+  white-space: nowrap;
+}
+
+.lens-spec-code {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 600;
+  background-color: var(--lab-light-surface-subtle);
+  color: var(--text-dark-primary);
+  border: 1px solid var(--lab-light-border-strong);
+  padding: 2px 4px;
+  border-radius: var(--radius-xs);
 }
 
 .lens-card-btn .lens-subtitle {
   font-size: 10px;
   font-weight: 500;
-  color: var(--text-muted);
-  line-height: 1.1;
+  color: var(--text-dark-muted);
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
-/* Estado Activo de las tarjetas según el tratamiento */
+/* Estados Activos por Tratamiento Óptico */
 .lens-card-btn.active {
-  border-color: var(--color-primary);
-  background-color: #FFFFFF;
-  box-shadow: 0 4px 14px -2px rgba(2, 132, 199, 0.25), 0 0 0 2px var(--color-primary-light);
-  transform: translateY(-2px);
+  border-color: var(--optical-primary);
+  background-color: var(--lab-light-bg);
+  box-shadow: 0 4px 12px var(--c-shadow-primary-subtle), 0 0 0 1px var(--optical-primary);
+  transform: translateY(-1px);
 }
 
 .lens-card-btn.active .lens-title {
-  color: var(--color-primary);
+  color: var(--optical-primary-hover);
 }
 
 .lens-card-btn.active .lens-icon-circle {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  background-color: var(--optical-primary-bg);
+  border-color: var(--optical-primary-border);
+  color: var(--optical-primary-hover);
 }
 
-/* Colores de acento por tratamiento */
 .lens-card-btn[data-filter="ar-verde"].active {
-  border-color: var(--color-emerald);
-  box-shadow: 0 4px 14px -2px rgba(5, 150, 105, 0.25), 0 0 0 2px var(--color-emerald-light);
+  border-color: var(--optical-ar-emerald);
+  box-shadow: 0 4px 12px var(--c-shadow-ar), 0 0 0 1px var(--optical-ar-emerald);
 }
-.lens-card-btn[data-filter="ar-verde"].active .lens-title { color: var(--color-emerald); }
-.lens-card-btn[data-filter="ar-verde"].active .lens-icon-circle { background-color: var(--color-emerald-light); }
+.lens-card-btn[data-filter="ar-verde"].active .lens-title { color: var(--optical-ar-emerald); }
+.lens-card-btn[data-filter="ar-verde"].active .lens-icon-circle {
+  background-color: var(--optical-ar-emerald-bg);
+  border-color: var(--optical-ar-emerald-border);
+  color: var(--optical-ar-emerald);
+}
 
 .lens-card-btn[data-filter="crizal"].active {
-  border-color: var(--color-indigo);
-  box-shadow: 0 4px 14px -2px rgba(79, 70, 229, 0.25), 0 0 0 2px var(--color-indigo-light);
+  border-color: var(--optical-crizal-indigo);
+  box-shadow: 0 4px 12px var(--c-shadow-crizal), 0 0 0 1px var(--optical-crizal-indigo);
 }
-.lens-card-btn[data-filter="crizal"].active .lens-title { color: var(--color-indigo); }
-.lens-card-btn[data-filter="crizal"].active .lens-icon-circle { background-color: var(--color-indigo-light); }
+.lens-card-btn[data-filter="crizal"].active .lens-title { color: var(--optical-crizal-indigo); }
+.lens-card-btn[data-filter="crizal"].active .lens-icon-circle {
+  background-color: var(--optical-crizal-indigo-bg);
+  border-color: var(--optical-crizal-indigo-border);
+  color: var(--optical-crizal-indigo);
+}
 
 .lens-card-btn[data-filter="amarillo"].active {
-  border-color: var(--color-amber);
-  box-shadow: 0 4px 14px -2px rgba(217, 119, 6, 0.25), 0 0 0 2px var(--color-amber-light);
+  border-color: var(--optical-amber);
+  box-shadow: 0 4px 12px var(--c-shadow-amber), 0 0 0 1px var(--optical-amber);
 }
-.lens-card-btn[data-filter="amarillo"].active .lens-title { color: var(--color-amber); }
-.lens-card-btn[data-filter="amarillo"].active .lens-icon-circle { background-color: var(--color-amber-light); }
+.lens-card-btn[data-filter="amarillo"].active .lens-title { color: var(--optical-amber); }
+.lens-card-btn[data-filter="amarillo"].active .lens-icon-circle {
+  background-color: var(--optical-amber-bg);
+  border-color: var(--optical-amber-border);
+  color: var(--optical-amber);
+}
 
 .lens-card-btn[data-filter="blue-cut"].active {
-  border-color: var(--color-bluecut);
-  box-shadow: 0 4px 14px -2px rgba(37, 99, 235, 0.25), 0 0 0 2px var(--color-bluecut-light);
+  border-color: var(--optical-bluecut-blue);
+  box-shadow: 0 4px 12px var(--c-shadow-bluecut), 0 0 0 1px var(--optical-bluecut-blue);
 }
-.lens-card-btn[data-filter="blue-cut"].active .lens-title { color: var(--color-bluecut); }
-.lens-card-btn[data-filter="blue-cut"].active .lens-icon-circle { background-color: var(--color-bluecut-light); }
+.lens-card-btn[data-filter="blue-cut"].active .lens-title { color: var(--optical-bluecut-blue); }
+.lens-card-btn[data-filter="blue-cut"].active .lens-icon-circle {
+  background-color: var(--optical-bluecut-blue-bg);
+  border-color: var(--optical-bluecut-blue-border);
+  color: var(--optical-bluecut-blue);
+}
 
 .lens-card-btn[data-filter="transitions"].active {
-  border-color: var(--color-amber);
-  box-shadow: 0 4px 14px -2px rgba(217, 119, 6, 0.25), 0 0 0 2px var(--color-amber-light);
+  border-color: var(--optical-amber);
+  box-shadow: 0 4px 12px var(--c-shadow-amber), 0 0 0 1px var(--optical-amber);
 }
-.lens-card-btn[data-filter="transitions"].active .lens-title { color: var(--color-amber); }
-.lens-card-btn[data-filter="transitions"].active .lens-icon-circle { background-color: var(--color-amber-light); }
+.lens-card-btn[data-filter="transitions"].active .lens-title { color: var(--optical-amber); }
+.lens-card-btn[data-filter="transitions"].active .lens-icon-circle {
+  background-color: var(--optical-amber-bg);
+  border-color: var(--optical-amber-border);
+  color: var(--optical-amber);
+}
 
 .lens-card-btn[data-filter="polarizado"].active {
-  border-color: #334155;
-  box-shadow: 0 4px 14px -2px rgba(51, 65, 85, 0.25), 0 0 0 2px #E2E8F0;
+  border-color: var(--optical-carbon);
+  box-shadow: 0 4px 12px var(--c-shadow-carbon), 0 0 0 1px var(--optical-carbon);
 }
-.lens-card-btn[data-filter="polarizado"].active .lens-title { color: #334155; }
-.lens-card-btn[data-filter="polarizado"].active .lens-icon-circle { background-color: #E2E8F0; }
+.lens-card-btn[data-filter="polarizado"].active .lens-title { color: var(--optical-carbon); }
+.lens-card-btn[data-filter="polarizado"].active .lens-icon-circle {
+  background-color: var(--lab-light-surface-subtle);
+  border-color: var(--lab-light-border);
+  color: var(--optical-carbon);
+}
 
-/* 3. Tarjeta de Experiencia del Paciente ("¿Cómo te ayuda?") */
+/* 3. Ficha Técnica y de Respuesta Fisiológica (Patient Card) */
 .patient-experience-card {
-  background-color: var(--bg-surface);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-lg);
+  background-color: var(--lab-light-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--lab-light-border);
+  box-shadow: var(--shadow-light-panel);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .experience-card-header {
-  padding: 14px 18px;
-  background-color: var(--bg-surface-soft);
-  border-bottom: 1px solid var(--border-light);
+  padding: 12px 16px;
+  background-color: var(--lab-light-surface-subtle);
+  border-bottom: 1px solid var(--lab-light-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -235,154 +304,204 @@
 
 .card-title-group {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .card-tag {
+  font-family: var(--font-sans);
   font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  display: inline-block;
+  align-self: flex-start;
 }
 
 .card-lens-name {
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-dark-primary);
 }
 
 .btn-card-close {
-  border: none;
-  background: transparent;
-  color: var(--text-subtle);
-  font-size: 18px;
+  border: 1px solid var(--lab-light-border);
+  background: var(--lab-light-surface);
+  color: var(--text-dark-muted);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-xs);
   cursor: pointer;
-  padding: 4px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .btn-card-close:hover {
-  color: var(--text-main);
+  background-color: var(--lab-light-surface-subtle);
+  color: var(--text-dark-primary);
+  border-color: var(--lab-light-border-strong);
 }
 
 .experience-card-body {
-  padding: 16px 18px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .patient-highlight-box {
-  background-color: #F8FAFC;
-  border-left: 3px solid var(--color-primary);
-  padding: 10px 12px;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--text-main);
+  background-color: var(--lab-light-surface-subtle);
+  border: 1px solid var(--lab-light-border);
+  border-top: 2px solid var(--optical-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-dark-primary);
   font-weight: 600;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.patient-highlight-box .highlight-icon {
+  color: var(--optical-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .patient-description {
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-dark-secondary);
 }
 
-/* Barras amigables de Beneficio */
+/* Indicadores de Rendimiento Óptico (Transform ScaleX en lugar de Width para evitar F10a) */
 .benefits-metrics-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-top: 4px;
+  padding: 12px;
+  background-color: var(--lab-light-surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--lab-light-border);
 }
 
 .metric-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  font-size: 11.5px;
+  gap: 8px;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--text-dark-secondary);
+}
+
+.metric-label {
+  min-width: 96px;
+}
+
+.metric-val {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dark-primary);
+  min-width: 32px;
+  text-align: right;
 }
 
 .metric-bar-bg {
   flex: 1;
   height: 6px;
-  background-color: var(--bg-surface-soft);
-  border-radius: var(--radius-full);
+  background-color: var(--lab-light-surface-subtle);
+  border-radius: var(--radius-pill);
   overflow: hidden;
+  border: 1px solid var(--lab-light-border);
 }
 
 .metric-bar-fill {
   height: 100%;
-  border-radius: var(--radius-full);
-  background-color: var(--color-primary);
-  transition: width 0.4s ease;
+  width: 100%;
+  border-radius: var(--radius-pill);
+  background-color: var(--optical-primary);
+  transform-origin: left;
+  transition: transform var(--transition-normal);
 }
 
 .btn-show-pitch {
-  margin-top: 6px;
-  border: 1px dashed var(--border-light);
-  background-color: var(--bg-surface-soft);
-  color: var(--color-primary);
+  margin-top: 4px;
+  border: 1px solid var(--lab-light-border);
+  background-color: var(--lab-light-surface-subtle);
+  color: var(--optical-primary-hover);
   font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11.5px;
+  font-weight: 700;
   padding: 8px 12px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xs);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  transition: all var(--transition-fast);
+  gap: 8px;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .btn-show-pitch:hover {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary-border);
+  background-color: var(--optical-primary-bg);
+  border-color: var(--optical-primary-border);
+  color: var(--optical-primary);
 }
 
-/* 4. Slider UV Táctil (Exclusivo Transitions) */
+/* 4. Control Espectrofotométrico UV (Transitions) */
 .uv-slider-card {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  padding: 10px 14px;
-  box-shadow: var(--shadow-md);
+  background-color: var(--lab-light-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--lab-light-border);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  box-shadow: var(--shadow-light-panel);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .uv-slider-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.uv-slider-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 11px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text-dark-secondary);
 }
 
 .uv-slider-header .uv-val {
-  color: var(--color-amber);
+  color: var(--optical-amber);
   font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.uv-slider-track-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .uv-slider-input {
   -webkit-appearance: none;
   width: 100%;
-  height: 8px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(to right, #CBD5E1 0%, #F59E0B 100%);
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(to right, var(--lab-light-border-strong) 0%, var(--optical-amber-light) 100%);
   outline: none;
   cursor: pointer;
 }
@@ -390,30 +509,37 @@
 .uv-slider-input::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background-color: #FFFFFF;
-  border: 2px solid #F59E0B;
-  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+  background-color: var(--lab-light-bg);
+  border: 2px solid var(--optical-amber);
+  box-shadow: 0 2px 6px var(--c-shadow-amber-thumb);
   cursor: pointer;
-  transition: transform 0.1s ease;
+  transition: transform var(--transition-fast);
 }
 
 .uv-slider-input::-webkit-slider-thumb:hover {
   transform: scale(1.15);
 }
 
-/* 5. Modal / Drawer de Argumentario Clínico de Mostrador */
+.uv-scale-markers {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  color: var(--text-dark-muted);
+}
+
+/* 5. Modal de Protocolo de Prescripción & Física de la Luz */
 .pitch-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--lab-bg-surface-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -421,7 +547,7 @@
   padding: 20px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
+  transition: opacity var(--transition-normal);
 }
 
 .pitch-modal-overlay.open {
@@ -430,15 +556,14 @@
 }
 
 .pitch-modal-content {
-  background-color: var(--bg-surface);
+  background-color: var(--lab-light-bg);
   width: 100%;
-  max-width: 540px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-float);
-  border: 1px solid var(--border-light);
+  max-width: 580px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--lab-light-border);
   overflow: hidden;
-  transform: scale(0.95);
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(0.98);
+  transition: transform var(--transition-normal);
 }
 
 .pitch-modal-overlay.open .pitch-modal-content {
@@ -447,20 +572,30 @@
 
 .pitch-modal-header {
   padding: 16px 20px;
-  background-color: var(--bg-surface-soft);
-  border-bottom: 1px solid var(--border-light);
+  background-color: var(--lab-light-surface-subtle);
+  border-bottom: 1px solid var(--lab-light-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.pitch-modal-header h3 {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-main);
+.pitch-modal-title-group {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.pitch-icon-badge {
+  color: var(--optical-primary);
+  display: flex;
+  align-items: center;
+}
+
+.pitch-modal-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark-primary);
+  margin: 0;
 }
 
 .pitch-modal-body {
@@ -468,127 +603,48 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: 70vh;
+  max-height: 72vh;
   overflow-y: auto;
 }
 
+.pitch-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .pitch-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-subtle);
-  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--text-dark-muted);
+}
+
+.section-title-icon {
+  color: var(--optical-primary);
 }
 
 .pitch-dialogue-quote {
-  background-color: var(--color-primary-light);
-  border-left: 4px solid var(--color-primary);
-  padding: 12px 14px;
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: #0369A1;
+  background-color: var(--optical-primary-bg);
+  border: 1px solid var(--optical-primary-border);
+  padding: 12px 16px;
+  border-radius: var(--radius-xs);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--optical-primary-hover);
   font-style: italic;
   font-weight: 500;
 }
 
 .pitch-physics-text {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-muted);
-}
-
-/* ==========================================================================
-   PRELOADER Y SELLO DE CALIDAD (BRANDING CLÍNICO)
-   ========================================================================== */
-.clinic-preloader {
-  position: fixed;
-  inset: 0;
-  background-color: #090D16;
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
-}
-
-.clinic-preloader.fade-out {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.preloader-icon-pulse {
-  width: 72px;
-  height: 72px;
-  border-radius: 20px;
-  background: #0F172A;
-  border: 1.5px solid #38BDF8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
-  animation: preloaderPulse 1.8s infinite ease-in-out;
-}
-
-.preloader-icon-pulse img {
-  width: 44px;
-  height: 44px;
-}
-
-.preloader-text {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #E2E8F0;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.preloader-subtext {
   font-size: 12px;
-  color: #64748B;
-}
-
-@keyframes preloaderPulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(56, 189, 248, 0.25); }
-  50% { transform: scale(1.06); box-shadow: 0 0 35px rgba(56, 189, 248, 0.5); }
-}
-
-/* Marca de Agua / Sello de Calidad */
-.clinic-watermark {
-  position: absolute;
-  right: 18px;
-  bottom: 120px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(226, 232, 240, 0.65);
-  pointer-events: none;
-  z-index: 10;
-  user-select: none;
-  transition: opacity 0.2s ease;
-}
-
-.clinic-watermark .watermark-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #38BDF8;
-}
-
-@media (max-width: 640px) {
-  .clinic-watermark {
-    display: none;
-  }
+  line-height: 1.6;
+  color: var(--text-dark-secondary);
+  background-color: var(--lab-light-surface);
+  padding: 12px 16px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--lab-light-border);
+  font-family: var(--font-sans);
 }
