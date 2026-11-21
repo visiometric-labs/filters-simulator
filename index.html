@@ -194,9 +194,15 @@
 
     <!-- Footer de Portada -->
     <footer class="landing-footer">
-      <div>© 2026 Visiometric Labs — JayzirTech. Todos los derechos reservados.</div>
+      <div>© <span id="copyright-year"></span> Visiometric Labs — JayzirTech. Todos los derechos reservados.</div>
       <div>Plataforma de argumentación clínica y demostración en mostrador.</div>
     </footer>
+    <script>
+      (function() {
+        var el = document.getElementById('copyright-year');
+        if (el) el.textContent = new Date().getFullYear();
+      })();
+    </script>
   </section>
 
   <div id="app">

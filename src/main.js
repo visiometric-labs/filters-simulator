@@ -378,6 +378,12 @@ class App {
 window.addEventListener('DOMContentLoaded', () => {
   new App();
 
+  // Actualizar año de derechos de autor dinámicamente
+  const copyrightYear = document.getElementById('copyright-year');
+  if (copyrightYear) {
+    copyrightYear.textContent = new Date().getFullYear();
+  }
+
   // Ocultar preloader suavemente
   const preloader = document.getElementById('clinic-preloader');
   if (preloader) {
