@@ -34,13 +34,13 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
 
 ### 1. 🚗 Conducción Nocturna (Avenida en Mercedes-Benz Clase S)
 - **Perspectiva:** Cabina de lujo en primera persona con cuadro de instrumentos digital activo, volante multifunción, iluminación ambiental LED y tráfico real.
-- **Placas Ópticas 2K:** Calibradas píxel a píxel (`night-blanco`, `night-ar-verde`, `night-crizal`, `night-amarillo`) con faros LED de tráfico que reaccionan inmediatamente al tratamiento seleccionado.
+- **Placas Ópticas 2K Calibradas:** `night-blanco`, `night-ar-verde`, `night-crizal` y `night-amarillo`.
+- **Filtro Amarillo DriveSafe Refinado:** Calibración sutil del tinte ámbar (sin saturación chillona) sobre base de alta nitidez Crizal, eliminando el deslumbramiento de faros LED y resaltando el pavimento y las marcas viales con alto contraste.
 
 ### 2. 💻 Oficina y Pantallas (Entorno Corporativo Ultrawide Dell)
 - **Perspectiva:** Escritorio ergonómico de madera con teclado mecánico y monitor ultrawide curvo Dell con hojas de cálculo financieras ("Q3 Sales Performance") y documentos de texto.
-- **Física Anti-Astenopía:**
-  - **Lente Normal / Sin Gafas:** Emula la fatiga visual real por sobreexposición LED fría (~8500K) y halo de saturación fotópica, manteniendo el texto 100% nítido (cero aberraciones de aumento o dioptrías).
-  - **Filtro Blue Cut:** Alivio visual inmediato, aumentando el contraste de los caracteres oscuros sobre un fondo relajante.
+- **Filtro Blue Cut de Confort Marfil:** Modulación cálida natural (~5000K) que alivia la fatiga visual por sobreexposición LED fría (~8500K), manteniendo el texto de hojas de cálculo y gráficos 100% nítidos sin distorsiones cromáticas excesivas.
+- **Crizal Multicapa:** Claridad neutra pura (99.5% transmisión) para contraste tipográfico de alta fidelidad sin reflejos parásitos de lámpara.
 
 ### 3. ☀️ Día Soleado y Exteriores (Carretera Panorámica Costera 2K)
 - **Perspectiva:** Carretera abierta frente al mar bajo radiación solar intensa con destellos orgánicos multicapa sobre asfalto y oleaje.
@@ -55,7 +55,27 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
 - **Transición Cinemática Diagonal (700ms):** Cierre orgánico de persianas oscuras desde las esquinas exteriores hacia el centro y apertura desde el centro hacia afuera, revelando los filtros sin líneas brillantes ni destellos artificiales.
 - **Tema Unificado Dark Glass (Glassmorphism):** Barra superior (*headbar*) y selector de filtros armonizados con el tema de la portada (`#070B14`, cristales translúcidos `rgba(11, 17, 32, 0.88)` con `backdrop-filter: blur(16px)` y acentos luminiscentes de alto contraste: verde esmeralda para AR Verde, azul rey `#2563EB` para Crizal, morado vibrante `#8B5CF6` para Polarizado y ámbar para Conducción/Transitions).
 - **Controles Táctiles y Joystick Virtual:** Pomo ergonómico para girar la cabeza 360°, botón de conmutación rápida *"Ver con Gafas / Ver sin Gafas"* y tarjeta flotante explicativa de beneficios del paciente con barras métricas visualmente diferenciadas por tratamiento.
+- **Estandarización de Controles:** Posicionamiento consistente de **Crizal Multicapa en el extremo derecho** de la barra de controles en todos los escenarios para facilitar la comparativa directa contra la gama más alta.
 - **Optimización de Pantalla Completa para Tablets:** Configuración `viewport-fit=cover`, meta `theme-color: #070B14` y llamada nativa con `{ navigationUI: 'hide' }` para eliminar franjas blancas en iPad y tablets Android.
+
+---
+
+## 🔮 Hoja de Ruta y Próximos Desarrollos (Roadmap de Trabajo)
+
+Para las siguientes fases de desarrollo y evolución del demostrador se han planificado las siguientes líneas de trabajo:
+
+### 1. 🕶️ Página / Módulo Especial Dedicado a Transitions
+* **Doble Perspectiva (POV + Tercera Persona / Espejo):**
+  * **Visión en 1ra Persona (POV):** Cómo ve el paciente a través de la lente mientras se oscurece con la radiación solar.
+  * **Visión en 3ra Persona (Rostro del Paciente):** Demostración de cómo se ve la persona con las gafas puestas. Resuelve la objeción estética principal del comprador: apreciar cómo la lente transparente pasa de forma elegante a una gafa de sol oscura sin verse extraña.
+* **Catálogo de Estilos:** Exploración de la línea clásica (Gris, Café, Verde Grafito) y de la gama de moda *Style Mirrors* (Plata, Azul, Bronce) sobre el rostro.
+
+### 2. ☀️ Comparativa Dinámica Trinity vs. Transitions en Día Soleado
+* **Inclusión de los Buques Insignia:** Incorporación del mejor fotocromático de **Trinity** (ServiÓptica) frente al mejor de **Transitions** (EssilorLuxottica), en tono gris solar neutro (sin colorización artificial).
+* **Cinética Fotosensible Automática:**
+  * Al seleccionar cualquiera de los dos filtros, la lente iniciará en estado **100% transparente**.
+  * Comenzará un oscurecimiento progresivo y automático en tiempo real.
+  * **Diferenciación de Rendimiento:** El paciente notará visualmente que **Transitions oscurece significativamente más rápido y alcanza mayor profundidad** que Trinity, justificando con claridad la diferencia de precio y gama en el mostrador.
 
 ---
 

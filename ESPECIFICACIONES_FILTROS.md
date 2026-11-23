@@ -224,11 +224,37 @@ Proyecto Filtros Opticos/
 5. **Arquitectura Visual Dark Glass y Transición Diagonal:**
    - **Transición Diagonal Cinemática (700ms):** Cierre diagonal fuera-adentro (320ms) y apertura dentro-fuera (320ms) libre de artefactos o líneas fluorescentes artificiales, garantizando un corte suave y profesional entre la portada y la cabina.
    - **Armonización Cyber-Clínica:** Unificación cromática total entre la portada de bienvenida y la experiencia de simulación. La barra superior (*headbar*) y las tarjetas del selector de tratamientos adoptan vidrio oscuro translúcido (`rgba(11, 17, 32, 0.88)` / `rgba(15, 23, 42, 0.70)`) con microbordes de alta definición y brillos activos según el tratamiento: verde esmeralda para AR Verde, **azul rey (#2563EB)** para Crizal Multicapa, **morado vibrante (#8B5CF6)** para Polarizado (optimizando el contraste de las barras métricas de beneficios sobre el fondo oscuro) y ámbar para Conducción y Transitions, conservando el joystick virtual en su diseño clínico original.
+   - **Calibración Refinada de Tintes Cálidos:**
+     - *Filtro Amarillo (DriveSafe):* Mezcla multicapa calibrada al 45% sobre base de alta nitidez Crizal, atenuando el exceso de saturación y preservando el realce de contraste de líneas viales y asfalto mojado.
+     - *Filtro Blue Cut (Oficina):* Mezcla al 42% sobre base Crizal para ofrecer un descanso marfil (~5000K) relajante sin distorsión de legibilidad en hojas de cálculo y documentos.
+   - **Estandarización de Controles:** Posicionamiento unificado de **Crizal Multicapa en el extremo derecho** de la barra de controles en todos los escenarios.
    - **Soporte de Pantalla Completa sin Franja Blanca:** Integración de `viewport-fit=cover`, meta `theme-color: #070B14`, pseudo-clases vendor desacopladas (`:fullscreen`, `:-webkit-full-screen`, `::backdrop`) y `requestFullscreen({ navigationUI: 'hide' })`.
 
 ---
 
-## 🚀 5. Despliegue y Sincronización Continua
+## 🔮 6. Hoja de Ruta y Próximos Desarrollos (Roadmap de Trabajo)
+
+### 6.1 Módulo Especial Dedicado a Transitions (Página Dual POV + Tercera Persona)
+* **Objetivo Comercial:** Resolver la doble objeción de compra de los lentes fotosensibles:
+  1. *¿Cómo veo yo a través del lente?* (Confort lumínico, ausencia de deslumbramiento, adaptación continua).
+  2. *¿Cómo me ven los demás con las gafas puestas?* (Estética, privacidad, transición de lente transparente bajo techo a gafa de sol en la calle).
+* **Funcionalidad Prevista:**
+  * Vista dual interactiva con selector o toggle: **Visión POV (primera persona)** y **Visión Espejo / Tercera Persona (rostro del paciente con montura oftálmica)**.
+  * Muestrario de tonalidades: gama clásica (Gris neutro, Café alto contraste, Verde grafito G-15) y gama de moda *Style Mirrors* (Plata, Azul vibrante, Bronce).
+  * Exclusividad para Transitions: no se requiere página independiente para Trinity; la comparativa de Trinity se centralizará en la escena de exteriores.
+
+### 6.2 Comparativa Dinámica Trinity vs. Transitions en Día Soleado
+* **Selección de Modelos:** Inclusión de los buques insignia neutros de cada fabricante:
+  * **Transitions:** Transitions Signature GEN 8 / XTRActive (EssilorLuxottica), en tono gris solar puro sin colorización de fantasía.
+  * **Trinity:** Fotocromático Trinity tradicional (ServiÓptica), en tono gris neutro.
+* **Cinética Fotosensible Automática en Tiempo Real:**
+  * Al conmutar entre filtros, el lente iniciará en estado **100% transparente**.
+  * Se activará una animación de oscurecimiento automático y progresivo hacia Categoría 3 solar.
+  * **Demostración de Brecha de Desempeño:** Transitions oscurecerá más rápidamente y alcanzará una densidad de bloqueo UV superior frente a Trinity en el mismo lapso de tiempo, demostrando visualmente por qué Transitions pertenece a una gama más alta y justifica su inversión.
+
+---
+
+## 🚀 7. Despliegue y Sincronización Continua
 
 * **Repositorio Central:** `https://github.com/visiometric-labs/filters-simulator`
 * **Ramas Sincronizadas:**

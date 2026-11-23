@@ -118,6 +118,38 @@ export class DigitalOfficeScene {
   }
 
   /**
+   * Renderiza el cuadro de un filtro con soporte para calibración sutil de confort Blue Cut
+   */
+  drawFilterFrame(ctx, filterId, rect, opacity = 1.0) {
+    if (opacity <= 0) return;
+    ctx.save();
+    ctx.globalAlpha = opacity;
+
+    if (filterId === 'blue-cut') {
+      // Base Crizal de máxima nitidez tipográfica y contraste clínico
+      const crizalImg = this.images['crizal'] && this.images['crizal'].isLoaded ? this.images['crizal'] : this.images['blanco'];
+      const blueCutImg = this.images['blue-cut'];
+
+      if (crizalImg && crizalImg.isLoaded) {
+        ctx.drawImage(crizalImg, rect.x, rect.y, rect.w, rect.h);
+      }
+      if (blueCutImg && blueCutImg.isLoaded) {
+        // Tinte suave de reposo visual marfil (42% de opacidad para eliminar el exceso de amarillo y mantener el descanso)
+        ctx.globalAlpha = opacity * 0.42;
+        ctx.drawImage(blueCutImg, rect.x, rect.y, rect.w, rect.h);
+      }
+    } else {
+      const img = this.getImageForFilter(filterId);
+      const imgToDraw = (img && img.isLoaded) ? img : this.images['blanco'];
+      if (imgToDraw && imgToDraw.isLoaded) {
+        ctx.drawImage(imgToDraw, rect.x, rect.y, rect.w, rect.h);
+      }
+    }
+
+    ctx.restore();
+  }
+
+  /**
    * PASE 2: Visión a través de los Cristales Oftálmicos (Dentro de la montura)
    * Muestra la placa fotográfica real con el tratamiento óptico activo sin pegatinas artificiales.
    */
@@ -131,27 +163,18 @@ export class DigitalOfficeScene {
       this.transitionProgress = 0.0;
     }
 
-    const currentImg = this.getImageForFilter(this.currentFilterId);
-    const targetImg = this.getImageForFilter(this.targetFilterId);
-
     ctx.save();
     ctx.imageSmoothingEnabled = true;
 
     // Transición suave entre fotos de lentes
-    if (this.transitionProgress < 1.0 && currentImg !== targetImg && currentImg.isLoaded) {
+    if (this.transitionProgress < 1.0 && this.currentFilterId !== this.targetFilterId) {
       const t = this.transitionProgress;
       const smoothAlpha = t * t * (3 - 2 * t);
-      ctx.drawImage(currentImg, rect.x, rect.y, rect.w, rect.h);
-      ctx.globalAlpha = smoothAlpha;
-      if (targetImg.isLoaded) {
-        ctx.drawImage(targetImg, rect.x, rect.y, rect.w, rect.h);
-      }
+      this.drawFilterFrame(ctx, this.currentFilterId, rect, 1.0);
+      this.drawFilterFrame(ctx, this.targetFilterId, rect, smoothAlpha);
     } else {
       // Estado estable
-      const imgToDraw = targetImg.isLoaded ? targetImg : this.images['blanco'];
-      if (imgToDraw.isLoaded) {
-        ctx.drawImage(imgToDraw, rect.x, rect.y, rect.w, rect.h);
-      }
+      this.drawFilterFrame(ctx, this.targetFilterId, rect, 1.0);
     }
 
     ctx.restore();
