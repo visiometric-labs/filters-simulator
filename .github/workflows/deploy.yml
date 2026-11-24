@@ -1,4 +1,4 @@
-name: Deploy Multi-Branch to GitHub Pages
+name: Deploy Dev to GitHub Pages
 
 on:
   push:
@@ -23,40 +23,25 @@ jobs:
         with:
           node-version: 22
 
-      # 1. Checkout completo con todas las ramas
+      # 1. Checkout exclusivo de la rama dev
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       # 2. Configurar Pages
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      # 3. Compilación combinada de ambas ramas (main a la raíz, dev a /dev/)
-      - name: Build Production (main) and Staging (dev)
+      # 3. Compilación exclusiva de dev para pruebas
+      - name: Build DEV for Testing
         run: |
-          set -e
-          mkdir -p combined-dist
-
-          echo "=== Compilando rama MAIN (Producción) ==="
-          git checkout main
           npm ci
           npx vite build --base=/filters-simulator/
-          cp -r dist/. combined-dist/
 
-          echo "=== Compilando rama DEV (Pruebas Tablet) ==="
-          git checkout dev
-          npm ci
-          npx vite build --base=/filters-simulator/dev/
-          mkdir -p combined-dist/dev
-          cp -r dist/. combined-dist/dev/
-
-      # 4. Subir artefacto combinado
+      # 4. Subir artefacto compilado de dev
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './combined-dist'
+          path: './dist'
 
   deploy:
     environment:
