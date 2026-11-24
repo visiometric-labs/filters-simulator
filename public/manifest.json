@@ -1,7 +1,7 @@
 {
-  "name": "Visiometric — Experiencia Óptica POV",
-  "short_name": "Visiometric",
-  "description": "Demostrador clínico de tratamientos oftálmicos en primera persona para consulta y mostrador",
+  "name": "Chromatis by Visiometric Labs",
+  "short_name": "Chromatis",
+  "description": "Simulador clínico de filtros oftálmicos en primera persona para consulta y mostrador",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "any",

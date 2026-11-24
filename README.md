@@ -1,5 +1,5 @@
-# 👓 Optical Filters — Interactive Clinical POV Simulator
-> **Visiometric Labs Suite — JayzirTech**  
+# 👓 Chromatis — Interactive Optical Filters POV Simulator
+> **by Visiometric Labs • JayzirTech**  
 > *First-Person (POV) Ophthalmic Demonstration Platform & Counter-Top Pitching Tool*
 
 🌐 **[English]** • **[Español](./README.es.md)**

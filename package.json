@@ -1,5 +1,9 @@
 {
-  "name": "filters-simulator",
+  "name": "chromatis",
+  "displayName": "Chromatis by Visiometric Labs",
+  "description": "Simulador clínico de filtros oftálmicos en primera persona para consulta y mostrador",
+  "author": "JayzirTech",
+  "license": "UNLICENSED",
   "private": true,
   "version": "0.1.0",
   "type": "module",

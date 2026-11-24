@@ -1,5 +1,5 @@
-# 👓 Filtros Ópticos — Simulador y Comparador Clínico Interactivo
-> **Suite Visiometric Labs — JayzirTech**  
+# 👓 Chromatis — Simulador Clínico Interactivo de Filtros Oftálmicos POV
+> **by Visiometric Labs • JayzirTech**  
 > *Plataforma en Primera Persona (POV) de Demostración Oftálmica y Argumentación en Mostrador*
 
 🌐 **[English (README.md)](./README.md)** • **[Español]**
