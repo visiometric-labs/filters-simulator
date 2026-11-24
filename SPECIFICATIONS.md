@@ -86,7 +86,7 @@ Below is the complete classification of commercial optical treatments, their und
   * **Interactive HUD Controls:**
     - Live absorption meter (%) and optical category badge (`Cat. 0` to `Cat. 3`).
     - Kinetic progress bar with customized gradient.
-    - **`🔄 Reactivar Sol` (Retrigger Solar Activation)** button allowing the optometrist to reset the lens to 100% clear and replay the darkening demonstration repeatedly before the patient.
+    - **Reactivar Sol (Retrigger Solar Activation)** button allowing the optometrist to reset the lens to 100% clear and replay the darkening demonstration repeatedly before the patient.
     - Manual scrubber bar for intermediate density demonstration.
 
 ---

@@ -46,7 +46,10 @@ export class UVSlider {
 
       <div class="photo-actions-row">
         <button type="button" class="btn-reactivate-solar" id="btn-reactivate-solar" title="Reiniciar oscurecimiento desde 100% transparente">
-          <span>🔄</span>
+          <svg class="icon-reactivate" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.85.83 6.72 2.24L21 8" />
+            <polyline points="21 3 21 8 16 8" />
+          </svg>
           <span>Reactivar Sol</span>
         </button>
         <div class="photo-manual-scrubber" title="Ajuste manual de exposición solar">

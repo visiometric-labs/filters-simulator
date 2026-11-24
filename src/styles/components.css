@@ -530,9 +530,15 @@
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   transition: all 0.15s ease;
   white-space: nowrap;
+}
+
+.icon-reactivate {
+  display: inline-block;
+  vertical-align: middle;
+  transition: transform 0.35s ease;
 }
 
 .btn-reactivate-solar:hover {
@@ -542,8 +548,16 @@
   transform: translateY(-1px);
 }
 
+.btn-reactivate-solar:hover .icon-reactivate {
+  transform: rotate(180deg);
+}
+
 .btn-reactivate-solar:active {
   transform: translateY(0);
+}
+
+.btn-reactivate-solar:active .icon-reactivate {
+  transform: rotate(360deg);
 }
 
 .photo-manual-scrubber {

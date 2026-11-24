@@ -51,7 +51,7 @@ It empowers patients to experience **in the first person (POV)**, through a high
   - Starts **100% transparent (Cat. 0)** upon selection, simulating indoor transition to bright outdoor sunlight.
   - **Transitions Signature:** Rapid sigmoidal response reaching ~70% in 1.5s and locking at **Category 3 (88% deep sunglasses absorption)** in graphite gray.
   - **Trinity Photochromic:** Standard mass technology stabilizing at **Category 2 (65% absorption)** in balanced neutral gray.
-  - **Interactive HUD Controller:** Live readout of solar absorption percentage (%), optical category badge (`Cat. 0` to `Cat. 3`), animated progress bar, and a **`🔄 Reactivar Sol` (Retrigger Solar Activation)** button to replay the test on demand.
+  - **Interactive HUD Controller:** Live readout of solar absorption percentage (%), optical category badge (`Cat. 0` to `Cat. 3`), animated progress bar, and a **Reactivar Sol (Retrigger Solar Activation)** button to replay the test on demand.
 - **Polarized Lens:** Eliminates over 95% of horizontal surface reflections on the lake and highway asphalt, increasing contrast and visual relaxation.
 - **Crizal Multicoat:** Maximum 99.5% transmission and back-surface UV reflection shield.
 

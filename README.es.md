@@ -52,7 +52,7 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
   - Al seleccionar cualquier lente fotocromática, inicia **100% transparente** (Cat. 0).
   - **Transitions Signature:** Reacciona a gran velocidad alcanzando **Cat. 3 (88% de absorción solar)** en tono gris grafito profundo en ~3.6s.
   - **Fotocromático Trinity:** Oscurecimiento estándar de masa, estabilizándose en **Cat. 2 (65% de absorción solar)** en tono gris neutro.
-  - **Controlador Interactivo:** Indicador en tiempo real de porcentaje de absorción solar, categoría óptica, barra de progreso y botón de **"🔄 Reactivar Sol"** para repetir la prueba ante el paciente.
+  - **Controlador Interactivo:** Indicador en tiempo real de porcentaje de absorción solar, categoría óptica, barra de progreso y botón de **"Reactivar Sol"** para repetir la prueba ante el paciente.
 - **Filtro Polarizado:** Cancelación de más del 95% del resplandor especular horizontal, realce del contraste de las marcas viales y saturación profunda de aguas turquesas.
 - **Crizal Multicapa:** Transmisión del 99.5% y protección contra radiación UV posterior reflejada.
 

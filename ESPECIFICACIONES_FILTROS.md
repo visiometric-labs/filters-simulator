@@ -245,7 +245,7 @@ Proyecto Filtros Opticos/
 * **Controlador Interactivo HUD:**
   * Indicador en vivo de porcentaje de absorción solar y categoría óptica (Cat. 0 Claro ➔ Cat. 1 Suave ➔ Cat. 2 Medio ➔ Cat. 3 Sol Intenso).
   * Barra de progreso cinética con gradiente adaptativo según el fabricante.
-  * Botón **"🔄 Reactivar Sol"** para repetir la prueba de activación solar desde cero tantas veces como requiera la explicación clínica.
+  * Botón **"Reactivar Sol"** para repetir la prueba de activación solar desde cero tantas veces como requiera la explicación clínica.
   * Deslizador (*scrubber*) para permitir al óptico regular manualmente el nivel si desea ilustrar estados intermedios.
 
 ### 6.2 Próximo Hito: Módulo Especial Dedicado a Transitions (Página Dual POV + Tercera Persona)
