@@ -2,6 +2,8 @@
 > **Suite Visiometric Labs — JayzirTech**  
 > *Módulo de Demostración Clínica y Comercial para la Consulta Optométrica y Venta en Mostrador*
 
+🌐 **[English (SPECIFICATIONS.md)](./SPECIFICATIONS.md)** • **[Español]**
+
 ---
 
 ## 📌 1. Introducción y Propósito del Proyecto
