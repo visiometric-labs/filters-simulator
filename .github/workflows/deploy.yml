@@ -1,8 +1,8 @@
-name: Deploy Dev to GitHub Pages
+name: Deploy Production (main) to GitHub Pages
 
 on:
   push:
-    branches: [dev]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 22
 
-      # 1. Checkout exclusivo de la rama dev
+      # 1. Checkout de la rama main de producción
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -31,13 +31,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      # 3. Compilación exclusiva de dev para pruebas
-      - name: Build DEV for Testing
+      # 3. Compilación de producción
+      - name: Build Production Bundle
         run: |
           npm ci
           npx vite build --base=/filters-simulator/
 
-      # 4. Subir artefacto compilado de dev
+      # 4. Subir artefacto compilado
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
