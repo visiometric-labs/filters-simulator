@@ -64,6 +64,8 @@ It empowers patients to experience **in the first person (POV)**, through a high
 - **Unified Dark Glass Theme (Glassmorphism):** Clinical header and treatment cards styled with dark translucent glass (`#070B14`, `rgba(11, 17, 32, 0.88)` with `backdrop-filter: blur(16px)`) and high-contrast treatment-specific active glows: emerald green for Green AR, royal blue `#2563EB` for Crizal, vibrant purple `#8B5CF6` for Polarized, and amber for DriveSafe/Transitions.
 - **Tactile Virtual Joystick & Touch Drag:** Seamless 360° head-turn kinematics with sub-pixel momentum and smooth damping.
 - **Tablet Fullscreen Optimization:** Configured with `viewport-fit=cover`, meta `theme-color: #070B14`, and native fullscreen call with `{ navigationUI: 'hide' }` to eliminate white browser bars on iPads and Android tablets.
+- **Automatic Kiosk Inactivity Reset (10 Minutes):** Engineered specifically for optical counters, showroom iPads, and optometric booths. After 10 minutes of user inactivity (or configurable via `?timeout=ms`), the application gracefully returns to the welcome portal, re-centers camera orientation to origin, and collapses open cards so the device is always fresh, engaging, and ready for the next patient.
+- **Brand Architecture (Chromatis by Visiometric Labs):** Endorsement under the Visiometric Labs ecosystem alongside sister project *Ocularis* (Refraction Simulator), maintaining 100% intellectual property and copyright ownership under JayzirTech.
 - **Standardized Control Layout:** **Crizal Multicoat positioned at the far right** across all scenarios for consistent top-tier benchmarking.
 
 ---
@@ -116,4 +118,4 @@ For an exhaustive breakdown of ophthalmic physics, optical formulas, counter-top
 
 ---
 
-© 2026 Visiometric Labs — JayzirTech. All rights reserved.
+© 2026 JayzirTech. All rights reserved. • Chromatis by Visiometric Labs

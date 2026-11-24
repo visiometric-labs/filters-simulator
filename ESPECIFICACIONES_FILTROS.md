@@ -1,5 +1,5 @@
-# 👓 Documentación Técnica y Comercial: Simulador de Filtros Ópticos
-> **Suite Visiometric Labs — JayzirTech**  
+# 👓 Documentación Técnica y Comercial: Chromatis — Simulador de Filtros Ópticos
+> **by Visiometric Labs • JayzirTech**  
 > *Módulo de Demostración Clínica y Comercial para la Consulta Optométrica y Venta en Mostrador*
 
 🌐 **[English (SPECIFICATIONS.md)](./SPECIFICATIONS.md)** • **[Español]**
@@ -276,4 +276,4 @@ Proyecto Filtros Opticos/
   ```
 
 ---
-*Documento registrado y actualizado para JayzirTech / Visiometric Labs.*
+© 2026 JayzirTech. Todos los derechos reservados. • Chromatis by Visiometric Labs

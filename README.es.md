@@ -64,6 +64,8 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
 - **Transición Cinemática Diagonal (700ms):** Cierre orgánico de persianas oscuras desde las esquinas exteriores hacia el centro y apertura desde el centro hacia afuera, revelando los filtros sin líneas brillantes ni destellos artificiales.
 - **Tema Unificado Dark Glass (Glassmorphism):** Barra superior (*headbar*) y selector de filtros armonizados con el tema de la portada (`#070B14`, cristales translúcidos `rgba(11, 17, 32, 0.88)` con `backdrop-filter: blur(16px)` y acentos luminiscentes de alto contraste: verde esmeralda para AR Verde, azul rey `#2563EB` para Crizal, morado vibrante `#8B5CF6` para Polarizado y ámbar para Conducción/Transitions).
 - **Controles Táctiles y Joystick Virtual:** Pomo ergonómico para girar la cabeza 360°, botón de conmutación rápida *"Ver con Gafas / Ver sin Gafas"* y tarjeta flotante explicativa de beneficios del paciente con barras métricas visualmente diferenciadas por tratamiento.
+- **Retorno Automático por Inactividad (Modo Kiosk / 10 Minutos):** Diseñado específicamente para tabletas de mostrador y exhibidores en ópticas. Tras 10 minutos de inactividad (o calibrable con `?timeout=ms`), el simulador regresa automáticamente a la portada de bienvenida, restablece el ángulo de cámara al frente y pliega las tarjetas abiertas para recibir al siguiente paciente con la presentación lista.
+- **Arquitectura de Marca (Chromatis by Visiometric Labs):** Pertenencia a la suite Visiometric Labs junto a su proyecto hermano *Ocularis* (Simulador de Refracción), manteniendo el 100% de la autoría y derechos de propiedad intelectual bajo JayzirTech.
 - **Estandarización de Controles:** Posicionamiento consistente de **Crizal Multicapa en el extremo derecho** de la barra de controles en todos los escenarios para facilitar la comparativa directa contra la gama más alta.
 - **Optimización de Pantalla Completa para Tablets:** Configuración `viewport-fit=cover`, meta `theme-color: #070B14` y llamada nativa con `{ navigationUI: 'hide' }` para eliminar franjas blancas en iPad y tablets Android.
 
@@ -118,4 +120,4 @@ Para una revisión exhaustiva de la taxonomía clínica de los filtros, argument
 
 ---
 
-© 2026 Visiometric Labs — JayzirTech. Todos los derechos reservados.
+© 2026 JayzirTech. Todos los derechos reservados. • Chromatis by Visiometric Labs

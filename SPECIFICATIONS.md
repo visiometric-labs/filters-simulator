@@ -1,5 +1,5 @@
-# 👓 Technical & Commercial Specifications: Optical Filters Simulator
-> **Visiometric Labs Suite — JayzirTech**  
+# 👓 Technical & Commercial Specifications: Chromatis Optical Filters Simulator
+> **by Visiometric Labs • JayzirTech**  
 > *Clinical Demonstration & Counter-Top Pitching Platform for Optometric Practice and Retail Sales*
 
 🌐 **[English]** • **[Español (ESPECIFICACIONES_FILTROS.md)](./ESPECIFICACIONES_FILTROS.md)**
@@ -170,4 +170,4 @@ Proyecto Filtros Opticos/
 
 ---
 
-© 2026 Visiometric Labs — JayzirTech. All rights reserved.
+© 2026 JayzirTech. All rights reserved. • Chromatis by Visiometric Labs
