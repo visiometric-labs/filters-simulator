@@ -1,14 +1,16 @@
 import { getAssetUrl } from '../core/asset-helper.js';
+import { eventBus } from '../core/event-bus.js';
 
 /**
  * Escenario 3: Día Soleado y Exteriores (Fotografía Realista 2K en Primera Persona)
  * Muestra una carretera panorámica costera real con sol brillante y reflejo solar sobre el agua,
  * calibrada para comprobar:
  * 1. Lente Normal: Deslumbramiento solar directo, reflejos en el agua y asfalto lavado.
- * 2. Fotocromático (Transitions): Oscurecimiento fotoquímico gradual con el Slider UV (Cat. 0 a Cat. 3).
- * 3. Filtro Polarizado: Cancelación de la luz polarizada horizontal (Brewster), eliminando los reflejos
+ * 2. Fotocromático Trinity: Tecnología tradicional de masa, oscurecimiento estándar a Cat. 2 (65% absorción).
+ * 3. Transitions Signature: Alta velocidad fotosensible, oscurecimiento profundo a Cat. 3 (88% absorción).
+ * 4. Filtro Polarizado: Cancelación de la luz polarizada horizontal (Brewster), eliminando los reflejos
  *    del agua y asfalto, y saturando el color turquesa del lago y el verde de la vegetación.
- * 4. Crizal Multicapa: Máxima transmisión antirreflejante (99.5%) y protección trasera contra rayos UV.
+ * 5. Crizal Multicapa: Máxima transmisión antirreflejante (99.5%) y protección trasera contra rayos UV.
  */
 export class OutdoorSunScene {
   constructor() {
@@ -47,10 +49,139 @@ export class OutdoorSunScene {
     };
 
     this.currentDrawRect = null;
+
+    // Cinética Fotocromática en Tiempo Real (Transitions vs Trinity)
+    this.activeFilterId = null;
+    this.photoTimer = 0;             // Segundos acumulados en la curva de activación
+    this.activationDuration = 3.6;   // Duración de la prueba solar completa (~3.6s)
+    this.isActivating = false;
+    this.currentDepth = 0.0;         // Profundidad de absorción actual (0.0 a maxDepth)
+    this.manualOverride = false;
+    this.lastEmittedPercent = -1;
+
+    this.bindKineticsEvents();
+  }
+
+  bindKineticsEvents() {
+    eventBus.on('filter-changed', (filter) => {
+      this.handleFilterChanged(filter.id);
+    });
+
+    eventBus.on('scene-changed', (scene) => {
+      if (scene.id === 'outdoor-sun') {
+        if (this.activeFilterId === 'trinity' || this.activeFilterId === 'transitions') {
+          this.restartActivation();
+        }
+      }
+    });
+
+    eventBus.on('restart-photochromic', () => {
+      this.restartActivation();
+    });
+
+    eventBus.on('set-photochromic-manual', (ratio) => {
+      this.setManualDepth(ratio);
+    });
+  }
+
+  handleFilterChanged(filterId) {
+    if (this.activeFilterId !== filterId) {
+      this.activeFilterId = filterId;
+      if (filterId === 'trinity' || filterId === 'transitions') {
+        this.restartActivation();
+      } else {
+        this.isActivating = false;
+        this.currentDepth = 0.0;
+        this.lastEmittedPercent = -1;
+      }
+    }
+  }
+
+  restartActivation() {
+    this.manualOverride = false;
+    this.photoTimer = 0;
+    this.isActivating = true;
+    this.currentDepth = 0.0;
+    this.lastEmittedPercent = -1;
+    this.emitProgress(0.0, true);
+  }
+
+  setManualDepth(ratio) {
+    this.manualOverride = true;
+    this.isActivating = false;
+    const maxDepth = this.activeFilterId === 'transitions' ? 0.88 : (this.activeFilterId === 'trinity' ? 0.65 : 0.0);
+    this.currentDepth = Math.max(0.0, Math.min(maxDepth, ratio * maxDepth));
+    this.emitProgress(ratio, false);
+  }
+
+  emitProgress(normProgress, isActivating) {
+    const maxDepth = this.activeFilterId === 'transitions' ? 0.88 : (this.activeFilterId === 'trinity' ? 0.65 : 0.0);
+    const absorptionPercent = Math.round(this.currentDepth * 100);
+    const relativePercent = maxDepth > 0 ? Math.round((this.currentDepth / maxDepth) * 100) : 0;
+
+    if (relativePercent !== this.lastEmittedPercent || !isActivating) {
+      this.lastEmittedPercent = relativePercent;
+
+      let category = 'Cat. 0 (Claro)';
+      if (this.currentDepth >= 0.70) {
+        category = 'Cat. 3 (Sol Intenso)';
+      } else if (this.currentDepth >= 0.40) {
+        category = 'Cat. 2 (Medio)';
+      } else if (this.currentDepth >= 0.15) {
+        category = 'Cat. 1 (Suave)';
+      }
+
+      eventBus.emit('photochromic-status', {
+        filterId: this.activeFilterId,
+        currentDepth: this.currentDepth,
+        maxDepth: maxDepth,
+        progress: normProgress,
+        relativePercent: relativePercent,
+        absorptionPercent: absorptionPercent,
+        category: category,
+        isActivating: isActivating,
+      });
+    }
   }
 
   update(deltaTime) {
     this.time += deltaTime * 0.001;
+
+    // Actualización de la cinética fotocromática en tiempo real
+    if (this.isActivating && (this.activeFilterId === 'trinity' || this.activeFilterId === 'transitions')) {
+      const dtSeconds = deltaTime * 0.001;
+      this.photoTimer += dtSeconds;
+
+      const normTime = Math.min(1.0, this.photoTimer / this.activationDuration);
+
+      if (this.activeFilterId === 'transitions') {
+        // TRANSITIONS SIGNATURE: Cinética Ultrarrápida
+        // Curva sigmoidal/ease-out rápida: arranca con potencia y llega a Cat. 3 (0.88)
+        // A t = 1.0s ya está en ~55% de profundidad (Cat. 2)
+        // A t = 2.0s ya está en ~85% (Cat. 3)
+        // A t = 3.6s culmina al 100% de su capacidad (0.88)
+        const progress = 1.0 - Math.pow(1.0 - normTime, 2.5);
+        this.currentDepth = progress * 0.88;
+
+        this.emitProgress(progress, normTime < 1.0);
+        if (normTime >= 1.0) {
+          this.isActivating = false;
+        }
+      } else if (this.activeFilterId === 'trinity') {
+        // TRINITY FOTOCROMÁTICO: Cinética Estándar de Masa
+        // Curva más lenta y meseta en Cat. 2 (0.65 máximo)
+        // A t = 1.0s apenas va en ~22%
+        // A t = 2.0s va en ~50%
+        // A t = 3.6s culmina en su tope de 0.65
+        const progress = Math.pow(normTime, 1.25);
+        this.currentDepth = progress * 0.65;
+
+        this.emitProgress(progress, normTime < 1.0);
+        if (normTime >= 1.0) {
+          this.isActivating = false;
+        }
+      }
+    }
   }
 
   /**
@@ -133,12 +264,14 @@ export class OutdoorSunScene {
       ctx.fillStyle = 'rgba(22, 34, 48, 0.52)';
       ctx.fillRect(0, 0, width, height);
 
-    } else if (filterId === 'transitions') {
+    } else if (filterId === 'trinity') {
       // -------------------------------------------------------------
-      // FOTOCROMÁTICO TRANSITIONS (Modulado por Slider de Radiación UV)
+      // FOTOCROMÁTICO TRINITY (Cinética Tradicional de Masa - Cat. 2 Máx 65%)
       // -------------------------------------------------------------
-      if (uvIntensity <= 0.05) {
-        // En interiores (UV 0%): Cristal transparente y claro
+      const depth = this.currentDepth;
+
+      if (depth <= 0.02) {
+        // En estado claro / interiores: Cristal transparente
         ctx.filter = 'contrast(1.02) brightness(1.01)';
         ctx.drawImage(this.img, rect.x, rect.y, rect.w, rect.h);
         ctx.filter = 'none';
@@ -146,15 +279,39 @@ export class OutdoorSunScene {
         ctx.fillStyle = 'rgba(241, 245, 249, 0.03)';
         ctx.fillRect(0, 0, width, height);
       } else {
-        // En exteriores: Oscurecimiento fotoquímico gradual (curva sigmoidal)
-        const photoFactor = Math.pow(uvIntensity, 0.85);
-
-        ctx.filter = `brightness(${1.0 - photoFactor * 0.26}) contrast(${1.0 + photoFactor * 0.12})`;
+        // En exteriores: Oscurecimiento gradual neutro tradicional (hasta 65%)
+        ctx.filter = `brightness(${1.0 - depth * 0.22}) contrast(${1.0 + depth * 0.08})`;
         ctx.drawImage(this.img, rect.x, rect.y, rect.w, rect.h);
         ctx.filter = 'none';
 
-        // Tinte Transitions Gris Grafito
-        const tintAlpha = photoFactor * 0.70;
+        // Tinte Gris Neutro Tradicional (sin coloración fantasía)
+        const tintAlpha = depth * 0.85;
+        ctx.fillStyle = `rgba(45, 55, 72, ${tintAlpha})`;
+        ctx.fillRect(0, 0, width, height);
+      }
+
+    } else if (filterId === 'transitions') {
+      // -------------------------------------------------------------
+      // FOTOCROMÁTICO TRANSITIONS SIGNATURE (Cinética Rápida - Cat. 3 Máx 88%)
+      // -------------------------------------------------------------
+      const depth = this.currentDepth;
+
+      if (depth <= 0.02) {
+        // En interiores: Cristal transparente y claro
+        ctx.filter = 'contrast(1.02) brightness(1.01)';
+        ctx.drawImage(this.img, rect.x, rect.y, rect.w, rect.h);
+        ctx.filter = 'none';
+
+        ctx.fillStyle = 'rgba(241, 245, 249, 0.03)';
+        ctx.fillRect(0, 0, width, height);
+      } else {
+        // En exteriores: Oscurecimiento profundo y rápido de gafa de sol (hasta 88%)
+        ctx.filter = `brightness(${1.0 - depth * 0.32}) contrast(${1.0 + depth * 0.16})`;
+        ctx.drawImage(this.img, rect.x, rect.y, rect.w, rect.h);
+        ctx.filter = 'none';
+
+        // Tinte Transitions Gris Grafito Profundo (sin coloración fantasía)
+        const tintAlpha = depth * 0.90;
         ctx.fillStyle = `rgba(38, 48, 62, ${tintAlpha})`;
         ctx.fillRect(0, 0, width, height);
       }
@@ -195,7 +352,8 @@ export class OutdoorSunScene {
       ctx.save();
 
       // Atenuación de la luminosidad del sol según transmisión del filtro
-      const sunAlpha = Math.min(1.0, optical.transmission * (optical.photochromic ? (1.0 - uvIntensity * 0.5) : 1.0));
+      const effectiveTransmission = optical.photochromic ? (1.0 - this.currentDepth * 0.70) : optical.transmission;
+      const sunAlpha = Math.min(1.0, optical.transmission * effectiveTransmission);
 
       // Corona solar brillante
       const sunGlow = ctx.createRadialGradient(sunX, sunY, 20, sunX, sunY, 260);
@@ -239,7 +397,7 @@ export class OutdoorSunScene {
     // Con Transitions: oscurecido proporcionalmente pero el resplandor sigue presente
     let glitterIntensity = (1.0 - polCut);
     if (isPhotochromic) {
-      glitterIntensity *= (1.0 - uvIntensity * 0.60);
+      glitterIntensity *= (1.0 - this.currentDepth * 0.60);
     }
 
     if (glitterIntensity > 0.06) {
@@ -273,7 +431,7 @@ export class OutdoorSunScene {
     // El polarizado elimina el deslumbramiento blanco del pavimento
     let roadGlareIntensity = (1.0 - polCut) * 0.70;
     if (isPhotochromic) {
-      roadGlareIntensity *= (1.0 - uvIntensity * 0.55);
+      roadGlareIntensity *= (1.0 - this.currentDepth * 0.55);
     }
 
     if (roadGlareIntensity > 0.06) {

@@ -25,8 +25,9 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
 - **Crizal Multicapa (Gama Premium 5 en 1):** Claridad quirúrgica con 99.5% de transmisión, negros profundos sin velo lumínico y corte nítido de faros.
 - **Filtro Amarillo (DriveSafe Nocturno & Lluvia):** Realce dramático del contraste del pavimento y absorción de luz azul molesta de faros xenón/LED.
 - **Filtro Blue Cut (Protección Pantallas LED):** Transformación del blanco LED frío y agresivo (~8500K) a un confort cálido descansado tipo papel (~4500K) sin perder nitidez tipográfica en hojas de cálculo y documentos.
-- **Fotocromático Transitions:** Oscurecimiento dinámico continuo controlado por slider de radiación solar/UV.
+- **Fotocromáticos en Tiempo Real (Trinity vs. Transitions):** Demostración cinética automática entre la gama estándar (*Trinity*, Cat. 2, 65%) y la gama alta (*Transitions Signature*, Cat. 3, 88%) con inicio transparente (0%) y reactivación solar interactiva.
 - **Filtro Polarizado:** Cancelación total del resplandor enceguecedor horizontal en asfalto mojado y agua.
+- **Crizal Multicapa (Gama Premium 5 en 1):** Claridad quirúrgica con 99.5% de transmisión, negros profundos sin velo lumínico y corte nítido de faros. Ubicado a la derecha de cada escenario para facilitar la comparativa de máxima gama.
 
 ---
 
@@ -44,8 +45,13 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
 
 ### 3. ☀️ Día Soleado y Exteriores (Carretera Panorámica Costera 2K)
 - **Perspectiva:** Carretera abierta frente al mar bajo radiación solar intensa con destellos orgánicos multicapa sobre asfalto y oleaje.
+- **Cinética Fotocromática en Tiempo Real (Trinity vs Transitions):**
+  - Al seleccionar cualquier lente fotocromática, inicia **100% transparente** (Cat. 0).
+  - **Transitions Signature:** Reacciona a gran velocidad alcanzando **Cat. 3 (88% de absorción solar)** en tono gris grafito profundo en ~3.6s.
+  - **Fotocromático Trinity:** Oscurecimiento estándar de masa, estabilizándose en **Cat. 2 (65% de absorción solar)** en tono gris neutro.
+  - **Controlador Interactivo:** Indicador en tiempo real de porcentaje de absorción solar, categoría óptica, barra de progreso y botón de **"🔄 Reactivar Sol"** para repetir la prueba ante el paciente.
 - **Filtro Polarizado:** Cancelación de más del 95% del resplandor especular horizontal, realce del contraste de las marcas viales y saturación profunda de aguas turquesas.
-- **Fotocromático Transitions:** Oscurecimiento sigmoidal continuo (de transparente Cat. 0 a gris grafito Cat. 3) regulado mediante el slider interactivo de radiación solar / UV, reteniendo los reflejos especulares del agua para evidenciar la diferencia clínica frente al Polarizado.
+- **Crizal Multicapa:** Transmisión del 99.5% y protección contra radiación UV posterior reflejada.
 
 ---
 
@@ -62,20 +68,14 @@ Permite que el paciente experimente **en primera persona (POV)**, dentro de una 
 
 ## 🔮 Hoja de Ruta y Próximos Desarrollos (Roadmap de Trabajo)
 
-Para las siguientes fases de desarrollo y evolución del demostrador se han planificado las siguientes líneas de trabajo:
+Para las siguientes fases de desarrollo y evolución del demostrador se ha planificado:
 
-### 1. 🕶️ Página / Módulo Especial Dedicado a Transitions
+### 1. 🕶️ Módulo Especial Dedicado a Transitions (Doble Vista POV + Espejo 3ra Persona)
 * **Doble Perspectiva (POV + Tercera Persona / Espejo):**
   * **Visión en 1ra Persona (POV):** Cómo ve el paciente a través de la lente mientras se oscurece con la radiación solar.
   * **Visión en 3ra Persona (Rostro del Paciente):** Demostración de cómo se ve la persona con las gafas puestas. Resuelve la objeción estética principal del comprador: apreciar cómo la lente transparente pasa de forma elegante a una gafa de sol oscura sin verse extraña.
 * **Catálogo de Estilos:** Exploración de la línea clásica (Gris, Café, Verde Grafito) y de la gama de moda *Style Mirrors* (Plata, Azul, Bronce) sobre el rostro.
-
-### 2. ☀️ Comparativa Dinámica Trinity vs. Transitions en Día Soleado
-* **Inclusión de los Buques Insignia:** Incorporación del mejor fotocromático de **Trinity** (ServiÓptica) frente al mejor de **Transitions** (EssilorLuxottica), en tono gris solar neutro (sin colorización artificial).
-* **Cinética Fotosensible Automática:**
-  * Al seleccionar cualquiera de los dos filtros, la lente iniciará en estado **100% transparente**.
-  * Comenzará un oscurecimiento progresivo y automático en tiempo real.
-  * **Diferenciación de Rendimiento:** El paciente notará visualmente que **Transitions oscurece significativamente más rápido y alcanza mayor profundidad** que Trinity, justificando con claridad la diferencia de precio y gama en el mostrador.
+* **Exclusividad Transitions:** Trinity permanece en la escena general de sol para la comparativa de velocidad de entrada.
 
 ---
 

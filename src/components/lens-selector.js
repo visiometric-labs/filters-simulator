@@ -11,7 +11,7 @@ import { eventBus } from '../core/event-bus.js';
 export const SCENE_FILTERS = {
   'night-drive': ['blanco', 'ar-verde', 'amarillo', 'crizal'],
   'digital-office': ['blanco', 'ar-verde', 'blue-cut', 'crizal'],
-  'outdoor-sun': ['blanco', 'transitions', 'polarizado', 'crizal'],
+  'outdoor-sun': ['blanco', 'trinity', 'transitions', 'polarizado', 'crizal'],
 };
 
 export const SCENE_DEFAULT_FILTERS = {

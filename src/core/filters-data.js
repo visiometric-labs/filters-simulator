@@ -170,36 +170,73 @@ export const FILTERS_DATA = {
     }
   },
 
+  'trinity': {
+    id: 'trinity',
+    name: 'Fotocromático Trinity',
+    subtitle: 'Gris Neutro Tradicional',
+    icon: '🌤️',
+    color: '#64748B',
+    bgLight: 'rgba(100, 116, 139, 0.18)',
+    tag: 'Fotocromático Estándar',
+    headline: 'Oscurecimiento solar balanceado para el día a día',
+    patientDescription: 'Tecnología fotocromática tradicional de masa. Se adapta a la luz solar alcanzando una oscuridad media (Categoría 2, hasta 65% de absorción). Ideal para quienes buscan confort en exteriores a un precio accesible.',
+    benefits: {
+      confort: 82,
+      claridad: 88,
+      proteccion: 85,
+    },
+    optical: {
+      transmission: 0.98,
+      flareFactor: 0.22,
+      ghostReflection: 0.03,
+      blueLightAbsorption: 0.35,
+      tintRgba: [45, 55, 72, 0.65],
+      tintIntensity: 0.0,
+      polarizationCut: 0.0,
+      photochromic: true,
+      maxDepth: 0.65,
+      speedFactor: 0.55,
+      antiFog: false,
+      contrastBoost: 1.10,
+    },
+    pitch: {
+      dialogue: '“Es la opción práctica y económica para protegerse del sol: una lente que se adapta a exteriores con un tinte gris cómodo sin pagar de más.”',
+      physics: 'Monómero fotocromático estándar que absorbe radiación ultravioleta moderada, alcanzando una transmitancia de Categoría 2 (alrededor del 35% de transmisión remanente) con tiempo de respuesta estándar.',
+    }
+  },
+
   'transitions': {
     id: 'transitions',
-    name: 'Fotocromático',
-    subtitle: 'Transitions Inteligente',
+    name: 'Transitions Signature',
+    subtitle: 'Gris Grafito de Alta Velocidad',
     icon: '☀️',
-    color: '#D97706',
-    bgLight: '#FEF3C7',
-    tag: '2 en 1 (Interiores / Sol)',
-    headline: 'Completamente claro bajo techo, oscuro bajo el sol',
-    patientDescription: 'Lentes inteligentes fotosensibles. En interiores son 100% transparentes como tu gafa regular, y al salir al sol se oscurecen suavemente adaptándose a la radiación UV.',
+    color: '#F59E0B',
+    bgLight: 'rgba(245, 158, 11, 0.18)',
+    tag: 'Gama Alta Fotosensible',
+    headline: 'Oscurecimiento ultrarrápido y máxima profundidad solar',
+    patientDescription: 'La tecnología fotosensible número 1 del mundo. Reacciona al instante bajo el sol alcanzando una oscuridad profunda de gafa de sol (Categoría 3 completa, hasta 88% de bloqueo). Máxima protección contra el sol intenso y rayos UV.',
     benefits: {
-      confort: 95,
-      claridad: 94,
+      confort: 98,
+      claridad: 96,
       proteccion: 100,
     },
     optical: {
-      transmission: 0.98,        // Dinámico según radiación UV
-      flareFactor: 0.15,
-      ghostReflection: 0.02,
-      blueLightAbsorption: 0.40,
-      tintRgba: [38, 48, 62, 0.70], // Tinte gris grafito Transitions
-      tintIntensity: 0.0,        // Se modula de 0 a 0.85 con el slider UV
+      transmission: 0.98,
+      flareFactor: 0.12,
+      ghostReflection: 0.015,
+      blueLightAbsorption: 0.45,
+      tintRgba: [38, 48, 62, 0.88],
+      tintIntensity: 0.0,
       polarizationCut: 0.0,
       photochromic: true,
+      maxDepth: 0.88,
+      speedFactor: 1.0,
       antiFog: false,
-      contrastBoost: 1.15,
+      contrastBoost: 1.20,
     },
     pitch: {
-      dialogue: '“Es la máxima comodidad para tu día a día: tienes tus gafas graduadas transparentes para la oficina y tus gafas de sol al salir a la calle, con protección 100% contra los rayos UV.”',
-      physics: 'Moléculas fotosensibles orgánicas integradas que rotan tridimensionalmente ante la radiación ultravioleta, regulando la transmitancia luminosa de Categoría 0 (92% de transmisión en interiores) a Categoría 3 (18% bajo sol intenso).',
+      dialogue: '“Es la tecnología líder mundial: se oscurece al instante al salir a la calle, alcanza una oscuridad profunda de gafa de sol real y se aclara mucho más rápido bajo techo sin dejar marcas.”',
+      physics: 'Moléculas fotosensibles orgánicas de última generación que reaccionan inmediatamente ante el espectro UV y luz natural intensa, pasando con rapidez de Categoría 0 a Categoría 3 (bloqueando hasta el 88% de la radiación visible y 100% de rayos UVA/UVB).',
     }
   },
 

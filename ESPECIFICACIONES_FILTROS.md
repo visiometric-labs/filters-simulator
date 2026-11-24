@@ -234,23 +234,28 @@ Proyecto Filtros Opticos/
 
 ## 🔮 6. Hoja de Ruta y Próximos Desarrollos (Roadmap de Trabajo)
 
-### 6.1 Módulo Especial Dedicado a Transitions (Página Dual POV + Tercera Persona)
-* **Objetivo Comercial:** Resolver la doble objeción de compra de los lentes fotosensibles:
+### 6.1 Cinética Solar y Comparativa Dinámica Trinity vs. Transitions (Implementado)
+* **Objetivo Demostrativo:** Mostrar en vivo la superioridad tecnológica de la marca benchmark mundial (*Transitions Signature*) frente al fotocromático estándar de masa (*Trinity*), en tonos solares grises puros sin colorización de fantasía.
+* **Cinética en Tiempo Real (~3.6s):**
+  * Al seleccionar cualquiera de los dos tratamientos, el cristal inicia **100% transparente (Categoría 0)** simulando interiores.
+  * Inicia un oscurecimiento automático progresivo:
+    * **Transitions Signature:** Curva sigmoidal rápida de alta velocidad. A 1.5s ya alcanza ~70% y culmina en **Categoría 3 (88% de absorción solar)** con tono gris grafito profundo.
+    * **Fotocromático Trinity:** Curva estándar más lenta. A 1.5s alcanza ~35% y culmina en su tope de **Categoría 2 (65% de absorción solar)** con tono gris neutro.
+  * **Atenuación Sincronizada de Luces:** Tanto el resplandor solar directo como los destellos especulares del agua y asfalto se atenúan dinámicamente en tiempo real según la profundidad del lente.
+* **Controlador Interactivo HUD:**
+  * Indicador en vivo de porcentaje de absorción solar y categoría óptica (Cat. 0 Claro ➔ Cat. 1 Suave ➔ Cat. 2 Medio ➔ Cat. 3 Sol Intenso).
+  * Barra de progreso cinética con gradiente adaptativo según el fabricante.
+  * Botón **"🔄 Reactivar Sol"** para repetir la prueba de activación solar desde cero tantas veces como requiera la explicación clínica.
+  * Deslizador (*scrubber*) para permitir al óptico regular manualmente el nivel si desea ilustrar estados intermedios.
+
+### 6.2 Próximo Hito: Módulo Especial Dedicado a Transitions (Página Dual POV + Tercera Persona)
+* **Objetivo Comercial:** Resolver la doble objeción de compra de los lentes fotosensibles de gama alta:
   1. *¿Cómo veo yo a través del lente?* (Confort lumínico, ausencia de deslumbramiento, adaptación continua).
   2. *¿Cómo me ven los demás con las gafas puestas?* (Estética, privacidad, transición de lente transparente bajo techo a gafa de sol en la calle).
 * **Funcionalidad Prevista:**
   * Vista dual interactiva con selector o toggle: **Visión POV (primera persona)** y **Visión Espejo / Tercera Persona (rostro del paciente con montura oftálmica)**.
   * Muestrario de tonalidades: gama clásica (Gris neutro, Café alto contraste, Verde grafito G-15) y gama de moda *Style Mirrors* (Plata, Azul vibrante, Bronce).
-  * Exclusividad para Transitions: no se requiere página independiente para Trinity; la comparativa de Trinity se centralizará en la escena de exteriores.
-
-### 6.2 Comparativa Dinámica Trinity vs. Transitions en Día Soleado
-* **Selección de Modelos:** Inclusión de los buques insignia neutros de cada fabricante:
-  * **Transitions:** Transitions Signature GEN 8 / XTRActive (EssilorLuxottica), en tono gris solar puro sin colorización de fantasía.
-  * **Trinity:** Fotocromático Trinity tradicional (ServiÓptica), en tono gris neutro.
-* **Cinética Fotosensible Automática en Tiempo Real:**
-  * Al conmutar entre filtros, el lente iniciará en estado **100% transparente**.
-  * Se activará una animación de oscurecimiento automático y progresivo hacia Categoría 3 solar.
-  * **Demostración de Brecha de Desempeño:** Transitions oscurecerá más rápidamente y alcanzará una densidad de bloqueo UV superior frente a Trinity en el mismo lapso de tiempo, demostrando visualmente por qué Transitions pertenece a una gama más alta y justifica su inversión.
+  * Exclusividad para Transitions: Trinity permanece centralizado en la escena de sol exterior como comparativa de gama de entrada.
 
 ---
 

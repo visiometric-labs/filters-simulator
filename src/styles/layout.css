@@ -380,8 +380,9 @@ html, body {
 
 .slider-uv-zone {
   pointer-events: auto;
-  min-width: 200px;
-  display: none; /* Se activa en la escena de sol */
+  min-width: 260px;
+  max-width: 330px;
+  display: none; /* Se activa en la escena de sol con Trinity o Transitions */
 }
 
 .slider-uv-zone.visible {

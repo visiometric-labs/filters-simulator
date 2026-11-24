@@ -122,10 +122,13 @@ export class SceneRenderer {
         // Calcular propiedades ópticas activas del filtro
         const activeOptical = { ...this.currentFilter.optical };
 
-        // Si es fotocromático, modular la absorción según el slider de radiación UV
+        // Si es fotocromático, modular la absorción según cinética en tiempo real o slider
         if (activeOptical.photochromic) {
-          activeOptical.tintIntensity = this.uvIntensity * 0.85;
-          activeOptical.transmission = 1.0 - (this.uvIntensity * 0.70);
+          const depth = (this.currentScene.currentDepth !== undefined)
+            ? this.currentScene.currentDepth
+            : this.uvIntensity * (activeOptical.maxDepth || 0.85);
+          activeOptical.tintIntensity = depth;
+          activeOptical.transmission = 1.0 - (depth * 0.75);
         }
 
         // Renderizar las luces con la calibración del filtro activo
