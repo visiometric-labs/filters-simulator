@@ -353,22 +353,41 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 104px;
   gap: 8px;
 }
 
+#joystick-container {
+  width: 104px;
+  height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .joystick-caption {
-  font-size: 11px;
+  width: 100%;
+  max-width: 104px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 10.5px;
   font-weight: 700;
   color: #94A3B8;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-indent: 0.05em;
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 3px 10px;
+  padding: 4px 6px;
   border-radius: var(--radius-full);
   border: 1px solid rgba(51, 65, 85, 0.65);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
 }
 
 .lens-selector-zone {
