@@ -51,13 +51,19 @@
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #0284C7, #0369A1);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.25);
+  overflow: hidden;
+}
+
+.landing-brand-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  display: block;
 }
 
 .landing-brand-text h2 {
