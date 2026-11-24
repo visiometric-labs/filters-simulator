@@ -2,7 +2,7 @@ name: Deploy Multi-Branch to GitHub Pages
 
 on:
   push:
-    branches: [dev, main]
+    branches: [dev]
   workflow_dispatch:
 
 permissions:
@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       # 1. Checkout completo con todas las ramas
       - name: Checkout repository
