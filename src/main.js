@@ -341,15 +341,77 @@ class App {
           // 4. Conclusión a los ~680-700ms exactos: Desactivar transición
           transition.className = 'diagonal-transition';
           isTransitioning = false;
+          resetInactivityTimer();
         }, 320);
       }, 340);
     };
 
     const openLanding = () => {
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+        inactivityTimer = null;
+      }
       if (landingCover) {
         landingCover.classList.remove('hidden');
         updateFullscreenUI();
       }
+      // Restaurar estado limpio para la siguiente demostración clínica
+      if (this.camera) {
+        this.camera.reset();
+      }
+      if (this.experienceCard && !this.experienceCard.isCollapsed) {
+        this.experienceCard.collapse();
+      }
+      if (this.pitchModal) {
+        this.pitchModal.close();
+      }
+    };
+
+    // 8. Temporizador de Inactividad (Modo Kiosk / Mostrador Clínico)
+    // Tras 5 minutos (300.000 ms) sin interacción, regresa automáticamente a la portada
+    // Permite calibración mediante parámetro URL ?timeout=ms (ej. ?timeout=3000 para testing)
+    const urlTimeoutParam = Number(new URLSearchParams(window.location.search).get('timeout'));
+    let inactivityTimeoutMs = (urlTimeoutParam && urlTimeoutParam > 0) ? urlTimeoutParam : 5 * 60 * 1000; // 5 minutos por defecto
+    let inactivityTimer = null;
+
+    const resetInactivityTimer = () => {
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+      }
+
+      // Solo programar si el usuario está dentro del simulador (portada oculta)
+      if (landingCover && landingCover.classList.contains('hidden')) {
+        inactivityTimer = setTimeout(() => {
+          console.log('[Chromatis Kiosk] Inactividad detectada. Regresando a la portada...');
+          openLanding();
+        }, inactivityTimeoutMs);
+      }
+    };
+
+    // Eventos de interacción del usuario que reinician el temporizador
+    const activityEvents = ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart', 'touchmove'];
+    let lastActivityTime = 0;
+    const handleUserActivity = () => {
+      const now = Date.now();
+      if (now - lastActivityTime > 1000) { // Throttle de 1 segundo para eficiencia
+        lastActivityTime = now;
+        resetInactivityTimer();
+      }
+    };
+
+    activityEvents.forEach((evt) => {
+      window.addEventListener(evt, handleUserActivity, { passive: true });
+    });
+
+    // Helper para testing y depuración rápida en consola
+    window.__setInactivityTimeoutMs = (ms) => {
+      inactivityTimeoutMs = ms;
+      resetInactivityTimer();
+      console.log(`[Chromatis Kiosk] Timeout de inactividad ajustado a ${ms}ms`);
+    };
+    window.__triggerInactivityTimeout = () => {
+      console.log('[Chromatis Kiosk] Disparo manual de inactividad...');
+      openLanding();
     };
 
     if (enterExpBtn) {
