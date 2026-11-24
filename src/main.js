@@ -368,10 +368,9 @@ class App {
     };
 
     // 8. Temporizador de Inactividad (Modo Kiosk / Mostrador Clínico)
-    // Tras 5 minutos (300.000 ms) sin interacción, regresa automáticamente a la portada
-    // Permite calibración mediante parámetro URL ?timeout=ms (ej. ?timeout=3000 para testing)
+    // Configurado a 10 segundos (10.000 ms) para prueba del usuario (por defecto: 5 minutos)
     const urlTimeoutParam = Number(new URLSearchParams(window.location.search).get('timeout'));
-    let inactivityTimeoutMs = (urlTimeoutParam && urlTimeoutParam > 0) ? urlTimeoutParam : 5 * 60 * 1000; // 5 minutos por defecto
+    let inactivityTimeoutMs = (urlTimeoutParam && urlTimeoutParam > 0) ? urlTimeoutParam : 10 * 1000; // 10 segundos para testing
     let inactivityTimer = null;
 
     const resetInactivityTimer = () => {
