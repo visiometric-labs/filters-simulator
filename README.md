@@ -5,7 +5,6 @@
 [![GitHub Pages](https://img.shields.io/badge/Demo-GitHub%20Pages-success?logo=github)](https://visiometric-labs.github.io/filters-simulator/)
 [![Vite](https://img.shields.io/badge/Bundler-Vite%206-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![JavaScript](https://img.shields.io/badge/Language-Vanilla%20JS%20(ES6+)-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)]()
 
 ---
@@ -92,7 +91,7 @@ Para las siguientes fases de desarrollo y evolución del demostrador se ha plani
 ## 🚀 Despliegue y Ejecución Local
 
 ### Requisitos
-- Node.js 18+ (o Docker)
+- Node.js 18+
 
 ### En Desarrollo
 ```bash
@@ -105,12 +104,6 @@ npm run dev
 ```bash
 npm run build
 # Genera los archivos optimizados en dist/
-```
-
-### Con Docker
-```bash
-docker compose up -d
-# Servido con Nginx en http://localhost:8080/
 ```
 
 ---

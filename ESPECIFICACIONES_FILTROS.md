@@ -151,8 +151,6 @@ Proyecto Filtros Opticos/
 ├── index.html                   # Shell HUD clínico con contenedor de simulación POV
 ├── package.json                 # Dependencias (Sharp para calibración, Vite 6)
 ├── vite.config.js               # Bundler con base: '/filters-simulator/' para GitHub Pages
-├── docker-compose.yml           # Despliegue en 1 comando (Nginx Alpine)
-├── Dockerfile                   # Imagen Nginx de producción ultraligera (~25 MB)
 ├── ESPECIFICACIONES_FILTROS.md  # Especificación clínica y técnica exhaustiva
 ├── README.md                    # Documentación general y guía rápida
 ├── .github/
